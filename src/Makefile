@@ -13,6 +13,6 @@ clean:
 	rm test tron *.o
 test: t/Tester.cpp Neural/Network.o
 	g++ -o test t/Tester.cpp Network.o 
-	./test
+
 # that's all
 

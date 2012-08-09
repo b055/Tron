@@ -19,24 +19,35 @@
 namespace tron{
 class Network {
 public:
-	Network(int input, int hidden,int output, double alpha,double lambda);
+	Network(int input, int hidden,int,int output, double alpha,double lambda);
 	double* sigmoid(double* nodes);
 	double* sigmoidGradient(double *nodes);
 	virtual ~Network();
 	double * feedForward(double * );
 	double sigmoid(double);
 	double sigmoidGradient(double);
-	double hyperbolic(double);
-	double hyperbolicGradient(double);
+	double hyperbolic(double,double);
+	double hyperbolicGradient(double,double);
+	void update(int);
 private:
 	double** firstWeight;
+	double** firstE;
 	double** secondWeight;
+	double** secondE;
+	double ** thirdWeight;
+	double ** thirdE;
+	double* input;
+	double* inter1;
+	double * inter2;
+	double* out;
 	int input_count;
-	int hidden_count;
+	int hidden1_count;
+	int hidden2_count;
 	double lambda;
 	double alpha;
 	int output_count;
 	void randomWeights();
+	double oldvalue;
 };
 }
 #endif /* NETWORK_H_ */
