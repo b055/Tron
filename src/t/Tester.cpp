@@ -10,7 +10,7 @@
 #include "../Neural/Network.h"
 #include <iostream>
 using namespace tron;
-
+/*
 int main(){
 
 	Network* net = new Network(10,100,100, 1, 0.4,0.2);
@@ -21,3 +21,4 @@ int main(){
 	std::cout<<out[0]<<std::endl;
 	return 0;
 }
+*/

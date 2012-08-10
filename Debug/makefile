@@ -15,6 +15,7 @@ RM := rm -rf
 -include src/Neural/subdir.mk
 -include src/Grid/subdir.mk
 -include src/Game/subdir.mk
+-include src/Evaluate/subdir.mk
 -include objects.mk
 
 ifneq ($(MAKECMDGOALS),clean)

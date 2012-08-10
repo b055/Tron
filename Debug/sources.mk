@@ -29,4 +29,5 @@ src/Player \
 src/Neural \
 src/Grid \
 src/Game \
+src/Evaluate \
 

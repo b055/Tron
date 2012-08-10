@@ -3,6 +3,9 @@
 ################################################################################
 
 # Add inputs and outputs from these tool invocations to the build variables 
+O_SRCS += \
+../src/Neural/Network.o 
+
 CPP_SRCS += \
 ../src/Neural/Network.cpp 
 

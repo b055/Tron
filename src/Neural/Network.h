@@ -13,7 +13,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <string>
-//#include <sstream>
+#include <sstream>
 #include <iostream>
 #include <time.h>
 namespace tron{
@@ -23,12 +23,13 @@ public:
 	double* sigmoid(double* nodes);
 	double* sigmoidGradient(double *nodes);
 	virtual ~Network();
-	double * feedForward(double * );
+	double feedForward(double * );
 	double sigmoid(double);
 	double sigmoidGradient(double);
 	double hyperbolic(double,double);
 	double hyperbolicGradient(double,double);
 	void update(int);
+	std::string getWeights();
 private:
 	double** firstWeight;
 	double** firstE;

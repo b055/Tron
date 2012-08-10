@@ -24,6 +24,23 @@ namespace tron{
 		turn = 0;
 	}
 
+	void Grid::reset()
+	{
+		player_one_head_x = 0;
+		player_two_head_x = 0;
+		player_one_head_y = 0;
+		player_two_head_y  = 0;
+		grid = new int*[30];
+		for(int i =0;i<30;i++)
+		{
+			grid[i] = new int[30];
+			for(int j = 0;j<30;j++)
+			{
+				grid[i][j] =0;
+			}
+		}
+		turn = 0;
+	}
 	Grid::Grid(int * player_one,int * player_two, int** grid) {
 		// constructor with many parameters
 	//	std::cout<<"just started the contructor\n";
@@ -124,17 +141,58 @@ namespace tron{
 	 * 4 - fractional positition of the player one head
 	 * 5 - fractional position of player two head
 	 *
-	 * 6..231 	laplace smoothened probabilities using (current_player_cout +1)/(total_count+12)
+	 * 6..230 	laplace smoothened probabilities using (current_player_cout +1)/(total_count+12)
 	 * 			for each 2x2 square
 	*/
 	double * Grid::getAfterState()
 	{
+		std::cout<<"searching for after state\n";
 		double * state = new double[231];
 		int available = 0;
 		int one=0;
 		int two=0;
 		int pos = 6;
+#pragma omp parallel for
+		for(int i = 0;i<30;i++)
+		{
+			for(int j = 0;j<30;j++)
+			{
+				if(grid[j][i] == 1)//number of ones
+				{
+#pragma omp critical
+					one++;
+				}
+				if(grid[j][i] == 3)//number of twos
+				{
+#pragma omp critical
+					two++;
+				}
+			}
+		}
+	//	bool finished  = false;
 
+		if(one == two)
+		{
+			turn = 1;
+			state[2] = 1;
+		}
+		else
+		{
+			turn = 0;
+			state[2] = 0;
+		}
+		if(grid[player_one_head_y][player_one_head_x] != 1 && grid[player_one_head_y][player_one_head_x]!=0)
+		{
+			//finished = true;
+			one++;
+			turn = 0;
+		}
+		if(grid[player_two_head_y][player_two_head_x] != 3 && grid[player_two_head_y][player_two_head_x] !=0)
+		{
+		//	finished = true;
+			two++;
+			turn = 1;
+		}
 		for(int j = 0; j<30;j++)
 		{
 			for(int i = 0 ;i<30;i++)
@@ -144,30 +202,37 @@ namespace tron{
 					int inner_one = 0;
 					int inner_two = 0;
 					int not_zero = 0;
-					for(int v = j;v<j+1;v++)
+					for(int v = j;v<j+2;v++)
 					{
-						for(int w = i;w<i+1;w++)
+						for(int w = i;w<i+2;w++)
 						{
 							if(grid[v][w] == 1)
 							{
 								inner_one++;
 								not_zero++;
+								continue;
 							}
-							else if(grid[v][w]==2)
+							if(grid[v][w]==3)
 							{
 								inner_two++;
 								not_zero++;
+								continue;
+							}
+							if(grid[v][w]!=0)
+							{
+								not_zero++;
+								continue;
 							}
 						}
 					}
 
 					if(turn == 0)
 					{
-						state[pos] = (inner_two +1.0)/(not_zero+12.0);//laplace smoothing
+						state[pos] = (inner_one +1.0)/(not_zero+12.0);//laplace smoothing
 					}
 					else
 					{
-						state[pos] =  (inner_one +1.0)/(not_zero+12.0);//laplace smoothin
+						state[pos] =  (inner_two +1.0)/(not_zero+12.0);//laplace smoothin
 					}
 					pos++;
 				}
@@ -185,27 +250,20 @@ namespace tron{
 				{
 					available++;
 				}
-				if(grid[j][i] == 1)//number of ones
-				{
-					one++;
-				}
-				if(grid[j][i] == 2)//number of twos
-				{
-					two++;
-				}
+
 			}
 		}
-		if(one == two)
-		{
-			state[2] = 1;
-		}
-		else
-		{
-			state[2] = 0;
-		}
+
 		state[3] = (available+1-state[1]+1-state[0])/(900.0-58.0);
 		state[4] = ((player_one_head_y * 30) -58 + player_one_head_x+1)/(900.0-58.0);
 		state[5] = ((player_two_head_y * 30 ) -58 + player_two_head_x +1)/(900.0-58.0);
+
+	/*	std::cout<<std::endl<<std::endl<<std::endl;
+		if (finished)
+		for(int i = 0;i<231;i++)
+			if(i >5)
+			std::cout<<i-5<<" "<<state[i]<<std::endl;
+			*/
 		return state;
 	}
 }

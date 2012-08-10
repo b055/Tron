@@ -28,12 +28,14 @@ namespace tron{
 	{
 			//checks for collisions
 
-			for (int i =0;i<30;i++)
+			for (int j=0;j<30;j++)
 			{
-				for (int j=0;j<30;j++)
+				for (int i =0;i<30;i++)
 				{
-					if (grid[j][i] >2)
+					if (grid[j][i] != 1 && grid[j][i] != 3 && grid[j][i]!= 0)
+					{
 						return true;
+					}
 				}
 			}
 

@@ -17,6 +17,15 @@ namespace tron{
 	Player::~Player() {
 		delete &grid;
 	}
+	void Player::reset()
+	{
+		digit = 0;
+		oppo_x = 0;
+		oppo_y = 0;
+		x = 0;
+		y = 0;
+	}
+
 	void Player::possibleMoves(Grid** result)
 	{
 		//check if at poles and get possible moves
@@ -42,6 +51,7 @@ namespace tron{
 			int x = rand()%30;
 			int y = rand()%30;
 			(*result[0]) = grid;
+			(*result[0]).getAfterState();
 			(*result[0])[y][x] = digit;
 			(*result[0]).setPlayerOneHeadX(x);
 			(*result[0]).setPlayerOneHeadY(y);
@@ -91,6 +101,13 @@ namespace tron{
 			std::cout<<"middlemoves\n";
 			middleMoves(result);
 		}
+		for(int i = 0;i<30;i++)
+		{
+			if(result[i]->isValid())
+				return;
+		}
+		std::cout<<"go to fetch random move\n";
+		(result[0]) = &randomMove();
 
 	}
 	//print players grid
@@ -140,8 +157,6 @@ namespace tron{
 				(*result[i] ) = grid;
 
 				(*result[i] )[28][i] = digit;
-				int * two = new int[2];
-				int * one = new int[2];
 				if(digit == 1)
 				{
 					(*result[i] ).setPlayerOneHead(i,28);
@@ -181,10 +196,10 @@ namespace tron{
 				}
 			}
 			if(check){//add move to bottom pole
-				result[count++]= &downMove(28);
+				result[count++]= &upMove(28);
 			}
 			//add up
-			result[count++] = &upMove(y);
+			result[count++] = &downMove(y);
 		}
 		else if(this->y ==1)//almost top
 		{
@@ -198,10 +213,10 @@ namespace tron{
 				}
 			}
 			if(check){//add move to top pole
-				result[count++]= &upMove(1);
+				result[count++]= &downMove(1);
 			}
 			//add down
-			result[count++] = &downMove(y);
+			result[count++] = &upMove(y);
 		}
 		else
 		{
@@ -222,6 +237,7 @@ namespace tron{
 		}
 		else if(x==0)//left edge
 		{
+			std::cout<<"left edge\n";
 			if(grid[this->y][29]==0){//can wrap around the left
 				result[count++] = &leftMove(30);
 			}
@@ -368,5 +384,100 @@ namespace tron{
 	void Player::setGrid(Grid& newGrid)
 	{
 		grid = newGrid;
+	}
+
+	/*
+	 * make a random move, argument is the current game grid
+	 */
+	Grid& Player::randomMove()
+	{
+		std::cout<<"Making a random move\n";
+
+		Grid *final = new Grid();
+		*final= grid;
+		srand(time(NULL));
+		int move_x= x;
+		int move_y = y;
+		if(this->y == 29)	//south pole move
+		{
+			move_x = rand() %30;
+			move_y = 28;
+		}
+		else if(this->y == 0)// north pole move
+		{
+			move_x= rand() %30;
+			move_y = 1;
+		}
+		else if(this->x == 0)
+		{
+			int move = int(rand() % 4);
+			if(move == 0)
+			{
+				move_y = y+1;
+			}
+			else if(move == 1)
+			{
+				move_y = y-1;
+			}
+			else if(move == 2)
+			{
+				move_x = x+1;
+			}
+			else if(move == 3)
+			{
+				move_x = 29;
+			}
+		}
+		else if(this->x==29)
+		{
+			int move = int(rand() % 4);
+			if(move == 0)
+			{
+				move_y = y+1;
+			}
+			else if(move == 1)
+			{
+				move_y = y-1;
+			}
+			else if(move == 2)
+			{
+				move_x = 0;
+			}
+			else if(move == 3)
+			{
+				move_x = x-1;
+			}
+		}
+		else//middle move
+		{
+			int move = int(rand() % 4);
+			if(move == 0)
+			{
+				move_y = y+1;
+			}
+			else if(move == 1)
+			{
+				move_y = y-1;
+			}
+			else if(move == 2)
+			{
+				move_x = x+1;
+			}
+			else if(move == 3)
+			{
+				move_x = x-1;
+			}
+		}
+		(*final)[move_y][move_x] = (*final)[move_y][move_x] + digit;
+		if(digit == 1)
+		{
+			(final)->setPlayerOneHead(move_x,move_y);
+		}
+		else
+		{
+			(final)->setPlayerTwoHead(move_x,move_y);
+		}
+		(final)->isValid(true);
+		return (*final);
 	}
 }

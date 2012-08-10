@@ -35,6 +35,7 @@ private:
 	int turn;
 	bool valid;
 public:
+	void reset();
 	inline bool isValid(){return valid;}
 	inline void isValid(bool b){valid = b;}
 	inline int getPlayerOneHeadX(){return player_one_head_x;};

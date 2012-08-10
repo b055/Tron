@@ -120,7 +120,7 @@ namespace tron{
 
 
 	//run the feed forward
-	double * Network::feedForward(double * in)
+	double Network::feedForward(double * in)
 	{
 		double stretch = 1;
 		input[0] = 1; // bias
@@ -128,24 +128,23 @@ namespace tron{
 		{
 			input[i] = in[i-1];
 		}
-		std::cout<<"inside feed forward\n";
+		//std::cout<<"inside feed forward\n";
 		inter1 = new double[hidden1_count];
 		inter1[0] = 1; //bias in the hidden layer
 #pragma omp parallel
 		for(int j = 1 ;j<hidden1_count;j++)//skips the bias
 		{
-
 			inter1[j] = 0;
 			for(int i = 0;i<input_count;i++)
 			{
 				inter1[j] += input[i]*firstWeight[j][i];
 			}
-			std::cout<<inter1[j]<<" "<<hyperbolic(inter1[j],stretch)<<std::endl;
+			//std::cout<<inter1[j]<<" "<<hyperbolic(inter1[j],stretch)<<std::endl;
 			inter1[j] = hyperbolic(inter1[j],stretch);
 		}
 
 
-		std::cout<<"finished first intersection "<<std::endl;
+		//std::cout<<"finished first intersection "<<std::endl;
 		inter2 = new double[hidden2_count];
 		inter2[0] = 1; //bias in the hidden layer
 #pragma omp parallel
@@ -160,10 +159,10 @@ namespace tron{
 				else
 					inter2[j] += inter1[i-1]*secondWeight[j][i];
 			}
-			std::cout<<inter2[j]<<" "<<hyperbolic(inter2[j],stretch)<<std::endl;
+			//std::cout<<inter2[j]<<" "<<hyperbolic(inter2[j],stretch)<<std::endl;
 			inter2[j] = hyperbolic(inter2[j],stretch);
 		}
-		std::cout<<"finished second intersection "<<std::endl;
+		//std::cout<<"finished second intersection "<<std::endl;
 		out = new double[output_count];
 
 #pragma omp parallel for
@@ -174,11 +173,11 @@ namespace tron{
 			{
 				out[j] += inter2[i] * thirdWeight[j][i];
 			}
-			std::cout<<out[j]<<" "<<hyperbolic(out[j],stretch)<<std::endl;
+		//	std::cout<<out[j]<<" "<<hyperbolic(out[j],stretch)<<std::endl;
 			out[j] = hyperbolic(out[j],stretch);
 		}
 
-		return out;
+		return out[0];
 	}
 
 	/*
@@ -190,16 +189,27 @@ namespace tron{
 		double *delta4 = new double[output_count];
 		delta4[0]= reward + out[0]-oldvalue;
 		//calculate current eligibility traces while back propagating
-		double * delta3 = new double[hidden2_count];
+		double ** delta3 = new double*[output_count];
 
-		double * delta2 = new double[hidden1_count];
+		double ** delta2 = new double*[hidden2_count];
 
 		double stretch = 0.2;
 #pragma omp parallel for
-		for(int i = 0 ;i<hidden2_count;i++)delta3[i] = 0;
+		for(int j = 0;j<output_count;j++)
+		{
+			delta3[j]= new double[hidden2_count];
+			for(int i = 0 ;i<hidden2_count;i++){
+				delta3[j][i] = 0;
+			}
+		}
 
 #pragma omp parallel for
-		for(int i = 0;i<hidden1_count;i++)delta2[i] = 0;
+		for(int i = 0;i<hidden2_count;i++)
+		{
+			delta2[i] = new double[hidden1_count];
+			for(int j=0;j<hidden1_count;j++)
+				delta2[i][j] = 0;
+		}
 
 
 		for(int k = 0;k<output_count;k++ )
@@ -207,21 +217,25 @@ namespace tron{
 			for(int j = 0;j<hidden2_count;j++)
 			{
 				thirdE[k][j] = lambda * thirdE[k][j] + out[k]*(1-out[k])*inter2[j];
-				delta3[j] += thirdWeight[k][j] * delta4[k] * hyperbolicGradient(inter2[j],stretch) ;
-				std::cout<<delta3[i]<<" delta3 "<<i<<std::endl;
+				delta3[k][j] += thirdWeight[k][j] * delta4[k] * hyperbolicGradient(inter2[j],stretch) ;
+				thirdWeight[k][j] += alpha * delta3[k][j]*thirdE[k][j];
+				//std::cout<<delta3[k][j]<<" delta3 "<<j<<std::endl;
 				for(int i = 0; i<hidden1_count;i++)
 				{
 					secondE[j][i] = lambda*secondE[j][i] + out[k]*(1-out[k]) * secondWeight[j][i] *inter2[j]*(1-inter2[j]) * inter1[i];
-					delta2[i]  += secondWeight[j][i] * delta3[j]* hyperbolicGradient(inter1[i],stretch);
-					std::cout<<delta2[i]<<" delta2 "<<i<<std::endl;
+					delta2[j][i]  += secondWeight[j][i] * delta3[k][j]* hyperbolicGradient(inter1[i],stretch);
+					secondWeight[j][i] += alpha * delta2[j][i]*secondE[j][i];
+				//	std::cout<<delta2[j][i]<<" delta2 "<<j<<" "<<i<<std::endl;
 					for(int h = 0;h<input_count;h++)
 					{
-						firstE[j][i] = lambda* firstE[j][i] +  out[k]*(1-out[k])*firstWeight[j][i]*inter1[j]*(1-inter1[j]) * input[i];
-
+						firstE[i][h] = lambda* firstE[i][h] +  out[k]*(1-out[k])*firstWeight[i][h]*inter1[i]*(1-inter1[i]) * input[i];
+						firstWeight[i][h] += alpha * firstE[i][h];
 					}
 				}
 			}
 		}
+
+		/*
 		for(int j = 0;j<output_count;j++)
 		{
 			for(int i = 0;i<hidden2_count;i++)
@@ -248,7 +262,7 @@ namespace tron{
 			{
 				firstE[j][i] = lambda* firstE[j][i] +  out[0]*(1-out[0])*firstWeight[j][i]*inter1[j]*(1-inter1[j]) * input[i];
 			}
-		}
+		}*/
 
 		//update the weights with the update rule
 
@@ -256,5 +270,37 @@ namespace tron{
 		//set old value
 		oldvalue = out[0];
 		std::cout<<delta4[0]<<" delta4"<<std::endl;
+	}
+	std::string Network::getWeights()
+	{
+		std::stringstream ss;
+		std::cout<<"getting third"<<std::endl;
+		for(int j = 0;j<output_count;j++)
+		{
+			for(int i = 0;i<hidden2_count-1;i++)
+			{
+				ss<<thirdWeight[j][i]<<" ";
+			}
+			ss<<std::endl;
+		}
+		std::cout<<"getting second\n";
+		for(int j = 0;j<hidden2_count;j++)
+		{
+			for(int i = 0 ; i<hidden1_count;i++)
+			{
+				ss<<secondWeight[j][i]<<" ";
+			}
+			ss<<std::endl;
+		}
+		std::cout<<"getting first\n";
+		for(int j = 0;j<hidden1_count;j++)
+		{
+			for(int i = 0; i<input_count;i++)
+			{
+				ss<<firstWeight[j][i]<<" ";
+			}
+			ss<<std::endl;
+		}
+		return ss.str();
 	}
 }
