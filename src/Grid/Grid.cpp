@@ -119,7 +119,7 @@ namespace tron{
 	}
 	std::string Grid::printGrid()
 	{
-		std::cout<<"trying to print\n";
+	//	std::cout<<"trying to print\n";
 		std::stringstream str;
 		str<<"player one: x "<<player_one_head_x<<" y "<<this->player_one_head_y<<std::endl;
 		str<< "player two: x "<<player_two_head_x<<" y "<<player_two_head_y<<std::endl;
@@ -146,7 +146,7 @@ namespace tron{
 	*/
 	double * Grid::getAfterState()
 	{
-		std::cout<<"searching for after state\n";
+	//	std::cout<<"searching for after state\n";
 		double * state = new double[231];
 		int available = 0;
 		int one=0;
