@@ -9,11 +9,13 @@
 
 namespace tron{
 	Game::Game() {
-		grid = *(new Grid());
+		grid = *new Grid();
 	}
 
 	Game::~Game() {
-
+		delete &one;
+		delete &two;
+		delete &grid;
 	}
 	void Game::setGrid(Grid &newGrid)
 	{
@@ -23,6 +25,10 @@ namespace tron{
 	std::string Game::printGrid()
 	{
 		return grid.printGrid();
+	}
+	void Game::reset()
+	{
+		grid.reset();
 	}
 	bool Game::endState()
 	{

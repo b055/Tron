@@ -11,17 +11,18 @@ namespace tron{
 	//takes player one's head, player_two's head player and the grid
 	Grid::Grid()
 	{
-
-		grid = new int*[30];
+		state = new double[231];
 		for(int i =0;i<30;i++)
 		{
-			grid[i] = new int[30];
+			std::vector<int> temp;
 			for(int j = 0;j<30;j++)
 			{
-				grid[i][j] =0;
+				temp.push_back(0);
 			}
+			grid.push_back(temp);
 		}
 		turn = 0;
+		valid = false;
 	}
 
 	void Grid::reset()
@@ -30,10 +31,9 @@ namespace tron{
 		player_two_head_x = 0;
 		player_one_head_y = 0;
 		player_two_head_y  = 0;
-		grid = new int*[30];
+#pragma omp parallel for
 		for(int i =0;i<30;i++)
 		{
-			grid[i] = new int[30];
 			for(int j = 0;j<30;j++)
 			{
 				grid[i][j] =0;
@@ -51,19 +51,20 @@ namespace tron{
 		player_two_head_y = player_two[1];
 
 	//	std::cout<<player_one_head_x<<"large constructor"<<std::endl;
-		this->grid = new int*[30];
+
 		int one =0;int two = 0;
 		for(int i =0;i<30;i++)
 		{
-			this->grid[i] = new int[30];
+			std::vector<int> temp;
 			for(int j = 0;j<30;j++)
 			{
-				this->grid[i][j] =grid[i][j];
+				temp.push_back(grid[i][j]);
 				if(grid[i][j]==1)
 					one++;
 				else
 					two++;
 			}
+			this->grid.push_back(temp);
 		}
 		if(one == two )
 			turn = 0;
@@ -76,16 +77,13 @@ namespace tron{
 
 
 
-	Grid& Grid::operator=(Grid& newGrid)
+	Grid& Grid::operator=(Grid const & newGrid)
 	{
 		player_one_head_x = newGrid.getPlayerOneHeadX();
 		player_one_head_y = newGrid.getPlayerOneHeadY();
 		player_two_head_x = newGrid.getPlayerTwoHeadX();
 		player_two_head_y = newGrid.getPlayerTwoHeadY();
-		this->valid = newGrid.valid;
-		for(int i = 0;i<30;i++)
-			for(int j = 0;j<30;j++)
-				this->grid[i][j] = newGrid[i][j];
+		copy(newGrid.grid.begin(),newGrid.grid.end(),grid.begin());
 		return *this;
 	}
 	Grid& Grid::operator()(Grid& newGrid)
@@ -95,7 +93,9 @@ namespace tron{
 	}
 	Grid::~Grid() {
 		for(int i = 0;i<30;i++)
-			delete []grid[i];
+			grid[i].~vector();
+		grid.~vector();
+		delete [] state;
 	}
 
 	void Grid::setPlayerOneHead(int x, int y )
@@ -108,14 +108,9 @@ namespace tron{
 		player_two_head_x = x;
 		player_two_head_y = y;
 	}
-	int* Grid::operator[](int x)
+	std::vector<int>& Grid::operator[](int x)
 	{
-		if(x<0 ||x>29)
-			return 	NULL;
-		else
-		{
-			return this->grid[x];
-		}
+		return this->grid[x];
 	}
 	std::string Grid::printGrid()
 	{
@@ -144,34 +139,47 @@ namespace tron{
 	 * 6..230 	laplace smoothened probabilities using (current_player_cout +1)/(total_count+12)
 	 * 			for each 2x2 square
 	*/
-	double * Grid::getAfterState()
+	double * Grid::getAfterState(int digit)
 	{
-	//	std::cout<<"searching for after state\n";
-		double * state = new double[231];
 		int available = 0;
-		int one=0;
-		int two=0;
+		int mine=0;
+		int other=0;
 		int pos = 6;
+		int oppo;
+		if(digit == 1)
+			oppo = 3;
+		else
+			oppo = 1;
 #pragma omp parallel for
 		for(int i = 0;i<30;i++)
 		{
 			for(int j = 0;j<30;j++)
 			{
-				if(grid[j][i] == 1)//number of ones
+				if(grid[j][i] == digit)//number of ones
 				{
 #pragma omp critical
-					one++;
+					mine++;
 				}
-				if(grid[j][i] == 3)//number of twos
+				if(grid[j][i] == oppo)//number of twos
 				{
 #pragma omp critical
-					two++;
+					other++;
 				}
 			}
 		}
-	//	bool finished  = false;
+		//bool finished  = false;
 
-		if(one == two)
+		
+		if(grid[player_one_head_y][player_one_head_x] != digit &&
+				grid[player_two_head_y][player_two_head_x] != digit &&
+				grid[player_one_head_y][player_one_head_x] != 0 &&
+				grid[player_two_head_y][player_two_head_x] != 0 )
+		{
+			finished = true;
+			mine++;
+		}
+
+		if(mine == other)
 		{
 			turn = 1;
 			state[2] = 1;
@@ -181,40 +189,29 @@ namespace tron{
 			turn = 0;
 			state[2] = 0;
 		}
-		if(grid[player_one_head_y][player_one_head_x] != 1 && grid[player_one_head_y][player_one_head_x]!=0)
-		{
-			//finished = true;
-			one++;
-			turn = 0;
-		}
-		if(grid[player_two_head_y][player_two_head_x] != 3 && grid[player_two_head_y][player_two_head_x] !=0)
-		{
-		//	finished = true;
-			two++;
-			turn = 1;
-		}
 		for(int j = 0; j<30;j++)
 		{
 			for(int i = 0 ;i<30;i++)
 			{
 				if(i%2 ==0 && j%2 == 0)//get the states for every four boxes
 				{
-					int inner_one = 0;
-					int inner_two = 0;
+					int inner_mine = 0;
+					int inner_other = 0;
 					int not_zero = 0;
 					for(int v = j;v<j+2;v++)
 					{
+		//std::cout<<"searching for after state\n";
 						for(int w = i;w<i+2;w++)
 						{
-							if(grid[v][w] == 1)
+							if(grid[v][w] == mine)
 							{
-								inner_one++;
+								inner_mine++;
 								not_zero++;
 								continue;
 							}
-							if(grid[v][w]==3)
+							if(grid[v][w]==oppo)
 							{
-								inner_two++;
+								inner_other++;
 								not_zero++;
 								continue;
 							}
@@ -226,14 +223,7 @@ namespace tron{
 						}
 					}
 
-					if(turn == 0)
-					{
-						state[pos] = (inner_one +1.0)/(not_zero+12.0);//laplace smoothing
-					}
-					else
-					{
-						state[pos] =  (inner_two +1.0)/(not_zero+12.0);//laplace smoothin
-					}
+					state[pos] = (inner_mine +1.0)/(not_zero+12.0);//laplace smoothing
 					pos++;
 				}
 				if(j==0&& state[0] == 0)//north pole
@@ -258,12 +248,12 @@ namespace tron{
 		state[4] = ((player_one_head_y * 30) -58 + player_one_head_x+1)/(900.0-58.0);
 		state[5] = ((player_two_head_y * 30 ) -58 + player_two_head_x +1)/(900.0-58.0);
 
-	/*	std::cout<<std::endl<<std::endl<<std::endl;
-		if (finished)
+		/*if (finished){
 		for(int i = 0;i<231;i++)
 			if(i >5)
 			std::cout<<i-5<<" "<<state[i]<<std::endl;
-			*/
+		std::cout<<digit<<std::endl;
+		}*/
 		return state;
 	}
 }

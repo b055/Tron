@@ -57,6 +57,11 @@ private:
 	Grid& rightMove(int);
 	Grid& leftMove(int);
 	Grid& downMove(int );
+	Grid * finalRight;
+	Grid * finalLeft;
+	Grid* finalUp;
+	Grid * finalDown;
+	Grid * finalRandom;
 };
 }
 

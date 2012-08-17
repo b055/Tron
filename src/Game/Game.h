@@ -26,8 +26,8 @@ public:
 	void setGrid(Grid&);
 	std::string printGrid();
 	bool endState();
-	double * getAfterState(){std::cout<<"getting the after state"<<std::endl;return grid.getAfterState();};
 	inline int getTurn(){return turn;}
+	void reset();
 private:
 	Player one;
 	Player two;
