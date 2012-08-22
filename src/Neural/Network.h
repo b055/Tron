@@ -24,8 +24,8 @@ public:
 	double* sigmoid(double* nodes);
 	double* sigmoidGradient(double *nodes);
 	virtual ~Network();
-	double feedForward(double * );
-	double feedForwardSave(double *);
+	double* feedForward(double * );
+	double* feedForwardSave(double *);
 	double sigmoid(double);
 	double sigmoidGradient(double);
 	double hyperbolic(double,double);
@@ -52,6 +52,7 @@ private:
 	double alpha;
 	double beta;
 	double gam;
+	int width;
 	int output_count;
 	void randomWeights();
 	double oldvalue;

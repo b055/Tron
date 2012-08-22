@@ -9,6 +9,7 @@
 
 namespace tron{
 	Game::Game() {
+		width = 10;
 		grid = *new Grid();
 	}
 
@@ -34,9 +35,9 @@ namespace tron{
 	{
 			//checks for collisions
 
-			for (int j=0;j<30;j++)
+			for (int j=0;j<width;j++)
 			{
-				for (int i =0;i<30;i++)
+				for (int i =0;i<width;i++)
 				{
 					if (grid[j][i] != 1 && grid[j][i] != 3 && grid[j][i]!= 0)
 					{
@@ -48,13 +49,13 @@ namespace tron{
 			int check_top=0;
 			int check_bot = 0;
 
-			for (int i = 0;i<30;i++)
+			for (int i = 0;i<width;i++)
 			{
 				if((grid[0][i]) != 0)
 				{
 					check_top++;
 				}
-				if(grid[29][i]!=0)
+				if(grid[width-1][i]!=0)
 				{
 					check_bot++;
 				}

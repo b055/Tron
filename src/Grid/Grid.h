@@ -40,7 +40,10 @@ private:
 	int player_two_head_y;
 	int turn;
 	bool valid;
+	int width;
 	double * state;
+	int statewidth;
+	int cells;
 public:
 	void reset();
 	inline bool isValid()const{return valid;}

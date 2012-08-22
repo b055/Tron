@@ -33,6 +33,7 @@ private:
 	Player two;
 	int turn;
 	Grid grid;
+	int width;
 };
 };
 

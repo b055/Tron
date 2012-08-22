@@ -8,9 +8,11 @@
 #include "Player.h"
 namespace tron{
 	Player::Player(){
+		width  = 10;
 		grid = *new Grid();
 	}
 	Player::Player(int digit):digit(digit){
+		width = 10;
 		grid = *new Grid();
 
 		finalRight =new Grid();
@@ -38,11 +40,11 @@ namespace tron{
 		//check if at poles and get possible moves
 		//check if at edges and get possible moves
 		int count = 0;
-		for(int i = 0;i<30;i++)
+		for(int i = 0;i<width;i++)
 		{
 			if(count>1)
 				break;
-			for(int j = 0 ;j<30;j++)
+			for(int j = 0 ;j<width;j++)
 			{
 				if(count>1)
 					break;
@@ -55,14 +57,15 @@ namespace tron{
 		{
 			//std::cout<<"playing first movve\n";
 			srand(time(NULL));
-			int x = rand()%30;
-			int y = rand()%30;
+			int x = rand()%width;
+			int y = rand()%width;
 			(*result[0]) = grid;
 			(*result[0]).getAfterState(digit);
 			(*result[0])[y][x] = digit;
 			(*result[0]).setPlayerOneHeadX(x);
 			(*result[0]).setPlayerOneHeadY(y);
 			(*result[0]).isValid(true);
+			//std::cout<<"playefd first move";
 			return;
 		}
 		else if(count ==1)
@@ -72,9 +75,9 @@ namespace tron{
 			(*result[0]) = grid;
 			//std::cout<<"made copy\n";
 
-			if(oppo_y>0&& oppo_y<29)
+			if(oppo_y>0&& oppo_y<width-1)
 			{
-				int new_x = (oppo_x+15)%30;
+				int new_x = (oppo_x+(width/2))%width;
 				int new_y = oppo_y;
 				(*result[0]).setPlayerOneHead(oppo_x,oppo_y);
 				(*result[0]).setPlayerTwoHead(new_x,new_y);
@@ -84,7 +87,7 @@ namespace tron{
 			}else
 			{
 				int new_x = oppo_x;
-				int new_y = 29-oppo_y;
+				int new_y = width-1-oppo_y;
 				(*result[0]).setPlayerOneHead(oppo_x,oppo_y);
 				(*result[0]).setPlayerTwoHead(new_x,new_y);
 				(*result[0]).isValid(true);
@@ -98,7 +101,7 @@ namespace tron{
 			//std::cout<<"topMoves\n";
 			topMoves(result);
 		}
-		else if (this->y==29)//bottom
+		else if (this->y==width-1)//bottom
 		{
 			//std::cout<<"bottommoves\n";
 			bottomMoves(result);
@@ -108,7 +111,7 @@ namespace tron{
 			//std::cout<<"middlemoves\n";
 			middleMoves(result);
 		}
-		for(int i = 0;i<30;i++)
+		for(int i = 0;i<width;i++)
 		{
 			if(result[i]->isValid())
 				return;
@@ -127,7 +130,7 @@ namespace tron{
 	void Player::topMoves(Grid** result)
 	{
 #pragma omp parallel for
-		for(int i = 0;i<30;i++)
+		for(int i = 0;i<width;i++)
 		{
 			if(grid[1][i]==0)
 			{
@@ -157,22 +160,22 @@ namespace tron{
 
 	{
 #pragma omp parallel for
-		for(int i = 0; i<30;i++)
+		for(int i = 0; i<width;i++)
 		{
-			if(grid[28][i]==0)
+			if(grid[width-2][i]==0)
 			{
 				(*result[i] ) = grid;
 
-				(*result[i] )[28][i] = digit;
+				(*result[i] )[width-2][i] = digit;
 				if(digit == 1)
 				{
-					(*result[i] ).setPlayerOneHead(i,28);
+					(*result[i] ).setPlayerOneHead(i,width-2);
 					(*result[i] ).setPlayerTwoHead(oppo_x,oppo_y);
 				}
 				else
 				{
 					(*result[i] ).setPlayerOneHead(oppo_x,oppo_y);
-					(*result[i] ).setPlayerTwoHead(i,28);
+					(*result[i] ).setPlayerTwoHead(i,width-2);
 
 				}
 				(*result[i] ).isValid(true);
@@ -190,20 +193,20 @@ namespace tron{
 		//std::cout<<"starting middle moves\n";
 
 		int count =0;
-		if(this->y ==28)//almost bottom
+		if(this->y ==width-2)//almost bottom
 		{
 			bool check = true;
 
-			for(int i =0;i<30;i++)
+			for(int i =0;i<width;i++)
 			{
-				if(grid[29][i]!=0)
+				if(grid[width-1][i]!=0)
 				{
 					check = false;
 					break;
 				}
 			}
 			if(check){//add move to bottom pole
-				result[count++]= &upMove(28);
+				result[count++]= &upMove(width-2);
 			}
 			//add up
 			result[count++] = &downMove(y);
@@ -211,7 +214,7 @@ namespace tron{
 		else if(this->y ==1)//almost top
 		{
 			bool check = true;
-			for(int i =0;i<30;i++)
+			for(int i =0;i<width;i++)
 			{
 				if(grid[0][i]!=0)
 				{
@@ -231,7 +234,7 @@ namespace tron{
 			result[count++] = &upMove(y);
 			result[count++] = &downMove(y);
 		}
-		if(this->x==29)//right edge
+		if(this->x==width-1)//right edge
 		{
 			//std::cout<<"right edge\n";
 			if(grid[this->y][0]==0)//can wrap around the right
@@ -245,8 +248,8 @@ namespace tron{
 		else if(x==0)//left edge
 		{
 			//std::cout<<"left edge\n";
-			if(grid[this->y][29]==0){//can wrap around the left
-				result[count++] = &leftMove(30);
+			if(grid[this->y][width-1]==0){//can wrap around the left
+				result[count++] = &leftMove(width);
 			}
 			//add right
 			result[count++] = &rightMove(x);
@@ -399,14 +402,14 @@ namespace tron{
 		srand(time(NULL));
 		int move_x= x;
 		int move_y = y;
-		if(this->y == 29)	//south pole move
+		if(this->y == width-1)	//south pole move
 		{
-			move_x = rand() %30;
-			move_y = 28;
+			move_x = rand() %width;
+			move_y = width-2;
 		}
 		else if(this->y == 0)// north pole move
 		{
-			move_x= rand() %30;
+			move_x= rand() %width;
 			move_y = 1;
 		}
 		else if(this->x == 0)
@@ -426,10 +429,10 @@ namespace tron{
 			}
 			else if(move == 3)
 			{
-				move_x = 29;
+				move_x = width-1;
 			}
 		}
-		else if(this->x==29)
+		else if(this->x==width-1)
 		{
 			int move = int(rand() % 4);
 			if(move == 0)

@@ -10,6 +10,7 @@ namespace tron{
 	Network::Network(int input, int hidden1,int hidden2,int output, double alpha,double beta,double gam,double lambda)
 	:input_count(input+1), hidden1_count(hidden1+1),beta(beta),gam(gam),hidden2_count(hidden2+1),output_count(output),alpha(alpha),lambda(lambda)
 	{
+		width = 10;
 		oldvalue = 0;
 		this->input = new double[input_count];
 		//initialize random weights and elegibility traces
@@ -183,6 +184,7 @@ namespace tron{
 		delete [] inter1;
 		delete [] inter2;
 		delete [] input;
+		delete [] out;
 	}
 
 	//initialize random weights and eligibility traces
@@ -261,7 +263,7 @@ namespace tron{
 	}
 
 	//run the feed forward
-		double Network::feedForward(double * in)
+		double * Network::feedForward(double * in)
 		{
 			input[0] = 1; // bias
 			for(int i = 1;i<input_count;i++)
@@ -315,11 +317,11 @@ namespace tron{
 				//std::cout<<out[j]<<" "<<sigmoid(out[j])<<std::endl;
 				out[j] = sigmoid(out[j]);
 			}
-			return out[0];
+			return out;
 		}
 
 	//run the feed forward
-	double Network::feedForwardSave(double * in)
+	double*  Network::feedForwardSave(double * in)
 	{		
 		input[0] = 1; // bias
 		for(int i = 1;i<input_count;i++)
@@ -371,7 +373,7 @@ namespace tron{
 			//std::cout<<out[j]<<" "<<sigmoid(out[j])<<std::endl;
 			out[j] = sigmoid(out[j]);
 		}
-		return out[0];
+		return out;
 	}
 
 	/*

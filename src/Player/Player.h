@@ -35,7 +35,8 @@ public:
 	inline void setDigit(int d){digit = d;}
 	inline int getDigit(){return digit;}
 	void setGrid(Grid&);
-
+	inline Grid& getGrid(){return grid;}
+	inline int getWidth(){return width;}
 	std::string printGrid();
 	void setHead(Grid&);
 	inline void setNet(Network * new_net){net = new_net;}
@@ -43,25 +44,27 @@ public:
 	void reset();
 
 private:
-	int digit;
-	int oppo_x;
-	int oppo_y;
-	Grid grid;
 	Network * net;
-	int x;
-	int y;
 	void topMoves(Grid**);
 	void bottomMoves(Grid**);
 	void middleMoves(Grid**);
-	Grid& upMove(int);
-	Grid& rightMove(int);
-	Grid& leftMove(int);
-	Grid& downMove(int );
+protected:
 	Grid * finalRight;
 	Grid * finalLeft;
 	Grid* finalUp;
 	Grid * finalDown;
 	Grid * finalRandom;
+	int x;
+	int y;
+	int digit;
+	int oppo_x;
+	int oppo_y;
+	int width;
+	Grid grid;
+	Grid& upMove(int);
+	Grid& rightMove(int);
+	Grid& leftMove(int);
+	Grid& downMove(int );
 };
 }
 

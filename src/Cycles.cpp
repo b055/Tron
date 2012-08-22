@@ -15,9 +15,9 @@
 using namespace tron;
 
 int main() {
-
-	Network* fnet = new Network(231,150,150,1,0.32,0.46,0.6,0.2);
-	Network* snet = new Network(231,150,150,1,0.4,0.5,0.44,0.3);
+	int width = 10;
+	Network* fnet = new Network(231,60,60,1,0.32,0.46,0.6,0.2);
+	Network* snet = new Network(231,60,60,1,0.4,0.5,0.44,0.3);
 
 	//Network * fnet = new Network("/home/cdrnel001/Cycles/src/Result/one/2012-8-15-8349.9500.txt");
 	//Network * snet = new Network("/home/cdrnel001/one/2012-8-16-182548.2800.txt");
@@ -29,9 +29,9 @@ int main() {
 
 	//std::cout<<"finished setting grids\n";
 
-	Grid** afterstates = new Grid*[30];
+	Grid** afterstates = new Grid*[width];
 #pragma omp parallel for
-	for(int i =0;i<30;i++)
+	for(int i =0;i<width;i++)
 		afterstates[i] = new Grid();
 
 	long total = 0;
@@ -43,7 +43,7 @@ int main() {
 	first->setNet(fnet);
 	second->setNet(snet);
 	Evaluate * ev = new Evaluate(first,second);
-	ev->setGap(500);
+	ev->setGap(10);
 
 	Game *g = new Game();
 
@@ -77,7 +77,7 @@ std::cout<<turn<<"this is the turn"<<std::endl;
 				int pos = 0;
 				int count = 0;
 #pragma omp parallel for
-				for(int a =0;a<30;a++){
+				for(int a =0;a<width;a++){
 					if(afterstates[a] != 0 && afterstates[a]->isValid()){
 #pragma omp atomic
 						count++;
@@ -99,7 +99,7 @@ std::cout<<turn<<"this is the turn"<<std::endl;
 				int new_count = 0;
 				if(chance <0.10)
 				{
-					for(int a = 0;a<30;a++)
+					for(int a = 0;a<width;a++)
 					{
 						if(afterstates[a] != 0 &&afterstates[a]->isValid()){
 							if(new_count == ran)
@@ -134,7 +134,7 @@ std::cout<<turn<<"this is the turn"<<std::endl;
 				int pos = 0;
 				int count = 0;
 #pragma omp parallel for
-				for(int a =0;a<30;a++){
+				for(int a =0;a<width;a++){
 					if(afterstates[a] != 0 &&afterstates[a]->isValid()){
 #pragma omp atomic
 						count++;
@@ -154,7 +154,7 @@ std::cout<<turn<<"this is the turn"<<std::endl;
 				int new_count = 0;
 				if(chance <0.10)
 				{
-					for(int a = 0;a<30;a++)
+					for(int a = 0;a<width;a++)
 					{
 						if(afterstates[a] != 0 &&afterstates[a]->isValid()){
 							if(new_count == ran)
@@ -226,7 +226,7 @@ std::cout<<turn<<"this is the turn"<<std::endl;
 				}
 			}
 #pragma omp parallel for
-				for(int i =0;i<30;i++)
+				for(int i =0;i<width;i++)
 					if(afterstates[i] != 0)
 						afterstates[i]->isValid(false);
 
