@@ -10,7 +10,6 @@ namespace tron{
 	Network::Network(int input, int hidden1,int hidden2,int output, double alpha,double beta,double gam,double lambda)
 	:input_count(input+1), hidden1_count(hidden1+1),beta(beta),gam(gam),hidden2_count(hidden2+1),output_count(output),alpha(alpha),lambda(lambda)
 	{
-		width = 10;
 		oldvalue = 0;
 		this->input = new double[input_count];
 		//initialize random weights and elegibility traces
@@ -192,7 +191,7 @@ namespace tron{
 	{
 		srand(time(NULL));
 	#pragma omp parallel for
-		for(int i = 0 ;i<hidden1_count;i++)
+ 		for(int i = 0 ;i<hidden1_count;i++)
 			for(int j = 0;j<input_count;j++){
 				firstWeight[i][j] = rand() / (1000*double(RAND_MAX)); // number between 0 and 1
 				firstE[i][j] = 0;

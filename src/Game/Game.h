@@ -15,13 +15,8 @@
 namespace tron{
 class Game {
 public:
-	Game();
+	Game(int);
 	virtual ~Game();
-
-	inline Player getPlayerTwo(){return two;};
-	inline Player getPlayerOne(){return one;};
-	inline void setPlayerOne(Player other){one = other;};
-	inline void setPlayerTwo(Player other){two = other;};
 	Grid& getGrid(){return grid;};
 	void setGrid(Grid&);
 	std::string printGrid();
@@ -29,8 +24,6 @@ public:
 	inline int getTurn(){return turn;}
 	void reset();
 private:
-	Player one;
-	Player two;
 	int turn;
 	Grid grid;
 	int width;

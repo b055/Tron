@@ -14,10 +14,11 @@
 #include <stdio.h>
 #include <vector>
 #include <algorithm>
+#include "Voronoi.h"
 namespace tron{
 class Grid {
 public:
-	Grid();
+	Grid(int );
 	Grid(int * ,int*, int**);
 	Grid(bool){};
 	virtual ~Grid();
@@ -25,7 +26,7 @@ public:
 	void setPlayerOneHead(int,int);
 	void setPlayerTwoHead(int,int);
 	std::string printGrid();
-	Grid& operator=(Grid const	&);
+	Grid& operator=(Grid &);
 	inline void operator()(int y,int x, int val){grid[y][x] = val;}
 	inline int operator()(int y,int x){return grid[y][x];}
 	double * getAfterState(int);

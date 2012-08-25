@@ -9,9 +9,8 @@
 #include "Grid.h"
 namespace tron{
 	//takes player one's head, player_two's head player and the grid
-	Grid::Grid()
+	Grid::Grid(int width):width(width)
 	{
-		width = 10;
 		cells = width * width;
 		statewidth = 6+(width/2*width/2);
 		state = new double[statewidth];
@@ -80,13 +79,19 @@ namespace tron{
 
 
 
-	Grid& Grid::operator=(Grid const & newGrid)
+	Grid& Grid::operator=(Grid & newGrid)
 	{
 		player_one_head_x = newGrid.getPlayerOneHeadX();
 		player_one_head_y = newGrid.getPlayerOneHeadY();
 		player_two_head_x = newGrid.getPlayerTwoHeadX();
 		player_two_head_y = newGrid.getPlayerTwoHeadY();
-		copy(newGrid.grid.begin(),newGrid.grid.end(),grid.begin());
+		width = newGrid.width;
+	//	copy(newGrid.grid.begin(),newGrid.grid.end(),grid.begin());
+		for(int i = 0;i<width;i++)
+		{
+			for(int j = 0;j<width;j++)
+				grid[i][j] = newGrid[i][j];
+		}
 		return *this;
 	}
 	Grid& Grid::operator()(Grid& newGrid)
@@ -136,8 +141,8 @@ namespace tron{
 	 * 1 - binary value,  1 if the south pole is occupied
 	 * 2 - turn 0 for player one, 1 for player two
 	 * 3 - fraction of available spots
-	 * 4 - fractional positition of the player one head
-	 * 5 - fractional position of player two head
+	 * 4 - one voronoi fraction
+	 * 5 - two voronoi fractiom
 	 *
 	 * 6..2width 	laplace smoothened probabilities using (current_player_cout +1)/(total_count+12)
 	 * 			for each 2x2 square
@@ -149,6 +154,13 @@ namespace tron{
 		int other=0;
 		int pos = 6;
 		int oppo;
+		tron::Voronoi * a = new tron::Voronoi(grid,width);
+		a->setOne(player_one_head_x,player_one_head_y);
+		a->setTwo(player_two_head_x,player_two_head_y);
+		int * result = a->calculate(digit);
+		state[4] = result[0]/(cells * 1.0);
+		state[5] = result[1]/(cells * 1.0);
+
 		if(digit == 1)
 			oppo = 3;
 		else
@@ -247,8 +259,7 @@ namespace tron{
 		}
 
 		state[3] = (available+1-state[1]+1-state[0])/(cells-58.0);
-		state[4] = ((player_one_head_y * width) -58 + player_one_head_x+1)/(cells-58.0);
-		state[5] = ((player_two_head_y * width ) -58 + player_two_head_x +1)/(cells-58.0);
+
 
 		/*if (finished){
 		for(int i = 0;i<statewidth;i++)
@@ -258,143 +269,5 @@ namespace tron{
 		}*/
 		return state;
 	}
-
-
-	 /*Array that gives the state of the board
-	         * 0 - binary value, 1 if the north pole is occupied
-	         * 1 - binary value,  1 if the south pole is occupied
-	         * 2 - turn 0 for player one, 1 for player two
-	         * 3 - fraction of available spots
-	         * 4 - fractional positition of the player one head
-	         * 5 - fractional position of player two head
-	         *
-	         * 6..230       laplace smoothened probabilities using (current_player_cout +1)/(total_count+12)
-	         *                      for each 2x2 square
-	        */
-/*
-    double * Grid::getAfterState()
-    {
-            int available = 0;
-            int one=0;
-            int two=0;
-            int pos = 6;
-#pragma omp parallel for
-            for(int i = 0;i<width;i++)
-            {
-                    for(int j = 0;j<width;j++)
-                    {
-                            if(grid[j][i] == 1)//number of ones
-                            {
-#pragma omp critical
-                                    one++;
-                            }
-                            if(grid[j][i] == 3)//number of twos
-                            {
-#pragma omp critical
-                                    two++;
-                            }
-                    }
-            }
-    //      bool finished  = false;
-
-            if(one == two)
-            {
-                    turn = 1;
-                    state[2] = 1;
-            }
-            else
-            {
-                    turn = 0;
-                    state[2] = 0;
-            }
-            if(grid[player_one_head_y][player_one_head_x] != 1 && grid[player_one_head_y][player_one_head_x]!=0)
-            {
-                    //finished = true;
-                    one++;
-                    turn = 0;
-            }
-            if(grid[player_two_head_y][player_two_head_x] != 3 && grid[player_two_head_y][player_two_head_x] !=0)
-            {
-            //      finished = true;
-                    two++;
-                    turn = 1;
-            }
-
-            for(int j = 0; j<width;j++)
-            {
-                    for(int i = 0 ;i<width;i++)
-                    {
-                            if(i%2 ==0 && j%2 == 0)//get the states for every four boxes
-                            {
-                                    int inner_one = 0;
-                                    int inner_two = 0;
-                                    int not_zero = 0;
-                                    for(int v = j;v<j+2;v++)
-                                    {
-
-
-	  //std::cout<<"searching for after state\n";
-	                                                for(int w = i;w<i+2;w++)
-	                                                {
-	                                                        if(grid[v][w] == 1)
-	                                                        {
-	                                                                inner_one++;
-	                                                                not_zero++;
-	                                                                continue;
-	                                                        }
-	                                                        if(grid[v][w]==3)
-	                                                        {
-	                                                                inner_two++;
-	                                                                not_zero++;
-	                                                                continue;
-	                                                        }
-	                                                        if(grid[v][w]!=0)
-	                                                        {
-	                                                                not_zero++;
-	                                                                continue;
-	                                                        }
-	                                                }
-	                                        }
-
-	                                        if(turn == 0)
-	                                        {
-	                                                state[pos] = (inner_one +1.0)/(not_zero+12.0);//laplace smoothing
-	                                        }
-	                                        else
-	                                        {
-	                                                state[pos] =  (inner_two +1.0)/(not_zero+12.0);//laplace smoothin
-	                                        }
-	                                        pos++;
-	                                }
-	                                if(j==0&& state[0] == 0)//north pole
-	                                {
-	                                        if(grid[j][i]!=0 )
-	                                                state[0] = 1;
-	                                }
-	                                else if(j==width-1&& state[1] == 0)//south pole
-	                                {
-	                                        if(grid[j][i]!=0)
-	                                                state[1] = 1;
-	                                }
-	                                if(j != 0 && j!= width-1 && grid[j][i]==0)//available spaces
-	                                {
-	                                        available++;
-	                                }
-
-	                        }
-	                }
-
-	                state[3] = (available+1-state[1]+1-state[0])/(cells-58.0);
-	                state[4] = ((player_one_head_y * width) -58 + player_one_head_x+1)/(cells-58.0);
-	                state[5] = ((player_two_head_y * width ) -58 + player_two_head_x +1)/(cells-58.0);
-
-	             // std::cout<<std::endl<<std::endl<<std::endl;
-	             //   if (finished)
-	            //    for(int i = 0;i<statewidth;i++)
-	             //           if(i >5)
-	          //              std::cout<<i-5<<" "<<state[i]<<std::endl;
-
-	                return state;
-	        }*/
 
 }

@@ -8,14 +8,14 @@ RM := rm -rf
 
 # All of the sources participating in the build are defined here
 -include sources.mk
--include subdir.mk
 -include src/t/subdir.mk
--include src/subdir.mk
 -include src/Player/subdir.mk
 -include src/Neural/subdir.mk
 -include src/Grid/subdir.mk
 -include src/Game/subdir.mk
 -include src/Evaluate/subdir.mk
+-include src/subdir.mk
+-include subdir.mk
 -include objects.mk
 
 ifneq ($(MAKECMDGOALS),clean)
@@ -50,7 +50,7 @@ all: Cycles
 Cycles: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C++ Linker'
-	g++  -o"Cycles" $(OBJS) $(USER_OBJS) $(LIBS)
+	g++  -o "Cycles" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 

@@ -7,19 +7,13 @@
 
 #include "Player.h"
 namespace tron{
-	Player::Player(){
-		width  = 10;
-		grid = *new Grid();
-	}
-	Player::Player(int digit):digit(digit){
-		width = 10;
-		grid = *new Grid();
-
-		finalRight =new Grid();
-		finalLeft=new Grid();
-		finalUp=new Grid();
-		finalDown=new Grid();
-		finalRandom=new Grid();
+	Player::Player(int digit,int width):digit(digit),width(width),grid(*new Grid(width)){
+		finalRight =new Grid(width);
+		finalLeft=new Grid(width);
+		finalUp=new Grid(width);
+		finalDown=new Grid(width);
+		finalRandom=new Grid(width);
+		debug = false;
 	}
 	Player::~Player() {
 		delete &grid;
@@ -39,6 +33,8 @@ namespace tron{
 	{
 		//check if at poles and get possible moves
 		//check if at edges and get possible moves
+		if(debug)
+			std::cout<<"possible moves for "<<digit<<std::endl;
 		int count = 0;
 		for(int i = 0;i<width;i++)
 		{
@@ -56,11 +52,10 @@ namespace tron{
 		if(count == 0)///first move
 		{
 			//std::cout<<"playing first movve\n";
-			srand(time(NULL));
+			std::srand(time(NULL));
 			int x = rand()%width;
 			int y = rand()%width;
 			(*result[0]) = grid;
-			(*result[0]).getAfterState(digit);
 			(*result[0])[y][x] = digit;
 			(*result[0]).setPlayerOneHeadX(x);
 			(*result[0]).setPlayerOneHeadY(y);
@@ -116,6 +111,7 @@ namespace tron{
 			if(result[i]->isValid())
 				return;
 		}
+
 		//std::cout<<"go to fetch random move\n";
 		(result[0]) = &randomMove();
 
@@ -159,11 +155,15 @@ namespace tron{
 	void Player::bottomMoves(Grid** result)
 
 	{
-#pragma omp parallel for
+		if(debug)
+			std::cout<<"getting bottom move"<<std::endl;
+//#pragma omp parallel for
 		for(int i = 0; i<width;i++)
 		{
 			if(grid[width-2][i]==0)
 			{
+				if(debug)
+					std::cout<<"true "<<i<<std::endl;
 				(*result[i] ) = grid;
 
 				(*result[i] )[width-2][i] = digit;
@@ -182,6 +182,8 @@ namespace tron{
 			}
 			else
 			{
+				if(debug)
+					std::cout<<"false "<<i<<std::endl;
 				result[i]->isValid(false);
 			}
 		}
@@ -190,7 +192,8 @@ namespace tron{
 	//possible moves for a player somewhere in the middle of the sphere
 	void Player::middleMoves(Grid** result)
 	{
-		//std::cout<<"starting middle moves\n";
+		if(debug)
+			std::cout<<"starting middle moves\n";
 
 		int count =0;
 		if(this->y ==width-2)//almost bottom
@@ -206,7 +209,8 @@ namespace tron{
 				}
 			}
 			if(check){//add move to bottom pole
-				result[count++]= &upMove(width-2);
+				result[count++]= &upMove(y);
+
 			}
 			//add up
 			result[count++] = &downMove(y);
@@ -262,7 +266,8 @@ namespace tron{
 	}
 	//returns afeterstate for up move if possible, otherwise returns null
 	Grid& Player::upMove(int y){
-		//std::cout<<"up move\n";
+		if(debug)
+			std::cout<<"up move\n";
 		if(this->grid[y+1][x]==0)
 		{
 			*finalUp = (grid);
@@ -289,7 +294,8 @@ namespace tron{
 	//returns afterstate for down move if possible, otherwise returns null
 	Grid& Player::downMove(int y)
 	{
-		//std::cout<<"down move\n";
+		if(debug)
+			std::cout<<"down move\n";
 		if(this->grid[y-1][x]==0)
 		{
 			*finalDown = (grid);
@@ -316,7 +322,8 @@ namespace tron{
 	//return afterstate for left move if possible, otherwise returns null
 	Grid& Player::leftMove(int x)
 	{
-		//std::cout<<"left move\n";
+		if(debug)
+			std::cout<<"left move\n";
 		if(this->grid[y][x-1]==0)
 		{
 			*finalLeft = (grid);
@@ -344,7 +351,8 @@ namespace tron{
 	//return after state for right move is possible, otherwise return null
 	Grid& Player::rightMove(int x)
 	{
-		//std::cout<<"right move\n";
+		if(debug)
+			std::cout<<"right move\n";
 
 		if(this->grid[y][x+1]==0)
 		{
@@ -399,7 +407,7 @@ namespace tron{
 		//std::cout<<"Making a random move\n";
 
 		*finalRandom= grid;
-		srand(time(NULL));
+		std::srand(std::time(NULL));
 		int move_x= x;
 		int move_y = y;
 		if(this->y == width-1)	//south pole move

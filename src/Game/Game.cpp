@@ -8,14 +8,10 @@
 #include "Game.h"
 
 namespace tron{
-	Game::Game() {
-		width = 10;
-		grid = *new Grid();
+	Game::Game(int w):width(w),grid(*new Grid(w)){
 	}
 
 	Game::~Game() {
-		delete &one;
-		delete &two;
 		delete &grid;
 	}
 	void Game::setGrid(Grid &newGrid)

@@ -15,11 +15,11 @@
 #include "omp.h"
 #include "../Grid/Grid.h"
 #include "../Neural/Network.h"
+#include "time.h"
 namespace tron{
 class Player {
 public:
-	Player();
-	Player(int digit);
+	Player(int,int);
 	virtual ~Player();
 	void possibleMoves(Grid**);
 	void setOpponent(int x , int y){oppo_x = x; oppo_y = y;}
@@ -65,6 +65,7 @@ protected:
 	Grid& rightMove(int);
 	Grid& leftMove(int);
 	Grid& downMove(int );
+	bool debug;
 };
 }
 

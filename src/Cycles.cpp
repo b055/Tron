@@ -22,36 +22,32 @@ int main() {
 	//Network * fnet = new Network("/home/cdrnel001/Cycles/src/Result/one/2012-8-15-8349.9500.txt");
 	//Network * snet = new Network("/home/cdrnel001/one/2012-8-16-182548.2800.txt");
 	//std::cout<<"before setting grids\n";
-
+	bool debug = false;
 
 	Player* first;
 	Player* second ;
 
 	//std::cout<<"finished setting grids\n";
 
-	Grid** afterstates = new Grid*[width];
-#pragma omp parallel for
-	for(int i =0;i<width;i++)
-		afterstates[i] = new Grid();
 
 	long total = 0;
 	srand(time(NULL));
 
 
-	first = new Player(1);
-	second = new Player(3);
+	first = new Player(1,width);
+	second = new Player(3,width);
 	first->setNet(fnet);
 	second->setNet(snet);
 	Evaluate * ev = new Evaluate(first,second);
 	ev->setGap(10);
 
-	Game *g = new Game();
-
+	Game *g = new Game(width);
 	while(true)
 	{
+
 		double val = 0;
 		int turn = int(rand()%2);
-std::cout<<turn<<"this is the turn"<<std::endl;
+		std::cout<<turn<<"this is the turn"<<std::endl;
 		if(turn == 0)
 		{
 			first->setDigit(1);
@@ -67,9 +63,17 @@ std::cout<<turn<<"this is the turn"<<std::endl;
 		second->getNet()->setOld(0);
 		while(g->endState() == false)
 		{
+			Grid** afterstates = new Grid*[width];
+			#pragma omp parallel for
+				for(int i =0;i<width;i++)
+				{
+					afterstates[i] = new Grid(width);
+				}
+
 			if(turn == 0)
 			{
-				//std::cout<<"player one "<<first->getX()<<std::endl;
+				if(debug)
+					std::cout<<"player one "<<first->getX()<<" "<<first->getY()<<std::endl;
 
 				first->possibleMoves(afterstates);
 				//std::cout<<"got possible moves\n";
@@ -81,12 +85,25 @@ std::cout<<turn<<"this is the turn"<<std::endl;
 					if(afterstates[a] != 0 && afterstates[a]->isValid()){
 #pragma omp atomic
 						count++;
-						double out = first->getNet()->feedForward(afterstates[a]->getAfterState(first->getDigit()));
-#pragma omp critical
-						if(out>=value)
+						if(debug && first->getY() == width-2)
+							std::cout<<afterstates[a]->printGrid()<<std::endl;
+						double* out = first->getNet()->feedForward(afterstates[a]->getAfterState(first->getDigit()));
+						if(first->getDigit() == 1)
 						{
-							value = out;
-							pos = a;
+#pragma omp critical
+							if(out[0]>=value)
+							{
+								value = out[0];
+								pos = a;
+							}
+						}
+						else
+						{
+							if(out[1]>=value)
+							{
+								value = out[1];
+								pos = a;
+							}
 						}
 
 					}
@@ -111,8 +128,13 @@ std::cout<<turn<<"this is the turn"<<std::endl;
 						}
 					}
 				}
-
-				val = first->getNet()->feedForwardSave(afterstates[pos]->getAfterState(first->getDigit()));//to set the hidden nodes to the best values
+				if(first->getDigit() == 1)
+				{
+					val = first->getNet()->feedForwardSave(afterstates[pos]->getAfterState(first->getDigit()))[0];//to set the hidden nodes to the best values
+				}
+				else{
+					val = first->getNet()->feedForwardSave(afterstates[pos]->getAfterState(first->getDigit()))[1];//to set the hidden nodes to the best values
+				}
 
 				g->setGrid(*(afterstates[pos]));
 				first->setHead(g->getGrid());
@@ -126,8 +148,9 @@ std::cout<<turn<<"this is the turn"<<std::endl;
 			}
 			else
 			{
-				//std::cout<<"player two "<<second->getX()<<std::endl;
 
+				if(debug)
+					std::cout<<"player two "<<second->getX()<<" "<<second->getY()<<std::endl;
 				second->possibleMoves(afterstates);
 
 				double value = -99999;
@@ -138,12 +161,23 @@ std::cout<<turn<<"this is the turn"<<std::endl;
 					if(afterstates[a] != 0 &&afterstates[a]->isValid()){
 #pragma omp atomic
 						count++;
-						double out = second->getNet()->feedForward(afterstates[a]->getAfterState(second->getDigit()));
-#pragma omp critical
-						if(out>=value)
+						double* out = second->getNet()->feedForward(afterstates[a]->getAfterState(second->getDigit()));
+						if(first->getDigit() == 1)
 						{
-							value = out;
-							pos = a;
+#pragma omp critical
+							if(out[0]>=value)
+							{
+								value = out[0];
+								pos = a;
+							}
+						}
+						else
+						{
+							if(out[1]>=value)
+							{
+								value = out[1];
+								pos = a;
+							}
 						}
 					}
 				}
@@ -167,15 +201,15 @@ std::cout<<turn<<"this is the turn"<<std::endl;
 					}
 				}
 
-
-				val = second->getNet()->feedForwardSave(afterstates[pos]->getAfterState(second->getDigit()));//to set the hidden nodes to the best values
+				if(second->getDigit() == 1)
+					val = second->getNet()->feedForwardSave(afterstates[pos]->getAfterState(second->getDigit()))[0];//to set the hidden nodes to the best values
+				else
+					val = second->getNet()->feedForwardSave(afterstates[pos]->getAfterState(second->getDigit()))[1];//to set the hidden nodes to the best values
 
 
 				g->setGrid(*(afterstates[pos]));
 				second->setHead(g->getGrid());
 				first->setGrid((g->getGrid()));
-				//std::cout<<second->printGrid();
-			//	std::cout<<"first grid above\n";
 				second->setGrid((g->getGrid()));
 				//std::cout<<second->printGrid();
 
@@ -190,22 +224,24 @@ std::cout<<turn<<"this is the turn"<<std::endl;
 
 			//std::cout<<"\n";
 			//std::cout<<count<<std::endl;
-
-			//std::cout<<g->printGrid();
+			if(debug)
+				std::cout<<g->printGrid();
 			if(g->endState() == true)//game over
 			{
 				if(turn == 1)
 				{
-					std::cout <<"Player one  lost" << std::endl;
+					if(debug)
+						std::cout <<"Player one  lost" << std::endl;
 					snet->update(1);
 					fnet->update(-1);
-					std::cout<<second->getDigit()<<std::endl;
+					if(debug)
+						std::cout<<second->getDigit()<<std::endl;
 					ev->progress(1);
 				}
 				else
 				{
-
-					std::cout<<"Player two lost"<<std::endl;
+					if(debug)
+						std::cout<<"Player two lost"<<std::endl;
 					fnet->update(1);
 					snet->update(-1);
 					std::cout<<first->getDigit()<<std::endl;
@@ -225,11 +261,8 @@ std::cout<<turn<<"this is the turn"<<std::endl;
 					second->getNet()->setOld(val);
 				}
 			}
-#pragma omp parallel for
-				for(int i =0;i<width;i++)
-					if(afterstates[i] != 0)
-						afterstates[i]->isValid(false);
-
+			if(debug)
+				std::cout<<g->printGrid();
 		}
 		first->reset();
 		second->reset();
@@ -238,8 +271,6 @@ std::cout<<turn<<"this is the turn"<<std::endl;
 	}
 	//g->getAfterState();
 
-	//std::cout<<g->printGrid();
-	std::cout<<"prit original\n";
 
 
 	return 0;
