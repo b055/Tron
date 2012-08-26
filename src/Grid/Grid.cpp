@@ -25,6 +25,7 @@ namespace tron{
 		}
 		turn = 0;
 		valid = false;
+		 result = new int[2];
 	}
 
 	void Grid::reset()
@@ -150,17 +151,17 @@ namespace tron{
 		int other=0;
 		int pos = 6;
 		int oppo;
-		tron::Voronoi * a = new tron::Voronoi(grid,width);
-		a->setOne(player_one_head_x,player_one_head_y);
-		a->setTwo(player_two_head_x,player_two_head_y);
-		int * result = a->calculate(digit);
-		state[4] = result[0]/(cells * 1.0);
-		state[5] = result[1]/(cells * 1.0);
 
-		if(digit == 1)
+
+		if(digit == 1){
 			oppo = 3;
+			state[2] = 0;
+		}
 		else
+		{
+			state[2] = 1;
 			oppo = 1;
+		}
 #pragma omp parallel for
 		for(int i = 0;i<width;i++)
 		{
@@ -189,16 +190,7 @@ namespace tron{
 			mine++;
 		}
 
-		if(mine == other)
-		{
-			turn = 1;
-			state[2] = 1;
-		}
-		else
-		{
-			turn = 0;
-			state[2] = 0;
-		}
+
 		for(int j = 0; j<width;j++)
 		{
 			for(int i = 0 ;i<width;i++)
@@ -257,6 +249,16 @@ namespace tron{
 		state[3] = (available+1-state[1]+1-state[0])/(cells-58.0);
 
 
+		static Voronoi * a =  new tron::Voronoi(grid,width);
+		//a->setMatrix(grid);
+		a->setOne(player_one_head_x,player_one_head_y);
+		a->setTwo(player_two_head_x,player_two_head_y);
+
+		result = a->calculate(digit);
+		state[4] = result[0]/(cells * 1.0);
+		state[5] = result[1]/(cells * 1.0);
+		//if(a!= 0)
+		//delete a;
 		/*if (finished){
 		for(int i = 0;i<statewidth;i++)
 			if(i >5)

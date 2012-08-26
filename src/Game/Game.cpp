@@ -37,7 +37,6 @@ namespace tron{
 				{
 					if ((*grid)[j][i] != 1 && (*grid)[j][i] != 3 && (*grid)[j][i]!= 0)
 					{
-						std::cout<<(*grid)[j][i]<<"end game";
 						return true;
 					}
 				}
@@ -57,7 +56,6 @@ namespace tron{
 					check_bot++;
 				}
 				if(check_top>1|| check_bot>1){
-					std::cout<<"end game poles\n";
 					return true;
 				}
 

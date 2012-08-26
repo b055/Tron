@@ -16,8 +16,8 @@ using namespace tron;
 
 int main() {
 	int width = 10;
-	Network* fnet = new Network(231,60,60,1,0.32,0.46,0.6,0.2);
-	Network* snet = new Network(231,60,60,1,0.4,0.5,0.44,0.3);
+	Network* fnet = new Network(6+(width/2*width/2),60,60,2,0.32,0.46,0.6,0.2);
+	Network* snet = new Network(6+(width/2*width/2),60,60,2,0.4,0.5,0.44,0.3);
 
 	//Network * fnet = new Network("/home/cdrnel001/Cycles/src/Result/one/2012-8-15-8349.9500.txt");
 	//Network * snet = new Network("/home/cdrnel001/one/2012-8-16-182548.2800.txt");
@@ -39,14 +39,18 @@ int main() {
 	first->setNet(fnet);
 	second->setNet(snet);
 	Evaluate * ev = new Evaluate(first,second);
-	ev->setGap(10);
+	ev->setGap(2000);
 
 	Game *g = new Game(width);
 	first->setGrid((g->getGrid()));
 	second->setGrid((g->getGrid()));
+
+	Grid** afterstates = new Grid*[width];
+#pragma omp parallel for
+	for(int i = 0;i<width;i++)
+		afterstates[i] = new tron::Grid(width);
 	while(true)
 	{
-
 		double val = 0;
 		int turn = int(rand()%2);
 		std::cout<<turn<<"this is the turn"<<std::endl;
@@ -65,13 +69,6 @@ int main() {
 		second->getNet()->setOld(0);
 		while(g->endState() == false)
 		{
-			Grid** afterstates = new Grid*[width];
-			#pragma omp parallel for
-				for(int i =0;i<width;i++)
-				{
-					afterstates[i] = new Grid(width);
-				}
-
 			if(turn == 0)
 			{
 				if(debug)
@@ -90,6 +87,7 @@ int main() {
 						if(debug && first->getY() == width-2)
 							std::cout<<afterstates[a]->printGrid()<<std::endl;
 						double* out = first->getNet()->feedForward(afterstates[a]->getAfterState(first->getDigit()));
+
 						if(first->getDigit() == 1)
 						{
 #pragma omp critical
@@ -101,6 +99,7 @@ int main() {
 						}
 						else
 						{
+#pragma omp critical
 							if(out[1]>=value)
 							{
 								value = out[1];
@@ -143,8 +142,6 @@ int main() {
 				second->setOppoX(first->getX());
 				second->setOppoY(first->getY());
 				turn = 1;
-				//std::cout<<first->printGrid();
-				//std::cout<<second->printGrid();
 			}
 			else
 			{
@@ -162,6 +159,7 @@ int main() {
 #pragma omp atomic
 						count++;
 						double* out = second->getNet()->feedForward(afterstates[a]->getAfterState(second->getDigit()));
+
 						if(first->getDigit() == 1)
 						{
 #pragma omp critical
@@ -173,6 +171,7 @@ int main() {
 						}
 						else
 						{
+#pragma omp critical
 							if(out[1]>=value)
 							{
 								value = out[1];
@@ -261,6 +260,11 @@ int main() {
 			}
 			if(debug)
 				std::cout<<g->printGrid();
+#pragma omp parallel for
+				for(int i =0;i<width;i++)
+				{
+					afterstates[i]->reset();
+				}
 		}
 		first->reset();
 		second->reset();

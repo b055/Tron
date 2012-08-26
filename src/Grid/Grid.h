@@ -45,6 +45,8 @@ private:
 	double * state;
 	int statewidth;
 	int cells;
+	int * result;
+	Voronoi * a;
 public:
 	void reset();
 	inline bool isValid()const{return valid;}
