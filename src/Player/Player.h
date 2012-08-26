@@ -23,7 +23,7 @@ public:
 	virtual ~Player();
 	void possibleMoves(Grid**);
 	void setOpponent(int x , int y){oppo_x = x; oppo_y = y;}
-	Grid& randomMove();
+	void randomMove(Grid*);
 	inline void setX(int x){this->x = x;}
 	inline int getX(){return x;}
 	inline int getY(){return y;}
@@ -34,8 +34,8 @@ public:
 	inline int getOppoY(){return oppo_y;}
 	inline void setDigit(int d){digit = d;}
 	inline int getDigit(){return digit;}
-	void setGrid(Grid&);
-	inline Grid& getGrid(){return grid;}
+	inline void setGrid(Grid* ptr){grid = ptr;}
+	inline Grid& getGrid(){return *grid;}
 	inline int getWidth(){return width;}
 	std::string printGrid();
 	void setHead(Grid&);
@@ -49,22 +49,17 @@ private:
 	void bottomMoves(Grid**);
 	void middleMoves(Grid**);
 protected:
-	Grid * finalRight;
-	Grid * finalLeft;
-	Grid* finalUp;
-	Grid * finalDown;
-	Grid * finalRandom;
 	int x;
 	int y;
 	int digit;
 	int oppo_x;
 	int oppo_y;
 	int width;
-	Grid grid;
-	Grid& upMove(int);
-	Grid& rightMove(int);
-	Grid& leftMove(int);
-	Grid& downMove(int );
+	Grid * grid;
+	void upMove(int, Grid * result);
+	void rightMove(int, Grid * result);
+	void leftMove(int, Grid * result);
+	void downMove(int , Grid * result);
 	bool debug;
 };
 }

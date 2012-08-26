@@ -42,6 +42,8 @@ int main() {
 	ev->setGap(10);
 
 	Game *g = new Game(width);
+	first->setGrid((g->getGrid()));
+	second->setGrid((g->getGrid()));
 	while(true)
 	{
 
@@ -137,9 +139,7 @@ int main() {
 				}
 
 				g->setGrid(*(afterstates[pos]));
-				first->setHead(g->getGrid());
-				first->setGrid((g->getGrid()));
-				second->setGrid((g->getGrid()));
+				first->setHead(*(g->getGrid()));
 				second->setOppoX(first->getX());
 				second->setOppoY(first->getY());
 				turn = 1;
@@ -208,9 +208,7 @@ int main() {
 
 
 				g->setGrid(*(afterstates[pos]));
-				second->setHead(g->getGrid());
-				first->setGrid((g->getGrid()));
-				second->setGrid((g->getGrid()));
+				second->setHead(*g->getGrid());
 				//std::cout<<second->printGrid();
 
 				//if(count>0)

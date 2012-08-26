@@ -41,6 +41,7 @@ namespace tron{
 				grid[i][j] =0;
 			}
 		}
+		valid = false;
 		turn = 0;
 	}
 	Grid::Grid(int * player_one,int * player_two, int** grid) {
@@ -86,12 +87,7 @@ namespace tron{
 		player_two_head_x = newGrid.getPlayerTwoHeadX();
 		player_two_head_y = newGrid.getPlayerTwoHeadY();
 		width = newGrid.width;
-	//	copy(newGrid.grid.begin(),newGrid.grid.end(),grid.begin());
-		for(int i = 0;i<width;i++)
-		{
-			for(int j = 0;j<width;j++)
-				grid[i][j] = newGrid[i][j];
-		}
+		copy(newGrid.grid.begin(),newGrid.grid.end(),grid.begin());
 		return *this;
 	}
 	Grid& Grid::operator()(Grid& newGrid)

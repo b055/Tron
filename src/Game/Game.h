@@ -17,7 +17,7 @@ class Game {
 public:
 	Game(int);
 	virtual ~Game();
-	Grid& getGrid(){return grid;};
+	Grid* getGrid(){return grid;};
 	void setGrid(Grid&);
 	std::string printGrid();
 	bool endState();
@@ -25,7 +25,7 @@ public:
 	void reset();
 private:
 	int turn;
-	Grid grid;
+	Grid * grid;
 	int width;
 };
 };
