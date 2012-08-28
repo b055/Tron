@@ -14,7 +14,7 @@
 #include <stdio.h>
 #include <vector>
 #include <algorithm>
-#include "Voronoi.h"
+//#include "Voronoi.h"
 namespace tron{
 class Grid {
 public:
@@ -46,7 +46,7 @@ private:
 	int statewidth;
 	int cells;
 	int * result;
-	Voronoi * a;
+	//Voronoi * a;
 public:
 	void reset();
 	inline bool isValid()const{return valid;}

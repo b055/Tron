@@ -249,12 +249,12 @@ namespace tron{
 		state[3] = (available+1-state[1]+1-state[0])/(cells-58.0);
 
 
-		Voronoi * a =  new tron::Voronoi(&grid,width);
+		//Voronoi * a =  new tron::Voronoi(&grid,width);
 		//a->setMatrix(grid);
-		a->setOne(player_one_head_x,player_one_head_y);
-		a->setTwo(player_two_head_x,player_two_head_y);
+		//a->setOne(player_one_head_x,player_one_head_y);
+		//a->setTwo(player_two_head_x,player_two_head_y);
 
-		result = a->calculate(digit);
+		//result = a->calculate(digit);
 		state[4] = result[0]/(cells * 1.0);
 		state[5] = result[1]/(cells * 1.0);
 		//std::cout<<player_one_head_x<<","<<player_one_head_y<<"  "<<player_two_head_x<<","<<player_two_head_y<<std::endl;

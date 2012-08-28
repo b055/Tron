@@ -80,15 +80,9 @@ namespace tron{
 			}
 			this->x = new_x;
 			this->y  =new_y;
-			if(digit == 1)
-			{
-				(*result[0]).setPlayerOneHead(x,y);
-				(*result[0]).setPlayerTwoHead(new_x,new_y);
-			}
-			else{
-				(*result[0]).setPlayerOneHead(oppo_x,oppo_y);
-				(*result[0]).setPlayerTwoHead(new_x,new_y);
-			}
+
+			(*result[0]).setPlayerOneHead(oppo_x,oppo_y);
+			(*result[0]).setPlayerTwoHead(new_x,new_y);
 			return;
 		}
 		else if(this->y==0)//top
@@ -387,11 +381,15 @@ namespace tron{
 		{
 			x= newgrid.getPlayerOneHeadX();
 			y = newgrid.getPlayerOneHeadY();
+			oppo_x  = newgrid.getPlayerTwoHeadX();
+			oppo_y = newgrid.getPlayerTwoHeadY();
 		}
 		else
 		{
 			x= newgrid.getPlayerTwoHeadX();
 			y = newgrid.getPlayerTwoHeadY();
+			oppo_x= newgrid.getPlayerOneHeadX();
+			oppo_y = newgrid.getPlayerOneHeadY();
 		}
 
 	}
