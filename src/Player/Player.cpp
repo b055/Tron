@@ -63,26 +63,32 @@ namespace tron{
 			//std::cout<<"playing second move\n";
 			(*result[0]) = *grid;
 			//std::cout<<"made copy\n";
-
+			int new_x,new_y;
 			if(oppo_y>0&& oppo_y<width-1)
 			{
-				int new_x = (oppo_x+(width/2))%width;
-				int new_y = oppo_y;
-				(*result[0]).setPlayerOneHead(oppo_x,oppo_y);
-				(*result[0]).setPlayerTwoHead(new_x,new_y);
+				new_x = (oppo_x+(width/2))%width;
+				new_y = oppo_y;
 				(*result[0]).isValid(true);
 				(*result[0])[new_y][new_x] = digit;
 
 			}else
 			{
-				int new_x = oppo_x;
-				int new_y = width-1-oppo_y;
-				(*result[0]).setPlayerOneHead(oppo_x,oppo_y);
-				(*result[0]).setPlayerTwoHead(new_x,new_y);
+				new_x = oppo_x;
+				new_y = width-1-oppo_y;
 				(*result[0]).isValid(true);
 				(*result[0])[new_y][new_x] = digit;
 			}
-			//std::cout<<"finished second\n";
+			this->x = new_x;
+			this->y  =new_y;
+			if(digit == 1)
+			{
+				(*result[0]).setPlayerOneHead(x,y);
+				(*result[0]).setPlayerTwoHead(new_x,new_y);
+			}
+			else{
+				(*result[0]).setPlayerOneHead(oppo_x,oppo_y);
+				(*result[0]).setPlayerTwoHead(new_x,new_y);
+			}
 			return;
 		}
 		else if(this->y==0)//top
@@ -483,4 +489,5 @@ namespace tron{
 		}
 		(result)->isValid(true);
 	}
+
 }

@@ -14,15 +14,18 @@ O_SRCS += \
 
 CPP_SRCS += \
 ../src/Cycles.cpp \
-../src/MachineVsHuman.cpp 
+../src/MachineVsHuman.cpp \
+../src/Minimax.cpp 
 
 OBJS += \
 ./src/Cycles.o \
-./src/MachineVsHuman.o 
+./src/MachineVsHuman.o \
+./src/Minimax.o 
 
 CPP_DEPS += \
 ./src/Cycles.d \
-./src/MachineVsHuman.d 
+./src/MachineVsHuman.d \
+./src/Minimax.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

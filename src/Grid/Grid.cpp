@@ -249,7 +249,7 @@ namespace tron{
 		state[3] = (available+1-state[1]+1-state[0])/(cells-58.0);
 
 
-		Voronoi * a =  new tron::Voronoi(grid,width);
+		Voronoi * a =  new tron::Voronoi(&grid,width);
 		//a->setMatrix(grid);
 		a->setOne(player_one_head_x,player_one_head_y);
 		a->setTwo(player_two_head_x,player_two_head_y);
@@ -272,4 +272,8 @@ namespace tron{
 		return state;
 	}
 
+	bool Grid::separated()
+	{
+		return false;
+	}
 }

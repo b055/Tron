@@ -32,7 +32,7 @@ public:
 	double * getAfterState(int);
 	Grid& operator()(Grid&);
 	inline std::vector<std::vector<int> > & getGrid(){return grid;}
-
+	bool separated();
 private:
 	std::vector<std::vector<int> > grid;
 	int player_one_head_x;
@@ -59,6 +59,7 @@ public:
 	inline void setPlayerOneHeadY(int y){player_one_head_y = y;}
 	inline void setPlayerTwoHeadX(int x){player_two_head_x = x;}
 	inline void setPlayerTwoHeadY(int y){player_two_head_y = y;}
+
 };
 }
 #endif /* GRID_H_ */

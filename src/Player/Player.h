@@ -42,12 +42,9 @@ public:
 	inline void setNet(Network * new_net){net = new_net;}
 	Network* getNet(){return net;}
 	void reset();
-
+	void wallHug(Grid**);
 private:
 	Network * net;
-	void topMoves(Grid**);
-	void bottomMoves(Grid**);
-	void middleMoves(Grid**);
 protected:
 	int x;
 	int y;
@@ -60,6 +57,9 @@ protected:
 	void rightMove(int, Grid * result);
 	void leftMove(int, Grid * result);
 	void downMove(int , Grid * result);
+	void topMoves(Grid**);
+	void bottomMoves(Grid**);
+	void middleMoves(Grid**);
 	bool debug;
 };
 }

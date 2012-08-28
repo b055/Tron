@@ -14,12 +14,14 @@ Grid.o: Grid/Grid.cpp Grid/Grid.h Voronoi.o
 	g++ -fopenmp -g  -c  Grid/Grid.cpp
 Evaluate.o: Evaluate/Evaluate.cpp Evaluate/Evaluate.h Player.o
 	g++ -fopenmp -g  -c Evaluate/Evaluate.cpp
+Minimax.o: Player.o Player/Minimax.cpp Player/Minimax.h Voronoi.o
+	g++ -fopenmp -g -c Player/Minimax.cpp
 clean:
 	rm test run human tron *.o
 test: t/Tester.cpp Neural/Network.o
 	g++ -fopenmp -g -o test t/Tester.cpp Network.o 
-human: MachineVsHuman.cpp Player.o Human.o Game.o Grid.o Voronoi.o Evaluate.o Network.o
-	g++ -fopenmp -g -o human MachineVsHuman.cpp Player.o Human.o Network.o Game.o Voronoi.o Grid.o Evaluate.o
+human: MachineVsHuman.cpp Player.o Human.o Game.o Grid.o Voronoi.o Evaluate.o Network.o Minimax.o
+	g++ -fopenmp -g -o human MachineVsHuman.cpp Player.o Human.o Network.o Game.o Voronoi.o Grid.o Evaluate.o Minimax.o
 
 # that's all
 
