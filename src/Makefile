@@ -20,8 +20,8 @@ clean:
 	rm test run human tron *.o
 test: t/Tester.cpp Neural/Network.o
 	g++ -fopenmp -g -o test t/Tester.cpp Network.o 
-human: MachineVsHuman.cpp Player.o Human.o Game.o Grid.o Voronoi.o Evaluate.o Network.o Minimax.o
-	g++ -fopenmp -g -o human MachineVsHuman.cpp Player.o Human.o Network.o Game.o Voronoi.o Grid.o Evaluate.o Minimax.o
+human: MinimaxVsHuman.cpp Player.o Human.o Game.o Grid.o Voronoi.o Evaluate.o Network.o Minimax.o
+	g++ -fopenmp -g -o human MinimaxVsHuman.cpp Player.o Human.o Network.o Game.o Voronoi.o Grid.o Evaluate.o Minimax.o
 
 # that's all
 
