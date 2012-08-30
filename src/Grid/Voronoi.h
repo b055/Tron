@@ -22,7 +22,7 @@ private:
 	std::vector<std::vector< int> > pos;
 	std::vector<std::vector< int> > one;
 	std::vector<std::vector< int> > two;
-	Grid* grid;
+	Grid grid;
 	void surroundCheck(int,int,std::vector<std::vector< int> >&);
 	void surroundLeft(int,int,std::vector<std::vector< int> >&);
 	int neighbourMin(int,int,std::vector<std::vector< int> >&);
@@ -38,7 +38,7 @@ private:
 	void resetMark();
 	int VAR;
 public:
-	void setGrid(Grid*);
+	void setGrid(Grid&);
 	Voronoi(Grid*,int);
 	Voronoi(int);
 	std::string outputVoronoi();

@@ -20,7 +20,6 @@ class Grid {
 public:
 	Grid(int );
 	Grid(int * ,int*, int**);
-	Grid(bool){};
 	virtual ~Grid();
 	std::vector<int>& operator[](int);
 	void setPlayerOneHead(int,int);

@@ -23,7 +23,7 @@ public:
 	virtual ~Player();
 	void possibleMoves(Grid &grid,Grid**);
 	void setOpponent(int x , int y){oppo_x = x; oppo_y = y;}
-	void randomMove(Grid*);
+	void randomMove(Grid &,Grid*);
 	inline void setX(int x){this->x = x;}
 	inline int getX(){return x;}
 	inline int getY(){return y;}

@@ -85,29 +85,59 @@ namespace tron{
 			(*result[0]).setPlayerTwoHead(new_x,new_y);
 			return;
 		}
-		else if(this->y==0)//top
+		if(digit == 1)
 		{
-			//std::cout<<"topMoves\n";
-			topMoves(grid,result);
+			if(grid.getPlayerOneHeadY()==0)//top
+			{
+				//std::cout<<"topMoves\n";
+				topMoves(grid,result);
+			}
+			else if (grid.getPlayerOneHeadY()==width-1)//bottom
+			{
+				//std::cout<<"bottommoves\n";
+				bottomMoves(grid,result);
+			}
+			else//somewhere in the middle
+			{
+				//std::cout<<"middlemoves\n";
+				middleMoves(grid,result);
+			}
+			for(int i = 0;i<width;i++)
+			{
+				if(result[i]->isValid())
+					return;
+			}
+
+			std::cout<<"go to fetch random move\n";
+			randomMove(grid,result[0]);
 		}
-		else if (this->y==width-1)//bottom
+		else
 		{
-			//std::cout<<"bottommoves\n";
-			bottomMoves(grid,result);
-		}
-		else//somewhere in the middle
-		{
-			//std::cout<<"middlemoves\n";
-			middleMoves(grid,result);
-		}
-		for(int i = 0;i<width;i++)
-		{
-			if(result[i]->isValid())
-				return;
+			if(grid.getPlayerTwoHeadY()==0)//top
+			{
+				//std::cout<<"topMoves\n";
+				topMoves(grid,result);
+			}
+			else if (grid.getPlayerTwoHeadY()==width-1)//bottom
+			{
+				//std::cout<<"bottommoves\n";
+				bottomMoves(grid,result);
+			}
+			else//somewhere in the middle
+			{
+				//std::cout<<"middlemoves\n";
+				middleMoves(grid,result);
+			}
+			for(int i = 0;i<width;i++)
+			{
+				if(result[i]->isValid())
+					return;
+			}
+
+			std::cout<<"go to fetch random move\n";
+			randomMove(grid,result[0]);
 		}
 
-		//std::cout<<"go to fetch random move\n";
-		randomMove(result[0]);
 
 	}
 	//print players grid
@@ -119,28 +149,46 @@ namespace tron{
 	//possible moves for a player at the top
 	void Player::topMoves(Grid& grid,Grid** result)
 	{
-#pragma omp parallel for
-		for(int i = 0;i<width;i++)
+		if(digit== 1)
 		{
-			if(grid[1][i]==0)
+	#pragma omp parallel for
+			for(int i = 0;i<width;i++)
 			{
-				(*result[i]) = grid;
-				(*result[i])[1][i]=digit;
-				if(digit == 1)
+				if(grid[1][i]==0)
 				{
+					(*result[i]) = grid;
+					(*result[i])[1][i]=digit;
+
 					(*result[i]).setPlayerOneHead(i,1);
-					(*result[i]).setPlayerTwoHead(oppo_x,oppo_y);
+
+					(*result[i] ).isValid(true);
 				}
 				else
 				{
-					(*result[i]).setPlayerTwoHead(i,1);
-					(*result[i]).setPlayerOneHead(oppo_x,oppo_y);
+					result[i]->isValid(false);
 				}
-				(*result[i] ).isValid(true);
 			}
-			else
+
+		}
+		else
+		{
+
+	#pragma omp parallel for
+			for(int i = 0;i<width;i++)
 			{
-				result[i]->isValid(false);
+				if(grid[1][i]==0)
+				{
+					(*result[i]) = grid;
+					(*result[i])[1][i]=digit;
+
+						(*result[i]).setPlayerTwoHead(i,1);
+
+					(*result[i] ).isValid(true);
+				}
+				else
+				{
+					result[i]->isValid(false);
+				}
 			}
 		}
 	}
@@ -151,38 +199,63 @@ namespace tron{
 	{
 		if(debug)
 			std::cout<<"getting bottom move"<<std::endl;
-//#pragma omp parallel for
-		for(int i = 0; i<width;i++)
+		if(digit == 1)
 		{
-			if(grid[width-2][i]==0)
+	//#pragma omp parallel for
+			for(int i = 0; i<width;i++)
 			{
-				if(debug){
-					std::cout<<"true "<<i<<std::endl;
-					std::cout<<result[i]->printGrid();
-					std::cout<<"other\n";
-				}
-				(*result[i] ) = grid;
-				if(debug)
-					std::cout<<result[i]->printGrid();
-				(*result[i] )[width-2][i] = digit;
-				if(digit == 1)
+				if(grid[width-2][i]==0)
 				{
+					if(debug){
+						std::cout<<"true "<<i<<std::endl;
+						std::cout<<result[i]->printGrid();
+						std::cout<<"other\n";
+					}
+					(*result[i] ) = grid;
+					if(debug)
+						std::cout<<result[i]->printGrid();
+					(*result[i] )[width-2][i] = digit;
+
 					(*result[i] ).setPlayerOneHead(i,width-2);
-					(*result[i] ).setPlayerTwoHead(oppo_x,oppo_y);
+
+					(*result[i] ).isValid(true);
 				}
 				else
 				{
-					(*result[i] ).setPlayerOneHead(oppo_x,oppo_y);
+					if(debug)
+						std::cout<<"false "<<i<<std::endl;
+					result[i]->isValid(false);
+				}
+			}
+		}
+		else
+		{
+	//#pragma omp parallel for
+			for(int i = 0; i<width;i++)
+			{
+				if(grid[width-2][i]==0)
+				{
+					if(debug){
+						std::cout<<"true "<<i<<std::endl;
+						std::cout<<result[i]->printGrid();
+						std::cout<<"other\n";
+					}
+					(*result[i] ) = grid;
+					if(debug)
+						std::cout<<result[i]->printGrid();
+					(*result[i] )[width-2][i] = digit;
+
 					(*result[i] ).setPlayerTwoHead(i,width-2);
 
+
+					(*result[i] ).isValid(true);
 				}
-				(*result[i] ).isValid(true);
-			}
-			else
-			{
-				if(debug)
-					std::cout<<"false "<<i<<std::endl;
-				result[i]->isValid(false);
+				else
+				{
+					if(debug)
+						std::cout<<"false "<<i<<std::endl;
+					result[i]->isValid(false);
+				}
 			}
 		}
 	}
@@ -194,151 +267,265 @@ namespace tron{
 			std::cout<<"starting middle moves\n";
 
 		int count =0;
-		if(this->y ==width-2)//almost bottom
+		if(digit == 1)
 		{
-			bool check = true;
-
-			for(int i =0;i<width;i++)
+			if(grid.getPlayerOneHeadY() ==width-2)//almost bottom
 			{
-				if(grid[width-1][i]!=0)
+				bool check = true;
+
+				for(int i =0;i<width;i++)
 				{
-					check = false;
-					break;
+					if(grid[width-1][i]!=0)
+					{
+						check = false;
+						break;
+					}
 				}
-			}
-			if(check){//add move to bottom pole
-				upMove(grid,y,result[count++]);
+				if(check){//add move to bottom pole
+					upMove(grid,grid.getPlayerOneHeadY(),result[count++]);
 
-			}
-			//add up
+				}
+				//add up
 
-			downMove(grid,y,result[count++]);
-		}
-		else if(this->y ==1)//almost top
-		{
-			bool check = true;
-			for(int i =0;i<width;i++)
+				downMove(grid,grid.getPlayerOneHeadY(),result[count++]);
+			}
+			else if(grid.getPlayerOneHeadY() ==1)//almost top
 			{
-				if(grid[0][i]!=0)
+				bool check = true;
+				for(int i =0;i<width;i++)
 				{
-					check = false;
-					break;
+					if(grid[0][i]!=0)
+					{
+						check = false;
+						break;
+					}
 				}
+				if(check){//add move to top pole
+					downMove(grid,1,result[count++]);
+				}
+				//add down
+				upMove(grid,grid.getPlayerOneHeadY(),result[count++]);
 			}
-			if(check){//add move to top pole
-				downMove(grid,1,result[count++]);
+			else
+			{
+				//normal y's
+				upMove(grid,grid.getPlayerOneHeadY(),result[count++]);
+				downMove(grid,grid.getPlayerOneHeadY(),result[count++]);
 			}
-			//add down
-			upMove(grid,y,result[count++]);
+			if(grid.getPlayerOneHeadX()==width-1)//right edge
+			{
+				//std::cout<<"right edge\n";
+				if(grid[grid.getPlayerOneHeadY()][0]==0)//can wrap around the right
+				{
+					rightMove(grid,-1,result[count++]);
+				}
+				//add left
+
+				leftMove(grid,grid.getPlayerOneHeadX(),result[count++]);
+			}
+			else if(grid.getPlayerOneHeadX()==0)//left edge
+			{
+				//std::cout<<"left edge\n";
+				if(grid[grid.getPlayerOneHeadY()][width-1]==0){//can wrap around the left
+					leftMove(grid,width,result[count++]);
+				}
+				//add right
+				rightMove(grid,grid.getPlayerOneHeadX(),result[count++]);
+			}
+			else
+			{//normal x's
+				leftMove(grid,grid.getPlayerOneHeadX(),result[count++]);
+				rightMove(grid,grid.getPlayerOneHeadX(),result[count++]);
+			}
+
 		}
 		else
 		{
-			//normal y's
-			upMove(grid,y,result[count++]);
-			downMove(grid,y,result[count++]);
-		}
-		if(this->x==width-1)//right edge
-		{
-			//std::cout<<"right edge\n";
-			if(grid[this->y][0]==0)//can wrap around the right
+			if(grid.getPlayerTwoHeadY() ==width-2)//almost bottom
 			{
-				rightMove(grid,-1,result[count++]);
-			}
-			//add left
+				bool check = true;
 
-			leftMove(grid,x,result[count++]);
-		}
-		else if(x==0)//left edge
-		{
-			//std::cout<<"left edge\n";
-			if(grid[this->y][width-1]==0){//can wrap around the left
-				leftMove(grid,width,result[count++]);
+				for(int i =0;i<width;i++)
+				{
+					if(grid[width-1][i]!=0)
+					{
+						check = false;
+						break;
+					}
+				}
+				if(check){//add move to bottom pole
+					upMove(grid,grid.getPlayerTwoHeadY(),result[count++]);
+
+				}
+				//add up
+
+				downMove(grid,grid.getPlayerTwoHeadY(),result[count++]);
 			}
-			//add right
-			rightMove(grid,x,result[count++]);
-		}
-		else
-		{//normal x's
-			leftMove(grid,x,result[count++]);
-			rightMove(grid,x,result[count++]);
+			else if(grid.getPlayerTwoHeadY() ==1)//almost top
+			{
+				bool check = true;
+				for(int i =0;i<width;i++)
+				{
+					if(grid[0][i]!=0)
+					{
+						check = false;
+						break;
+					}
+				}
+				if(check){//add move to top pole
+					downMove(grid,1,result[count++]);
+				}
+				//add down
+				upMove(grid,grid.getPlayerTwoHeadY(),result[count++]);
+			}
+			else
+			{
+				//normal y's
+				upMove(grid,grid.getPlayerTwoHeadY(),result[count++]);
+				downMove(grid,grid.getPlayerTwoHeadY(),result[count++]);
+			}
+			if(grid.getPlayerTwoHeadX()==width-1)//right edge
+			{
+				//std::cout<<"right edge\n";
+				if(grid[grid.getPlayerTwoHeadY()][0]==0)//can wrap around the right
+				{
+					rightMove(grid,-1,result[count++]);
+				}
+				//add left
+
+				leftMove(grid,grid.getPlayerTwoHeadX(),result[count++]);
+			}
+			else if(grid.getPlayerTwoHeadX()==0)//left edge
+			{
+				//std::cout<<"left edge\n";
+				if(grid[grid.getPlayerTwoHeadY()][width-1]==0){//can wrap around the left
+					leftMove(grid,width,result[count++]);
+				}
+				//add right
+				rightMove(grid,grid.getPlayerTwoHeadX(),result[count++]);
+			}
+			else
+			{//normal x's
+				leftMove(grid,grid.getPlayerTwoHeadX(),result[count++]);
+				rightMove(grid,grid.getPlayerTwoHeadX(),result[count++]);
+			}
 		}
 	}
 	//returns afeterstate for up move if possible, otherwise returns null
 	void Player::upMove(Grid& grid,int y, Grid * result){
 		if(debug)
 			std::cout<<"up move\n";
-		if(grid[y+1][x]==0)
+		if(digit ==1 )
 		{
-			*result = grid;
-			(*result)[y+1][x] = digit;
+			if(grid[y+1][grid.getPlayerOneHeadX()]==0)
+			{
+				*result = grid;
+				(*result)[y+1][grid.getPlayerOneHeadX()] = digit;
 
-			if(digit == 1)
-			{
-				(*result).setPlayerOneHead(x,y+1);
-				(*result).setPlayerTwoHead(oppo_x,oppo_y);
+				(*result).setPlayerOneHead(grid.getPlayerOneHeadX(),y+1);
+				(*result).setPlayerTwoHead(grid.getPlayerTwoHeadX(),grid.getPlayerTwoHeadY());
+
+				(*result).isValid(true);
 			}
-			else
-			{
-				(*result).setPlayerOneHead(oppo_x,oppo_y);
-				(*result).setPlayerTwoHead(x,y+1);
+			else {
+				(*result).isValid(false);
 			}
-			(*result).isValid(true);
 		}
-		else {
-			(*result).isValid(false);
+		else
+		{
+			if(grid[y+1][grid.getPlayerTwoHeadX()]==0)
+			{
+				*result = grid;
+				(*result)[y+1][grid.getPlayerTwoHeadX()] = digit;
+
+				(*result).setPlayerOneHead(grid.getPlayerOneHeadX(),grid.getPlayerOneHeadY());
+				(*result).setPlayerTwoHead(grid.getPlayerTwoHeadX(),y+1);
+
+				(*result).isValid(true);
+			}
+			else {
+				(*result).isValid(false);
+			}
 		}
+
 	}
 	//returns afterstate for down move if possible, otherwise returns null
 	void Player::downMove(Grid & grid,int y, Grid * result)
 	{
 		if(debug)
 			std::cout<<"down move\n";
-		if(grid[y-1][x]==0)
+		if(digit ==1)
 		{
-			*result = grid;
-			(*result)[y-1][x] = digit;
+			if(grid[y-1][grid.getPlayerOneHeadX()]==0)
+			{
+				*result = grid;
+				(*result)[y-1][grid.getPlayerOneHeadX()] = digit;
+				(*result).setPlayerTwoHead(grid.getPlayerTwoHeadX(),grid.getPlayerTwoHeadY());
+				(*result).setPlayerOneHead(grid.getPlayerOneHeadX(),y-1);
 
-			if(digit == 1)
-			{
-				(*result).setPlayerOneHead(x,y-1);
-				(*result).setPlayerTwoHead(oppo_x,oppo_y);
+				(*result).isValid(true);
 			}
-			else
-			{
-				(*result).setPlayerOneHead(oppo_x,oppo_y);
-				(*result).setPlayerTwoHead(x,y-1);
+			else{
+				(*result).isValid(false);
 			}
-			(*result).isValid(true);
 		}
-		else{
-			(*result).isValid(false);
+		else
+		{
+			if(grid[y-1][grid.getPlayerTwoHeadX()]==0)
+			{
+				*result = grid;
+				(*result)[y-1][grid.getPlayerTwoHeadX()] = digit;
+
+
+				(*result).setPlayerOneHead(grid.getPlayerOneHeadX(),grid.getPlayerOneHeadY());
+				(*result).setPlayerTwoHead(grid.getPlayerTwoHeadX(),y-1);
+
+				(*result).isValid(true);
+			}
+			else{
+				(*result).isValid(false);
+			}
 		}
+
 	}
 	//return afterstate for left move if possible, otherwise returns null
 	void Player::leftMove(Grid& grid,int x, Grid * result)
 	{
 		if(debug)
 			std::cout<<"left move\n";
-		if(grid[y][x-1]==0)
+		if(digit ==1 )
 		{
-			*result = grid;
-			(*result)[y][x-1] = digit;
+			if(grid[grid.getPlayerOneHeadY()][x-1]==0)
+			{
+				*result = grid;
+				(*result)[grid.getPlayerOneHeadY()][x-1] = digit;
 
-			if(digit == 1)
-			{
-				(*result).setPlayerOneHead(x-1,y);
-				(*result).setPlayerTwoHead(oppo_x,oppo_y);
+				(*result).setPlayerOneHead(x-1,grid.getPlayerOneHeadY());
+				(*result).setPlayerTwoHead(grid.getPlayerTwoHeadX(),grid.getPlayerTwoHeadY());
+
+				(*result).isValid(true);
 			}
-			else
-			{
-				(*result).setPlayerOneHead(oppo_x,oppo_y);
-				(*result).setPlayerTwoHead(x-1,y);
+			else {
+				(*result).isValid(false);
 			}
-			(*result).isValid(true);
 		}
-		else {
-			(*result).isValid(false);
+		else
+		{
+			if(grid[grid.getPlayerTwoHeadY()][x-1]==0)
+			{
+				*result = grid;
+				(*result)[grid.getPlayerTwoHeadY()][x-1] = digit;
+
+				(*result).setPlayerOneHead(grid.getPlayerOneHeadX(),grid.getPlayerOneHeadY());
+				(*result).setPlayerTwoHead(x-1,grid.getPlayerTwoHeadY());
+
+				(*result).isValid(true);
+			}
+			else {
+				(*result).isValid(false);
+			}
 		}
+
 	}
 
 	//return after state for right move is possible, otherwise return null
@@ -346,32 +533,49 @@ namespace tron{
 	{
 		if(debug)
 			std::cout<<"right move\n";
-
-		if(grid[y][x+1]==0)
+		if(digit ==1 )
 		{
-			*result = grid;
-			(*result)[y][x+1] = digit;
-			if(debug)
+			if(grid[grid.getPlayerOneHeadY()][x+1]==0)
 			{
-				std::cout<<result->printGrid();
-				std::cout<<"difference\n"<<grid.printGrid();
-			}
-			if(digit == 1)
-			{
-				(*result).setPlayerOneHead(x+1,y);
-				(*result).setPlayerTwoHead(oppo_x,oppo_y);
-			}
-			else
-			{
-				(*result).setPlayerOneHead(oppo_x,oppo_y);
-				(*result).setPlayerTwoHead(x+1,y);
+				*result = grid;
+				(*result)[y][x+1] = digit;
+				if(debug)
+				{
+					std::cout<<result->printGrid();
+					std::cout<<"difference\n"<<grid.printGrid();
+				}
 
+				(*result).setPlayerOneHead(x+1,grid.getPlayerOneHeadY());
+				(*result).setPlayerTwoHead(grid.getPlayerTwoHeadX(),grid.getPlayerTwoHeadY());
+
+				(*result).isValid(true);
 			}
-			(*result).isValid(true);
+			else{
+				(*result).isValid(false);
+			}
 		}
-		else{
-			(*result).isValid(false);
+		else
+		{
+			if(grid[grid.getPlayerTwoHeadY()][x+1]==0)
+			{
+				*result = grid;
+				(*result)[grid.getPlayerTwoHeadY()][x+1] = digit;
+				if(debug)
+				{
+					std::cout<<result->printGrid();
+					std::cout<<"difference\n"<<grid.printGrid();
+				}
+
+				(*result).setPlayerOneHead(grid.getPlayerOneHeadX(),grid.getPlayerOneHeadY());
+				(*result).setPlayerTwoHead(x+1,grid.getPlayerTwoHeadY());
+
+				(*result).isValid(true);
+			}
+			else{
+				(*result).isValid(false);
+			}
 		}
+
 	}
 
 
@@ -398,87 +602,230 @@ namespace tron{
 	/*
 	 * make a random move, argument is the current game grid
 	 */
-	void Player::randomMove(Grid* result)
+	void Player::randomMove(Grid &grid,Grid* result)
 	{
 		//std::cout<<"Making a random move\n";
 
-		*result= *grid;
+		*result= grid;
 		std::srand(std::time(NULL));
-		int move_x= x;
-		int move_y = y;
-		if(this->y == width-1)	//south pole move
+		int move_x;
+		int move_y;
+		if(digit ==1 )
 		{
-			move_x = rand() %width;
-			move_y = width-2;
+			if(grid.getPlayerOneHeadY() == width-1)	//south pole move
+			{
+				move_x = rand() %width;
+				move_y = width-2;
+			}
+			else if(grid.getPlayerOneHeadY() == 0)// north pole move
+			{
+				move_x= rand() %width;
+				move_y = 1;
+			}
+			else if(grid.getPlayerOneHeadX() == 0)
+			{
+				int move = int(rand() % 4);
+				if(move == 0)
+				{
+					move_y = grid.getPlayerOneHeadY()+1;
+				}
+				else if(move == 1)
+				{
+					move_y = grid.getPlayerOneHeadY()-1;
+				}
+				else if(move == 2)
+				{
+					move_x = grid.getPlayerOneHeadX()+1;
+				}
+				else if(move == 3)
+				{
+					move_x = width-1;
+				}else if(grid.getPlayerOneHeadY() == 0)// north pole move
+				{
+					move_x= rand() %width;
+					move_y = 1;
+				}
+				else if(grid.getPlayerOneHeadX() == 0)
+				{
+					int move = int(rand() % 4);
+					if(move == 0)
+					{
+						move_y = grid.getPlayerOneHeadY()+1;
+					}
+					else if(move == 1)
+					{
+						move_y = grid.getPlayerOneHeadY()-1;
+					}
+					else if(move == 2)
+					{
+						move_x = grid.getPlayerOneHeadX()+1;
+					}
+					else if(move == 3)
+					{
+						move_x = width-1;
+					}
+				}
+				else if(grid.getPlayerOneHeadX()==width-1)
+				{
+					int move = int(rand() % 4);
+					if(move == 0)
+					{
+						move_y = grid.getPlayerOneHeadY()+1;
+					}
+					else if(move == 1)
+					{
+						move_y = grid.getPlayerOneHeadY()-1;
+					}
+					else if(move == 2)
+					{
+						move_x = 0;
+					}
+					else if(move == 3)
+					{
+						move_x = grid.getPlayerOneHeadX()-1;
+					}
+				}
+				else//middle move
+				{
+					int move = int(rand() % 4);
+					if(move == 0)
+					{
+						move_y = grid.getPlayerOneHeadY()+1;
+					}
+					else if(move == 1)
+					{
+						move_y = grid.getPlayerOneHeadY()-1;
+					}
+					else if(move == 2)
+					{
+						move_x = grid.getPlayerOneHeadX()+1;
+					}
+					else if(move == 3)
+					{
+						move_x = grid.getPlayerOneHeadX()-1;
+					}
+				}
+			}
+			else if(grid.getPlayerOneHeadX()==width-1)
+			{
+				int move = int(rand() % 4);
+				if(move == 0)
+				{
+					move_y = grid.getPlayerOneHeadY()+1;
+				}
+				else if(move == 1)
+				{
+					move_y = grid.getPlayerOneHeadY()-1;
+				}
+				else if(move == 2)
+				{
+					move_x = 0;
+				}
+				else if(move == 3)
+				{
+					move_x = grid.getPlayerOneHeadX()-1;
+				}
+			}
+			else//middle move
+			{
+				int move = int(rand() % 4);
+				if(move == 0)
+				{
+					move_y = grid.getPlayerOneHeadY()+1;
+				}
+				else if(move == 1)
+				{
+					move_y = grid.getPlayerOneHeadY()-1;
+				}
+				else if(move == 2)
+				{
+					move_x = grid.getPlayerOneHeadX()+1;
+				}
+				else if(move == 3)
+				{
+					move_x = grid.getPlayerOneHeadX()-1;
+				}
+			}
 		}
-		else if(this->y == 0)// north pole move
+		else
 		{
-			move_x= rand() %width;
-			move_y = 1;
+			if(grid.getPlayerTwoHeadY() == width-1)	//south pole move
+			{
+				move_x = rand() %width;
+				move_y = width-2;
+			}
+			else if(grid.getPlayerTwoHeadY() == 0)// north pole move
+			{
+				move_x= rand() %width;
+				move_y = 1;
+			}
+			else if(grid.getPlayerTwoHeadX() == 0)
+			{
+				int move = int(rand() % 4);
+				if(move == 0)
+				{
+					move_y = grid.getPlayerTwoHeadY()+1;
+				}
+				else if(move == 1)
+				{
+					move_y = grid.getPlayerTwoHeadY()-1;
+				}
+				else if(move == 2)
+				{
+					move_x = grid.getPlayerTwoHeadX()+1;
+				}
+				else if(move == 3)
+				{
+					move_x = width-1;
+				}
+			}
+			else if(grid.getPlayerTwoHeadX()==width-1)
+			{
+				int move = int(rand() % 4);
+				if(move == 0)
+				{
+					move_y = grid.getPlayerTwoHeadY()+1;
+				}
+				else if(move == 1)
+				{
+					move_y = grid.getPlayerTwoHeadY()-1;
+				}
+				else if(move == 2)
+				{
+					move_x = 0;
+				}
+				else if(move == 3)
+				{
+					move_x = grid.getPlayerTwoHeadX()-1;
+				}
+			}
+			else//middle move
+			{
+				int move = int(rand() % 4);
+				if(move == 0)
+				{
+					move_y = grid.getPlayerTwoHeadY()+1;
+				}
+				else if(move == 1)
+				{
+					move_y = grid.getPlayerTwoHeadY()-1;
+				}
+				else if(move == 2)
+				{
+					move_x = grid.getPlayerTwoHeadX()+1;
+				}
+				else if(move == 3)
+				{
+					move_x = grid.getPlayerTwoHeadX()-1;
+				}
+			}
 		}
-		else if(this->x == 0)
-		{
-			int move = int(rand() % 4);
-			if(move == 0)
-			{
-				move_y = y+1;
-			}
-			else if(move == 1)
-			{
-				move_y = y-1;
-			}
-			else if(move == 2)
-			{
-				move_x = x+1;
-			}
-			else if(move == 3)
-			{
-				move_x = width-1;
-			}
-		}
-		else if(this->x==width-1)
-		{
-			int move = int(rand() % 4);
-			if(move == 0)
-			{
-				move_y = y+1;
-			}
-			else if(move == 1)
-			{
-				move_y = y-1;
-			}
-			else if(move == 2)
-			{
-				move_x = 0;
-			}
-			else if(move == 3)
-			{
-				move_x = x-1;
-			}
-		}
-		else//middle move
-		{
-			int move = int(rand() % 4);
-			if(move == 0)
-			{
-				move_y = y+1;
-			}
-			else if(move == 1)
-			{
-				move_y = y-1;
-			}
-			else if(move == 2)
-			{
-				move_x = x+1;
-			}
-			else if(move == 3)
-			{
-				move_x = x-1;
-			}
-		}
-		(*result)[move_y][move_x] = (*result)[move_y][move_x] + digit;
+		std::cout<<move_y<<"  "<<move_x<<std::endl;
+		std::cout<<grid.getPlayerTwoHeadY()<<" ";
+		(*result)[move_y][move_x] = (*result)[move_y][move_x]+ digit;
 		if(digit == 1)
 		{
+
 			(result)->setPlayerOneHead(move_x,move_y);
 		}
 		else

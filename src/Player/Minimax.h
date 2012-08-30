@@ -20,8 +20,8 @@ public:
 	void play();
 private:
 	Grid& alpha_beta(Grid&, int );
-	float min(Grid,int,int,int);
-	float max(Grid,int,int,int);
+	float min(Grid,float,float,int);
+	float max(Grid,float,float,int);
 	Voronoi * a;
 };
 } /* namespace tron */

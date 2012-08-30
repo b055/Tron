@@ -10,7 +10,7 @@
 namespace tron {
 
 	Minimax::Minimax(int digit,int width):Player(digit,width) {
-		a =  new Voronoi(width);
+		a =  new Voronoi(new Grid(width),width);
 	}
 
 	Minimax::~Minimax() {
@@ -157,7 +157,7 @@ namespace tron {
 		this->possibleMoves(current,afterstates);
 		for(int j = 0;j<width;j++)
 		{
-			a->setGrid(afterstates[j]);
+			a->setGrid(*afterstates[j]);
 			int * result = a->calculate(digit);
 			if(digit ==1 )
 			{
@@ -171,18 +171,21 @@ namespace tron {
 			}
 		}
 		Grid *g = new Grid(width);
-		randomMove(g);
+		randomMove(*grid,g);
 		return *g;
 	}
 
-	float Minimax::max(Grid current, int alpha,int beta, int depth)
+	float Minimax::max(Grid current, float alpha,float beta, int depth)
 	{
 		depth++;
 		//if end state return alpha
 		std::cout<<"in the maximuma "<<depth<<"\n";
 		if(current.endState())
 		{
-			a = new Voronoi(&current,width);
+			std::cout<<"at end state\n";
+			a->setGrid(current);
+			std::cout<<&current<<std::endl;
+			std::cout<<"set the grid in max\n";
 			if(digit==1)
 			{
 				return a->calculate(digit)[0];
@@ -210,7 +213,7 @@ namespace tron {
 		return value;
 	}
 
-	float Minimax::min(Grid current, int alpha,int beta, int depth)
+	float Minimax::min(Grid current, float alpha,float beta, int depth)
 	{
 		//if endstate beta
 		depth++;
@@ -218,7 +221,8 @@ namespace tron {
 		std::cout<<current.printGrid()<<std::endl;
 		if(current.endState())
 		{
-			a = new Voronoi(&current,width);
+			std::cout<<"at end state\n";
+			a->setGrid(current);
 			if(digit== 1)
 			{
 				return a->calculate(digit)[0];
@@ -230,6 +234,7 @@ namespace tron {
 		}
 		float value = std::numeric_limits<float>::infinity();
 
+		std::cout<<"initializing\n";
 		Grid** afterstates = new Grid*[width];
 		for(int i = 0;i<width;i++)
 			afterstates[i] = new Grid(width);

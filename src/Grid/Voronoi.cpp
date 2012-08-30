@@ -7,13 +7,13 @@
 
 #include "Voronoi.h"
 namespace tron{
-Voronoi::Voronoi(Grid * grid,int width):width(width)
+Voronoi::Voronoi(Grid * grid,int width):grid(*new Grid(width)),width(width)
 {
 	VAR = 999;
 	co = 0;
 	pos.resize(grid->getGrid().size());
 	copy(grid->getGrid().begin(),grid->getGrid().end(),pos.begin());
-	this->grid = grid;
+	this->grid = *grid;
 	for(int i = 0;i<width;i++)
 	{
 		std::vector<int> temp;
@@ -33,23 +33,23 @@ Voronoi::Voronoi(Grid * grid,int width):width(width)
 	one[grid->getPlayerOneHeadY()][grid->getPlayerOneHeadX()]=0;
 	two[grid->getPlayerTwoHeadY()][grid->getPlayerTwoHeadX()] = 0;
 }
-void Voronoi::setGrid(Grid * grid)
+void Voronoi::setGrid(Grid & newgrid)
 {
-	this->grid = grid;
-	pos.resize(grid->getGrid().size());
-	copy(grid->getGrid().begin(),grid->getGrid().end(),pos.begin());
+	this->grid = newgrid;
+	pos.resize(newgrid.getGrid().size());
+	copy(grid.getGrid().begin(),grid.getGrid().end(),pos.begin());
 
 	resetOneandTwo();
 	for(int j = 0;j<width;j++)
-		if(grid->getGrid()[0][j] !=0){
-			if(0 == grid->getPlayerOneHeadY())
+		if(grid.getGrid()[0][j] !=0){
+			if(0 == grid.getPlayerOneHeadY())
 			{
 				for(int i = 0;i<width;i++)
 				{
 					one[0][i] = 0;
 				}
 			}
-			else if(0 == grid->getPlayerTwoHeadY())
+			else if(0 == grid.getPlayerTwoHeadY())
 			{
 				for(int i = 0;i<width;i++)
 				{
@@ -65,15 +65,15 @@ void Voronoi::setGrid(Grid * grid)
 			break;
 		}
 	for(int j = 0;j<width;j++)
-		if(grid->getGrid()[width-1][j] !=0){
-			if(width-1 == grid->getPlayerOneHeadY())
+		if(grid.getGrid()[width-1][j] !=0){
+			if(width-1 == grid.getPlayerOneHeadY())
 			{
 				for(int i = 0;i<width;i++)
 				{
 					one[width-1][i] = 0;
 				}
 			}
-			else if(width-1 == grid->getPlayerTwoHeadY())
+			else if(width-1 == grid.getPlayerTwoHeadY())
 			{
 				for(int i = 0;i<width;i++)
 				{
@@ -92,12 +92,12 @@ void Voronoi::setGrid(Grid * grid)
 	co = 0;
 	resetVor();
 	resetMark();
-	pos[grid->getPlayerOneHeadY()][grid->getPlayerOneHeadX()] = 0;
-	pos[grid->getPlayerTwoHeadY()][grid->getPlayerTwoHeadX()] = 0;
-	one[grid->getPlayerOneHeadY()][grid->getPlayerOneHeadX()]=0;
-	two[grid->getPlayerTwoHeadY()][grid->getPlayerTwoHeadX()] = 0;
+	pos[grid.getPlayerOneHeadY()][grid.getPlayerOneHeadX()] = 0;
+	pos[grid.getPlayerTwoHeadY()][grid.getPlayerTwoHeadX()] = 0;
+	one[grid.getPlayerOneHeadY()][grid.getPlayerOneHeadX()]=0;
+	two[grid.getPlayerTwoHeadY()][grid.getPlayerTwoHeadX()] = 0;
 }
-Voronoi::Voronoi(int width):width(width)
+Voronoi::Voronoi(int width):grid(*new Grid(width)),width(width)
 {
 
 }
@@ -154,7 +154,7 @@ int Voronoi::countArea(int tempX, int tempY,std::vector<std::vector< int> > & ma
 				int a = neighbourMin(tempX,tempY,mat) + 1;
 				if(tempY == 0 || tempY == width-1)
 				{
-					if(tempY == grid->getPlayerOneHeadY())//player one
+					if(tempY == grid.getPlayerOneHeadY())//player one
 					{
 						if(two[tempY][0] == 0)
 							for(int i = 0;i<width;i++)
@@ -162,7 +162,7 @@ int Voronoi::countArea(int tempX, int tempY,std::vector<std::vector< int> > & ma
 								one[tempY][i] = VAR;
 							}
 					}
-					else if(tempY == grid->getPlayerTwoHeadY())//player two
+					else if(tempY == grid.getPlayerTwoHeadY())//player two
 					{
 						if(one[tempY][0] == 0)
 							for(int i = 0;i<width;i++)
@@ -198,7 +198,7 @@ int Voronoi::countLeft(int tempX, int tempY,std::vector<std::vector< int> > &mat
 				int a = neighbourMin(tempX,tempY,mat) + 1;
 				if(tempY == 0 || tempY == width-1)
 				{
-					if(tempY == grid->getPlayerOneHeadY())//player one
+					if(tempY == grid.getPlayerOneHeadY())//player one
 					{
 						if(two[tempY][0] == 0)
 							for(int i = 0;i<width;i++)
@@ -206,7 +206,7 @@ int Voronoi::countLeft(int tempX, int tempY,std::vector<std::vector< int> > &mat
 								one[tempY][i] = VAR;
 							}
 					}
-					else if(tempY == grid->getPlayerTwoHeadY())//player two
+					else if(tempY == grid.getPlayerTwoHeadY())//player two
 					{
 						if(one[tempY][0] == 0)
 							for(int i = 0;i<width;i++)
@@ -242,7 +242,7 @@ int Voronoi::countTop(int tempX, int tempY,std::vector<std::vector< int> >&mat){
 				int a = neighbourMin(tempX,tempY,mat) + 1;
 				if(tempY == 0 || tempY == width-1)
 				{
-					if(tempY == grid->getPlayerOneHeadY())//player one
+					if(tempY == grid.getPlayerOneHeadY())//player one
 					{
 						if(two[tempY][0] == 0)
 							for(int i = 0;i<width;i++)
@@ -250,7 +250,7 @@ int Voronoi::countTop(int tempX, int tempY,std::vector<std::vector< int> >&mat){
 								one[tempY][i] = VAR;
 							}
 					}
-					else if(tempY == grid->getPlayerTwoHeadY())//player two
+					else if(tempY == grid.getPlayerTwoHeadY())//player two
 					{
 						if(one[tempY][0] == 0)
 							for(int i = 0;i<width;i++)
@@ -287,7 +287,7 @@ int Voronoi::countBottom(int tempX, int tempY,std::vector<std::vector< int> >&ma
 
 				if(tempY == 0 || tempY == width-1)
 				{
-					if(tempY == grid->getPlayerOneHeadY())//player one
+					if(tempY == grid.getPlayerOneHeadY())//player one
 					{
 						if(two[tempY][0] == 0)
 							for(int i = 0;i<width;i++)
@@ -295,7 +295,7 @@ int Voronoi::countBottom(int tempX, int tempY,std::vector<std::vector< int> >&ma
 								one[tempY][i] = VAR;
 							}
 					}
-					else if(tempY == grid->getPlayerTwoHeadY())//player two
+					else if(tempY == grid.getPlayerTwoHeadY())//player two
 					{
 						if(one[tempY][0] == 0)
 							for(int i = 0;i<width;i++)
@@ -389,7 +389,7 @@ int Voronoi::neighbourMin(int x,int y,std::vector<std::vector< int> >& mat)
 std::string Voronoi::outputOne()
 {
 	std::stringstream ss;
-	ss<<"this is one "<<this->grid->getPlayerOneHeadX()<<" "<<grid->getPlayerOneHeadY()<<std::endl;
+	ss<<"this is one "<<this->grid.getPlayerOneHeadX()<<" "<<grid.getPlayerOneHeadY()<<std::endl;
 	for(int i = 0;i<width;i++)
 	{
 		for(int j = 0;j<width;j++)
@@ -403,7 +403,7 @@ std::string Voronoi::outputOne()
 std::string Voronoi::outputTwo()
 {
 	std::stringstream ss;
-	ss<<"this is two "<<this->grid->getPlayerTwoHeadX()<<" "<<grid->getPlayerTwoHeadY()<<std::endl;
+	ss<<"this is two "<<this->grid.getPlayerTwoHeadX()<<" "<<grid.getPlayerTwoHeadY()<<std::endl;
 	for(int i = 0;i<width;i++)
 	{
 		for(int j = 0;j<width;j++)
@@ -438,29 +438,29 @@ void Voronoi::getMerge(int turn){
 int* Voronoi::calculate(int player)
 {
 
-	surroundBottom(grid->getPlayerOneHeadX(),grid->getPlayerOneHeadY(),one);this->resetMark();
+	surroundBottom(grid.getPlayerOneHeadX(),grid.getPlayerOneHeadY(),one);this->resetMark();
 
-	surroundTop(grid->getPlayerOneHeadX(),grid->getPlayerOneHeadY(),one);this->resetMark();
-	surroundCheck(grid->getPlayerOneHeadX(),grid->getPlayerOneHeadY(),one);this->resetMark();
-	surroundLeft(grid->getPlayerOneHeadX(),grid->getPlayerOneHeadY(),one);this->resetMark();
+	surroundTop(grid.getPlayerOneHeadX(),grid.getPlayerOneHeadY(),one);this->resetMark();
+	surroundCheck(grid.getPlayerOneHeadX(),grid.getPlayerOneHeadY(),one);this->resetMark();
+	surroundLeft(grid.getPlayerOneHeadX(),grid.getPlayerOneHeadY(),one);this->resetMark();
 
 //	last(one);this->resetMark();
 
 //	std::cout<<this->outputOne();
 	std::cout<<std::endl;
 
-	surroundLeft(grid->getPlayerTwoHeadX(),grid->getPlayerTwoHeadY(),two);this->resetMark();
-	surroundBottom(grid->getPlayerTwoHeadX(),grid->getPlayerTwoHeadY(),two);this->resetMark();
-	surroundTop(grid->getPlayerTwoHeadX(),grid->getPlayerTwoHeadY(),two);this->resetMark();
-	surroundCheck(grid->getPlayerTwoHeadX(),grid->getPlayerTwoHeadY(),two);this->resetMark();
+	surroundLeft(grid.getPlayerTwoHeadX(),grid.getPlayerTwoHeadY(),two);this->resetMark();
+	surroundBottom(grid.getPlayerTwoHeadX(),grid.getPlayerTwoHeadY(),two);this->resetMark();
+	surroundTop(grid.getPlayerTwoHeadX(),grid.getPlayerTwoHeadY(),two);this->resetMark();
+	surroundCheck(grid.getPlayerTwoHeadX(),grid.getPlayerTwoHeadY(),two);this->resetMark();
 //	last(two);this->resetMark();
 
 //	std::cout<<this->outputTwo();
 	std::cout<<std::endl;
 
 	getMerge(player);
-	vor[grid->getPlayerOneHeadY()][grid->getPlayerOneHeadX()]=0;
-	vor[grid->getPlayerTwoHeadY()][grid->getPlayerTwoHeadX()]=0;
+	vor[grid.getPlayerOneHeadY()][grid.getPlayerOneHeadX()]=0;
+	vor[grid.getPlayerTwoHeadY()][grid.getPlayerTwoHeadX()]=0;
 	//std::cout<<this->outputVoronoi();
 	int one = 0;
 	int two = 0;
