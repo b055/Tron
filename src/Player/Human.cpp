@@ -101,6 +101,7 @@ void Human::play()
 			//std::cout<<"caught right move\n";
 			if(x == width-1)
 			{
+				std::cout<<"at the edge\n";
 				rightMove(-1);
 				return;
 			}
@@ -169,12 +170,12 @@ void Human::upMove(int y){
 		if(digit == 1)
 		{
 			grid->setPlayerTwoHead(oppo_x,oppo_y);
-			grid->setPlayerOneHead(x,y);
+			grid->setPlayerOneHead(x,this->y);
 		}
 		else
 		{
 			grid->setPlayerOneHead(oppo_x,oppo_y);
-			grid->setPlayerTwoHead(x,y);
+			grid->setPlayerTwoHead(x,this->y);
 		}
 		grid->isValid(true);
 
@@ -188,12 +189,12 @@ void Human::downMove(int y)
 	if(digit == 1)
 	{
 		grid->setPlayerTwoHead(oppo_x,oppo_y);
-		grid->setPlayerOneHead(x,y);
+		grid->setPlayerOneHead(x,this->y);
 	}
 	else
 	{
 		grid->setPlayerOneHead(oppo_x,oppo_y);
-		grid->setPlayerTwoHead(x,y);
+		grid->setPlayerTwoHead(x,this->y);
 	}
 	grid->isValid(true);
 
@@ -208,12 +209,12 @@ void Human::leftMove(int x)
 	if(digit == 1)
 	{
 		grid->setPlayerTwoHead(oppo_x,oppo_y);
-		grid->setPlayerOneHead(x,y);
+		grid->setPlayerOneHead(this->x,y);
 	}
 	else
 	{
 		grid->setPlayerOneHead(oppo_x,oppo_y);
-		grid->setPlayerTwoHead(x,y);
+		grid->setPlayerTwoHead(this->x,y);
 	}
 	grid->isValid(true);
 }
@@ -222,18 +223,17 @@ void Human::leftMove(int x)
 	void Human::rightMove(int x)
 	{
 		(*grid)[y][x+1] = digit;
-
 		this->x = 1+x;
 		this->y = y;
 		if(digit == 1)
 		{
 			grid->setPlayerTwoHead(oppo_x,oppo_y);
-			grid->setPlayerOneHead(x,y);
+			grid->setPlayerOneHead(this->x,y);
 		}
 		else
 		{
 			grid->setPlayerOneHead(oppo_x,oppo_y);
-			grid->setPlayerTwoHead(x,y);
+			grid->setPlayerTwoHead(this->x,y);
 		}
 		grid->isValid(true);
 	}

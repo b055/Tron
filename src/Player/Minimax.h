@@ -10,6 +10,7 @@
 
 #include "Player.h"
 #include "../Grid/Voronoi.h"
+#include <limits>
 namespace tron {
 
 class Minimax: public tron::Player {
@@ -17,7 +18,11 @@ public:
 	Minimax(int,int);
 	virtual ~Minimax();
 	void play();
+private:
+	Grid& alpha_beta(Grid&, int );
+	float min(Grid,int,int,int);
+	float max(Grid,int,int,int);
+	Voronoi * a;
 };
-
 } /* namespace tron */
 #endif /* MINIMAX_H_ */

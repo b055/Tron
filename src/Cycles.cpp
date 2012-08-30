@@ -74,7 +74,7 @@ int main() {
 				if(debug)
 					std::cout<<"player one "<<first->getX()<<" "<<first->getY()<<std::endl;
 
-				first->possibleMoves(afterstates);
+				first->possibleMoves(first->getGrid(),afterstates);
 				//std::cout<<"got possible moves\n";
 				double value = -999999;
 				int pos = 0;
@@ -148,7 +148,7 @@ int main() {
 
 				if(debug)
 					std::cout<<"player two "<<second->getX()<<" "<<second->getY()<<std::endl;
-				second->possibleMoves(afterstates);
+				second->possibleMoves(second->getGrid(),afterstates);
 
 				double value = -99999;
 				int pos = 0;

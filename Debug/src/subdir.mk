@@ -8,24 +8,25 @@ O_SRCS += \
 ../src/Game.o \
 ../src/Grid.o \
 ../src/Human.o \
+../src/Minimax.o \
 ../src/Network.o \
 ../src/Player.o \
 ../src/Voronoi.o 
 
 CPP_SRCS += \
 ../src/Cycles.cpp \
-../src/MachineVsHuman.cpp \
-../src/Minimax.cpp 
+../src/Minimax.cpp \
+../src/MinimaxVsHuman.cpp 
 
 OBJS += \
 ./src/Cycles.o \
-./src/MachineVsHuman.o \
-./src/Minimax.o 
+./src/Minimax.o \
+./src/MinimaxVsHuman.o 
 
 CPP_DEPS += \
 ./src/Cycles.d \
-./src/MachineVsHuman.d \
-./src/Minimax.d 
+./src/Minimax.d \
+./src/MinimaxVsHuman.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

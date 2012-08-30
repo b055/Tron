@@ -24,7 +24,7 @@ namespace tron{
 		grid->reset();
 	}
 
-	void Player::possibleMoves(Grid** result)
+	void Player::possibleMoves(Grid & grid,Grid** result)
 	{
 		//check if at poles and get possible moves
 		//check if at edges and get possible moves
@@ -39,7 +39,7 @@ namespace tron{
 			{
 				if(count>1)
 					break;
-				if((*grid)[i][j]!=0){
+				if((grid)[i][j]!=0){
 					count++;
 				}
 			}
@@ -50,7 +50,7 @@ namespace tron{
 			std::srand(time(NULL));
 			int x = rand()%width;
 			int y = rand()%width;
-			(*result[0]) = *grid;
+			(*result[0]) = grid;
 			(*result[0])[y][x] = digit;
 			(*result[0]).setPlayerOneHeadX(x);
 			(*result[0]).setPlayerOneHeadY(y);
@@ -61,7 +61,7 @@ namespace tron{
 		{
 			//PLAYING SECOND MOVE
 			//std::cout<<"playing second move\n";
-			(*result[0]) = *grid;
+			(*result[0]) = grid;
 			//std::cout<<"made copy\n";
 			int new_x,new_y;
 			if(oppo_y>0&& oppo_y<width-1)
@@ -88,17 +88,17 @@ namespace tron{
 		else if(this->y==0)//top
 		{
 			//std::cout<<"topMoves\n";
-			topMoves(result);
+			topMoves(grid,result);
 		}
 		else if (this->y==width-1)//bottom
 		{
 			//std::cout<<"bottommoves\n";
-			bottomMoves(result);
+			bottomMoves(grid,result);
 		}
 		else//somewhere in the middle
 		{
 			//std::cout<<"middlemoves\n";
-			middleMoves(result);
+			middleMoves(grid,result);
 		}
 		for(int i = 0;i<width;i++)
 		{
@@ -117,14 +117,14 @@ namespace tron{
 		return this->grid->printGrid();
 	}
 	//possible moves for a player at the top
-	void Player::topMoves(Grid** result)
+	void Player::topMoves(Grid& grid,Grid** result)
 	{
 #pragma omp parallel for
 		for(int i = 0;i<width;i++)
 		{
-			if((*grid)[1][i]==0)
+			if(grid[1][i]==0)
 			{
-				(*result[i]) = *grid;
+				(*result[i]) = grid;
 				(*result[i])[1][i]=digit;
 				if(digit == 1)
 				{
@@ -146,7 +146,7 @@ namespace tron{
 	}
 
 	//possible moves for a player at the bottom
-	void Player::bottomMoves(Grid** result)
+	void Player::bottomMoves(Grid &grid,Grid** result)
 
 	{
 		if(debug)
@@ -154,14 +154,14 @@ namespace tron{
 //#pragma omp parallel for
 		for(int i = 0; i<width;i++)
 		{
-			if((*grid)[width-2][i]==0)
+			if(grid[width-2][i]==0)
 			{
 				if(debug){
 					std::cout<<"true "<<i<<std::endl;
 					std::cout<<result[i]->printGrid();
 					std::cout<<"other\n";
 				}
-				(*result[i] ) = *grid;
+				(*result[i] ) = grid;
 				if(debug)
 					std::cout<<result[i]->printGrid();
 				(*result[i] )[width-2][i] = digit;
@@ -188,7 +188,7 @@ namespace tron{
 	}
 
 	//possible moves for a player somewhere in the middle of the sphere
-	void Player::middleMoves(Grid** result)
+	void Player::middleMoves(Grid & grid,Grid** result)
 	{
 		if(debug)
 			std::cout<<"starting middle moves\n";
@@ -200,76 +200,76 @@ namespace tron{
 
 			for(int i =0;i<width;i++)
 			{
-				if((*grid)[width-1][i]!=0)
+				if(grid[width-1][i]!=0)
 				{
 					check = false;
 					break;
 				}
 			}
 			if(check){//add move to bottom pole
-				upMove(y,result[count++]);
+				upMove(grid,y,result[count++]);
 
 			}
 			//add up
 
-			downMove(y,result[count++]);
+			downMove(grid,y,result[count++]);
 		}
 		else if(this->y ==1)//almost top
 		{
 			bool check = true;
 			for(int i =0;i<width;i++)
 			{
-				if((*grid)[0][i]!=0)
+				if(grid[0][i]!=0)
 				{
 					check = false;
 					break;
 				}
 			}
 			if(check){//add move to top pole
-				downMove(1,result[count++]);
+				downMove(grid,1,result[count++]);
 			}
 			//add down
-			upMove(y,result[count++]);
+			upMove(grid,y,result[count++]);
 		}
 		else
 		{
 			//normal y's
-			upMove(y,result[count++]);
-			downMove(y,result[count++]);
+			upMove(grid,y,result[count++]);
+			downMove(grid,y,result[count++]);
 		}
 		if(this->x==width-1)//right edge
 		{
 			//std::cout<<"right edge\n";
-			if((*grid)[this->y][0]==0)//can wrap around the right
+			if(grid[this->y][0]==0)//can wrap around the right
 			{
-				rightMove(-1,result[count++]);
+				rightMove(grid,-1,result[count++]);
 			}
 			//add left
 
-			leftMove(x,result[count++]);
+			leftMove(grid,x,result[count++]);
 		}
 		else if(x==0)//left edge
 		{
 			//std::cout<<"left edge\n";
-			if((*grid)[this->y][width-1]==0){//can wrap around the left
-				leftMove(width,result[count++]);
+			if(grid[this->y][width-1]==0){//can wrap around the left
+				leftMove(grid,width,result[count++]);
 			}
 			//add right
-			rightMove(x,result[count++]);
+			rightMove(grid,x,result[count++]);
 		}
 		else
 		{//normal x's
-			leftMove(x,result[count++]);
-			rightMove(x,result[count++]);
+			leftMove(grid,x,result[count++]);
+			rightMove(grid,x,result[count++]);
 		}
 	}
 	//returns afeterstate for up move if possible, otherwise returns null
-	void Player::upMove(int y, Grid * result){
+	void Player::upMove(Grid& grid,int y, Grid * result){
 		if(debug)
 			std::cout<<"up move\n";
-		if((*grid)[y+1][x]==0)
+		if(grid[y+1][x]==0)
 		{
-			*result = (*grid);
+			*result = grid;
 			(*result)[y+1][x] = digit;
 
 			if(digit == 1)
@@ -289,13 +289,13 @@ namespace tron{
 		}
 	}
 	//returns afterstate for down move if possible, otherwise returns null
-	void Player::downMove(int y, Grid * result)
+	void Player::downMove(Grid & grid,int y, Grid * result)
 	{
 		if(debug)
 			std::cout<<"down move\n";
-		if((*grid)[y-1][x]==0)
+		if(grid[y-1][x]==0)
 		{
-			*result = (*grid);
+			*result = grid;
 			(*result)[y-1][x] = digit;
 
 			if(digit == 1)
@@ -315,13 +315,13 @@ namespace tron{
 		}
 	}
 	//return afterstate for left move if possible, otherwise returns null
-	void Player::leftMove(int x, Grid * result)
+	void Player::leftMove(Grid& grid,int x, Grid * result)
 	{
 		if(debug)
 			std::cout<<"left move\n";
-		if((*grid)[y][x-1]==0)
+		if(grid[y][x-1]==0)
 		{
-			*result = (*grid);
+			*result = grid;
 			(*result)[y][x-1] = digit;
 
 			if(digit == 1)
@@ -342,19 +342,19 @@ namespace tron{
 	}
 
 	//return after state for right move is possible, otherwise return null
-	void Player::rightMove(int x, Grid * result)
+	void Player::rightMove(Grid& grid,int x, Grid * result)
 	{
 		if(debug)
 			std::cout<<"right move\n";
 
-		if((*grid)[y][x+1]==0)
+		if(grid[y][x+1]==0)
 		{
-			*result = (*grid);
+			*result = grid;
 			(*result)[y][x+1] = digit;
 			if(debug)
 			{
 				std::cout<<result->printGrid();
-				std::cout<<"difference\n"<<grid->printGrid();
+				std::cout<<"difference\n"<<grid.printGrid();
 			}
 			if(digit == 1)
 			{

@@ -33,6 +33,18 @@ public:
 	Grid& operator()(Grid&);
 	inline std::vector<std::vector<int> > & getGrid(){return grid;}
 	bool separated();
+	void reset();
+	inline bool isValid()const{return valid;}
+	inline void isValid(bool b){valid = b;}
+	inline int getPlayerOneHeadX()const{return player_one_head_x;};
+	inline int getPlayerOneHeadY()const{return player_one_head_y;};
+	inline int getPlayerTwoHeadY()const{return player_two_head_y;};
+	inline int getPlayerTwoHeadX()const{return player_two_head_x;};
+	inline void setPlayerOneHeadX(int x){player_one_head_x = x;}
+	inline void setPlayerOneHeadY(int y){player_one_head_y = y;}
+	inline void setPlayerTwoHeadX(int x){player_two_head_x = x;}
+	inline void setPlayerTwoHeadY(int y){player_two_head_y = y;}
+	bool endState();
 private:
 	std::vector<std::vector<int> > grid;
 	int player_one_head_x;
@@ -46,20 +58,6 @@ private:
 	int statewidth;
 	int cells;
 	int * result;
-	//Voronoi * a;
-public:
-	void reset();
-	inline bool isValid()const{return valid;}
-	inline void isValid(bool b){valid = b;}
-	inline int getPlayerOneHeadX()const{return player_one_head_x;};
-	inline int getPlayerOneHeadY()const{return player_one_head_y;};
-	inline int getPlayerTwoHeadY()const{return player_two_head_y;};
-	inline int getPlayerTwoHeadX()const{return player_two_head_x;};
-	inline void setPlayerOneHeadX(int x){player_one_head_x = x;}
-	inline void setPlayerOneHeadY(int y){player_one_head_y = y;}
-	inline void setPlayerTwoHeadX(int x){player_two_head_x = x;}
-	inline void setPlayerTwoHeadY(int y){player_two_head_y = y;}
-
 };
 }
 #endif /* GRID_H_ */
