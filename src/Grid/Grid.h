@@ -14,11 +14,13 @@
 #include <stdio.h>
 #include <vector>
 #include <algorithm>
+#include <limits>
 //#include "Voronoi.h"
 namespace tron{
 class Grid {
 public:
 	Grid(int );
+	Grid();
 	Grid(int * ,int*, int**);
 	virtual ~Grid();
 	std::vector<int>& operator[](int);
@@ -44,6 +46,7 @@ public:
 	inline void setPlayerTwoHeadX(int x){player_two_head_x = x;}
 	inline void setPlayerTwoHeadY(int y){player_two_head_y = y;}
 	bool endState();
+	int loser();
 private:
 	std::vector<std::vector<int> > grid;
 	int player_one_head_x;

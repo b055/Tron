@@ -7,8 +7,9 @@
 
 #include "Voronoi.h"
 namespace tron{
-Voronoi::Voronoi(Grid * grid,int width):grid(*new Grid(width)),width(width)
+Voronoi::Voronoi(Grid * grid,int width):width(width)
 {
+
 	VAR = 999;
 	co = 0;
 	pos.resize(grid->getGrid().size());
@@ -29,17 +30,18 @@ Voronoi::Voronoi(Grid * grid,int width):grid(*new Grid(width)),width(width)
 		two.push_back(other);
 
 	}
-
+	//std::cout<<"here's the one coordinate "<<grid->getPlayerOneHeadY()<<" "<<grid->getPlayerOneHeadX()<<std::endl;
 	one[grid->getPlayerOneHeadY()][grid->getPlayerOneHeadX()]=0;
 	two[grid->getPlayerTwoHeadY()][grid->getPlayerTwoHeadX()] = 0;
 }
 void Voronoi::setGrid(Grid & newgrid)
 {
-	this->grid = newgrid;
+	grid = newgrid;
 	pos.resize(newgrid.getGrid().size());
 	copy(grid.getGrid().begin(),grid.getGrid().end(),pos.begin());
 
 	resetOneandTwo();
+	//sets the pos matrix if the poles have been occupied
 	for(int j = 0;j<width;j++)
 		if(grid.getGrid()[0][j] !=0){
 			if(0 == grid.getPlayerOneHeadY())
@@ -437,6 +439,31 @@ void Voronoi::getMerge(int turn){
 }
 int* Voronoi::calculate(int player)
 {
+	int* result = new int[2];
+	if(grid.endState())
+	{
+		if(grid.loser() == 0)
+		{
+			result[0] = -std::numeric_limits<int>::infinity();
+			result[1] = std::numeric_limits<int>::infinity();
+		}
+		else
+		{
+			result[1] = -std::numeric_limits<int>::infinity();
+			result[0] = std::numeric_limits<int>::infinity();
+		}
+		return result;
+	}
+	if(&grid == 0)
+		std::cout<<"grid is null\n";
+	if(&one == 0 )
+		std::cout<<"one is null\n";
+	if(&two == 0 )
+		std::cout<<"two is null\n";
+	if(&pos == 0)
+		std::cout<<"pos is null\n";
+	if(&vor == 0)
+		std::cout<<"vor is null\n";
 
 	surroundBottom(grid.getPlayerOneHeadX(),grid.getPlayerOneHeadY(),one);this->resetMark();
 
@@ -483,7 +510,8 @@ int* Voronoi::calculate(int player)
 		one++;
 	else if(vor[width-1][0]>0)
 		two++;
-	int* result = new int[2];
+
+
 	result[0] = one;
 	result[1] = two;
 

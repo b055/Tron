@@ -12,7 +12,7 @@ namespace tron{
 	}
 
 	Game::~Game() {
-		delete grid;
+	/*	delete grid;*/
 	}
 	void Game::setGrid(Grid &newGrid)
 	{

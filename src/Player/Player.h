@@ -21,9 +21,9 @@ class Player {
 public:
 	Player(int,int);
 	virtual ~Player();
-	void possibleMoves(Grid &grid,Grid**);
+	void possibleMoves(Grid &grid,std::vector<Grid>&);
 	void setOpponent(int x , int y){oppo_x = x; oppo_y = y;}
-	void randomMove(Grid &,Grid*);
+	void randomMove(Grid &,Grid&);
 	inline void setX(int x){this->x = x;}
 	inline int getX(){return x;}
 	inline int getY(){return y;}
@@ -56,13 +56,13 @@ protected:
 	int oppo_y;
 	int width;
 	Grid * grid;
-	void upMove(Grid & grid,int, Grid * result);
-	void rightMove(Grid & grid, int,Grid * result);
-	void leftMove(Grid& ,int, Grid * result);
-	void downMove(Grid &,int , Grid * result);
-	void topMoves(Grid &,Grid**);
-	void bottomMoves(Grid &,Grid**);
-	void middleMoves(Grid &,Grid**);
+	void upMove(Grid & grid,int, Grid & result);
+	void rightMove(Grid & grid, int,Grid & result);
+	void leftMove(Grid& ,int, Grid & result);
+	void downMove(Grid &,int , Grid & result);
+	void topMoves(Grid &,std::vector<Grid>&);
+	void bottomMoves(Grid &,std::vector<Grid>&);
+	void middleMoves(Grid &,std::vector<Grid>&);
 	bool debug;
 };
 }

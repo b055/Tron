@@ -101,7 +101,6 @@ void Human::play()
 			//std::cout<<"caught right move\n";
 			if(x == width-1)
 			{
-				std::cout<<"at the edge\n";
 				rightMove(-1);
 				return;
 			}
@@ -114,8 +113,6 @@ void Human::play()
 			if(x==0)
 			{
 				leftMove(width);
-				grid->setPlayerOneHeadX(x);
-				grid->setPlayerOneHeadY(y);
 				return;
 			}
 			leftMove(this->x);

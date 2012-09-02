@@ -27,7 +27,24 @@ namespace tron{
 		valid = false;
 		 result = new int[2];
 	}
-
+	Grid::Grid():width(4)
+	{
+		cells = width * width;
+		statewidth = 6+(width/2*width/2);
+		state = new double[statewidth];
+		for(int i =0;i<width;i++)
+		{
+			std::vector<int> temp;
+			for(int j = 0;j<width;j++)
+			{
+				temp.push_back(0);
+			}
+			grid.push_back(temp);
+		}
+		turn = 0;
+		valid = false;
+		result = new int[2];
+	}
 	void Grid::reset()
 	{
 		player_one_head_x = 0;
@@ -97,10 +114,10 @@ namespace tron{
 		return *this;
 	}
 	Grid::~Grid() {
-		for(int i = 0;i<width;i++)
-			grid[i].~vector();
-		grid.~vector();
-		delete [] state;
+		//for(int i = 0;i<width;i++)
+			//grid[i].~vector();
+		//grid.~vector();
+		//delete [] state;
 	}
 
 	void Grid::setPlayerOneHead(int x, int y )
@@ -311,5 +328,61 @@ namespace tron{
 
 		}
 		return false;
+	}
+	int Grid::loser()
+	{
+		if(endState())
+		{
+			if(grid[player_one_head_y][player_one_head_x] ==2)
+			{
+				return 0;
+			}
+			if(grid[player_two_head_y][player_two_head_x] ==6)
+			{
+				return 1;
+			}
+			int check_top =0;
+			int check_bot = 0;
+			for (int i = 0;i<width;i++)
+			{
+				if((grid[0][i]) != 0)
+				{
+					check_top+=(grid[0][i]);
+				}
+				if(grid[width-1][i]!=0)
+				{
+					check_bot+=grid[width-1][i];
+				}
+			}
+			if(check_top == 6 || check_bot == 6)
+				return 1;
+			else if(check_top == 2 || check_bot ==2)
+				return 0;
+
+			int ones = 0;
+			int twos = 0;
+			for (int j=0;j<width;j++)
+			{
+				for (int i =0;i<width;i++)
+				{
+					if (grid[j][i] == 1)
+					{
+						ones++;
+					}
+					else if (grid[j][i]== 3)
+					{
+						twos++;
+					}
+				}
+			}
+			if(ones<twos)
+				return 0;
+			else
+				return 1;
+		}
+		else
+		{
+			return -1;
+		}
 	}
 }

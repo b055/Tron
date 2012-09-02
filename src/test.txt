@@ -1,82 +1,23 @@
 top second move
-in the alpha beta
-in the maximuma 6
-in the minimum 7
-player one: x 0 y 1
-player two: x 0 y 5
-1 0 0 0 0 0 
-1 0 0 0 0 0 
-0 0 0 0 0 0 
-0 0 0 0 0 0 
-0 0 0 0 0 0 
-3 0 0 0 0 0 
-
-in the maximuma 8
-in the minimum 9
-player one: x 1 y 1
-player two: x 0 y 5
-1 0 0 0 0 0 
-1 1 0 0 0 0 
-0 0 0 0 0 0 
-0 0 0 0 0 0 
-3 0 0 0 0 0 
-3 0 0 0 0 0 
-
-in the maximuma 10
-in the minimum 11
-player one: x 2 y 1
-player two: x 0 y 5
-1 0 0 0 0 0 
-1 1 1 0 0 0 
-0 0 0 0 0 0 
-0 0 0 0 0 0 
-3 3 0 0 0 0 
-3 0 0 0 0 0 
-
-in the maximuma 12
-in the minimum 13
-player one: x 3 y 1
-player two: x 0 y 5
-1 0 0 0 0 0 
-1 1 1 1 0 0 
-0 0 0 0 0 0 
-0 0 0 0 0 0 
-3 3 3 0 0 0 
-3 0 0 0 0 0 
-
-in the maximuma 14
-in the minimum 15
-player one: x 4 y 1
-player two: x 0 y 5
-1 0 0 0 0 0 
-1 1 1 1 1 0 
-0 0 0 0 0 0 
-0 0 0 0 0 0 
-3 3 3 3 0 0 
-3 0 0 0 0 0 
-
-in the maximuma 16
-in the minimum 17
-player one: x 5 y 1
-player two: x 0 y 5
-1 0 0 0 0 0 
-1 1 1 1 1 1 
-0 0 0 0 0 0 
-0 0 0 0 0 0 
-3 3 3 3 3 0 
-3 0 0 0 0 0 
-
-in the maximuma 18
-go to fetch random move
-in the minimum 19
-player one: x 0 y 1
-player two: x 5 y 4
-1 0 0 0 0 0 
-2 1 1 1 1 1 
-0 0 0 0 0 0 
-0 0 0 0 0 0 
-3 3 3 3 3 3 
-3 0 0 0 0 0 
+top second move
+ --- MINIMUM ---   0
 
 
+4 0these are the values calculated 
 
+
+6 0these are the values calculated 
+
+
+4 0these are the values calculated 
+
+
+6 0these are the values calculated 
+playing first movve
+player one: x 1 y 3
+player two: x 1 y 0
+0 1 0 0 
+0 0 0 0 
+0 0 0 0 
+0 3 0 0 
+Please play a move(3): 
