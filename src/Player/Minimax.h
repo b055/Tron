@@ -20,8 +20,8 @@ public:
 	void play();
 private:
 	Grid& alpha_beta(Grid&, int );
-	int min(Grid,int,int,int);
-	int max(Grid,int,int,int);
+	float min(Grid,float,float,int,Grid & next);
+	float max(Grid,float,float,int,Grid & next);
 
 };
 } /* namespace tron */

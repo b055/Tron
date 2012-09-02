@@ -1,23 +1,1209 @@
-top second move
-top second move
- --- MINIMUM ---   0
+middle second move
 
 
-4 0these are the values calculated 
 
 
-6 0these are the values calculated 
 
 
-4 0these are the values calculated 
 
 
-6 0these are the values calculated 
-playing first movve
-player one: x 1 y 3
-player two: x 1 y 0
+
+
+
+
+1  1  1  -1
+player one: x 1 y 1
+player two: x 1 y 1
+0 0 0 3 
+1 4 0 3 
+1 1 0 3 
 0 1 0 0 
+
+1  1  1  -1
+player one: x 0 y 1
+player two: x 1 y 1
+0 0 0 3 
+1 3 0 3 
+1 1 0 3 
+0 1 0 0 
+
+
+
+
+
+
+
+1  1  1  -1
+player one: x 2 y 1
+player two: x 2 y 2
+0 0 0 3 
+1 0 4 3 
+1 1 3 3 
+0 1 0 0 
+
+0  1  1  -1
+player one: x 1 y 1
+player two: x 2 y 2
+0 0 0 3 
+1 0 3 3 
+1 1 3 3 
+0 1 0 0 
+
+
+
+1  1  0  -1
+player one: x 2 y 1
+player two: x 1 y 1
+0 0 0 3 
+1 3 4 3 
+1 1 0 3 
+0 1 0 0 
+
+0  1  0  -1
+player one: x 1 y 1
+player two: x 1 y 1
+0 0 0 3 
+1 3 3 3 
+1 1 0 3 
+0 1 0 0 
+
+1  0  1  -1
+player one: x 1 y 1
+player two: x 2 y 1
+0 0 0 3 
+1 0 3 3 
+1 1 0 3 
+0 1 0 0 
+
+1  1  1  -1
+player one: x 0 y 1
+player two: x 2 y 1
+0 0 0 3 
+1 0 3 3 
+1 1 0 3 
+0 1 0 0 
+
+1  1  1  -1
+player one: x 0 y 1
+player two: x 3 y 0
+0 0 0 3 
+1 0 0 3 
+1 1 0 3 
+0 1 0 0 
+
+-1  1  1  -1
+player one: x 0 y 2
+player two: x 3 y 0
+0 0 0 3 
+0 0 0 3 
+1 1 0 3 
+0 1 0 0 
+
+-1  -1  1  -1
+player one: x 0 y 2
+player two: x 3 y 1
+0 0 0 0 
+0 0 0 3 
+1 1 0 3 
+0 1 0 0 
+
+
+
+
+
+
+
+
+
+
+
+
+
+-1  -1  1  -1
+player one: x 2 y 1
+player two: x 0 y 2
+0 0 0 3 
+3 1 2 3 
+3 1 1 3 
+0 1 0 0 
+
+-1  -1  1  -1
+player one: x 1 y 1
+player two: x 0 y 2
+0 0 0 3 
+3 1 1 3 
+3 1 1 3 
+0 1 0 0 
+
+1  -1  1  -1
+player one: x 1 y 1
+player two: x 0 y 1
+0 0 0 3 
+3 1 1 3 
+0 1 1 3 
+0 1 0 0 
+
+1  1  1  -1
+player one: x 2 y 1
+player two: x 0 y 1
+0 0 0 3 
+3 0 1 3 
+0 1 1 3 
+0 1 0 0 
+
+
+
+1  1  1  -1
+player one: x 3 y 1
+player two: x 1 y 1
+0 0 0 3 
+0 3 1 4 
+0 1 1 3 
+0 1 0 0 
+
+1  1  1  -1
+player one: x 2 y 1
+player two: x 1 y 1
+0 0 0 3 
+0 3 1 3 
+0 1 1 3 
+0 1 0 0 
+
+1  1  1  -1
+player one: x 2 y 1
+player two: x 3 y 0
+0 0 0 3 
+0 0 1 3 
+0 1 1 3 
+0 1 0 0 
+
+-1  1  1  -1
+player one: x 2 y 2
+player two: x 3 y 0
+0 0 0 3 
+0 0 0 3 
+0 1 1 3 
+0 1 0 0 
+
+-1  -1  1  -1
+player one: x 2 y 2
+player two: x 3 y 1
+0 0 0 0 
+0 0 0 3 
+0 1 1 3 
+0 1 0 0 
+
+-1  -1  1  -1
+player one: x 1 y 3
+player two: x 3 y 1
+0 0 0 0 
+0 0 0 3 
+0 1 0 3 
+0 1 0 0 
+
+-1  -1  1  -1
+player one: x 1 y 3
+player two: x 3 y 2
 0 0 0 0 
 0 0 0 0 
-0 3 0 0 
+0 1 0 3 
+0 1 0 0 
+
+player one: x 1 y 3
+player two: x 3 y 2
+0 0 0 0 
+0 0 0 0 
+0 1 0 3 
+0 1 0 0 
+
+
+
+
+
+
+
+
+
+
+1  1  1  -1
+player one: x 0 y 1
+player two: x 1 y 2
+0 1 0 0 
+1 1 0 0 
+3 4 0 3 
+0 0 0 3 
+
+1  1  1  -1
+player one: x 0 y 1
+player two: x 0 y 2
+0 1 0 0 
+1 1 0 0 
+3 1 0 3 
+0 0 0 3 
+
+1  1  1  -1
+player one: x 1 y 0
+player two: x 0 y 2
+0 1 0 0 
+0 1 0 0 
+3 1 0 3 
+0 0 0 3 
+
+
+
+
+
+
+
+
+
+
+
+-1  -1  1  -1
+player one: x 1 y 2
+player two: x 3 y 1
+0 1 0 0 
+1 1 3 3 
+1 2 3 3 
+0 0 0 3 
+
+-1  -1  1  -1
+player one: x 0 y 2
+player two: x 3 y 1
+0 1 0 0 
+1 1 3 3 
+1 1 3 3 
+0 0 0 3 
+
+1  -1  1  -1
+player one: x 0 y 2
+player two: x 2 y 1
+0 1 0 0 
+1 1 3 0 
+1 1 3 3 
+0 0 0 3 
+
+-1  1  1  -1
+player one: x 0 y 1
+player two: x 2 y 1
+0 1 0 0 
+1 1 3 0 
+0 1 3 3 
+0 0 0 3 
+
+-0.333333  -1  1  -1
+player one: x 0 y 1
+player two: x 2 y 2
+0 1 0 0 
+1 1 0 0 
+0 1 3 3 
+0 0 0 3 
+
+
+
+1  1  1  -0.333333
+player one: x 2 y 1
+player two: x 3 y 2
+0 1 0 0 
+0 1 1 0 
+0 1 3 6 
+0 0 0 3 
+
+1  1  1  -0.333333
+player one: x 2 y 1
+player two: x 2 y 2
+0 1 0 0 
+0 1 1 0 
+0 1 3 3 
+0 0 0 3 
+
+1  1  1  -1
+player one: x 1 y 0
+player two: x 2 y 2
+0 1 0 0 
+0 1 0 0 
+0 1 3 3 
+0 0 0 3 
+
+1  1  1  -1
+player one: x 1 y 0
+player two: x 3 y 3
+0 1 0 0 
+0 1 0 0 
+0 1 0 3 
+0 0 0 3 
+
+0.333333  1  1  -1
+player one: x 1 y 1
+player two: x 3 y 3
+0 0 0 0 
+0 1 0 0 
+0 1 0 3 
+0 0 0 3 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1  1  0.333333  -1
+player one: x 3 y 2
+player two: x 0 y 3
+0 1 0 0 
+3 1 1 3 
+3 1 1 4 
+3 0 0 0 
+
+0  1  0.333333  -1
+player one: x 2 y 2
+player two: x 0 y 3
+0 1 0 0 
+3 1 1 3 
+3 1 1 3 
+3 0 0 0 
+
+0  0  0.333333  -1
+player one: x 2 y 2
+player two: x 0 y 2
+0 1 0 0 
+3 1 1 3 
+3 1 1 3 
+0 0 0 0 
+
+0  0  0.333333  -1
+player one: x 2 y 1
+player two: x 0 y 2
+0 1 0 0 
+3 1 1 3 
+3 1 0 3 
+0 0 0 0 
+
+0  0  0.333333  -1
+player one: x 2 y 1
+player two: x 0 y 1
+0 1 0 0 
+3 1 1 3 
+0 1 0 3 
+0 0 0 0 
+
+0  0  0.333333  -1
+player one: x 1 y 0
+player two: x 0 y 1
+0 1 0 0 
+3 1 0 3 
+0 1 0 3 
+0 0 0 0 
+
+
+
+
+
+
+
+
+
+
+
+-1  -1  0  -1
+player one: x 1 y 2
+player two: x 2 y 3
+0 1 0 0 
+1 1 3 3 
+1 2 3 3 
+0 0 3 0 
+
+-1  -1  0  -1
+player one: x 0 y 2
+player two: x 2 y 3
+0 1 0 0 
+1 1 3 3 
+1 1 3 3 
+0 0 3 0 
+
+0  -1  0  -1
+player one: x 0 y 2
+player two: x 2 y 2
+0 1 0 0 
+1 1 3 3 
+1 1 3 3 
+0 0 0 0 
+
+0  0  0  -1
+player one: x 0 y 1
+player two: x 2 y 2
+0 1 0 0 
+1 1 3 3 
+0 1 3 3 
+0 0 0 0 
+
+0  0  0  -1
+player one: x 0 y 1
+player two: x 2 y 1
+0 1 0 0 
+1 1 3 3 
+0 1 0 3 
+0 0 0 0 
+
+0  0  0  -1
+player one: x 1 y 0
+player two: x 2 y 1
+0 1 0 0 
+0 1 3 3 
+0 1 0 3 
+0 0 0 0 
+
+0  0  0.333333  -1
+player one: x 1 y 0
+player two: x 3 y 1
+0 1 0 0 
+0 1 0 3 
+0 1 0 3 
+0 0 0 0 
+
+
+
+
+
+
+
+
+
+
+
+
+
+1  1  0.333333  0
+player one: x 2 y 2
+player two: x 2 y 2
+0 0 0 3 
+1 1 3 3 
+1 1 4 3 
+1 0 0 0 
+
+0  1  0.333333  0
+player one: x 0 y 3
+player two: x 2 y 2
+0 0 0 3 
+1 1 3 3 
+1 1 3 3 
+1 0 0 0 
+
+0  0  0.333333  0
+player one: x 0 y 3
+player two: x 2 y 1
+0 0 0 3 
+1 1 3 3 
+1 1 0 3 
+1 0 0 0 
+
+0  0  0.333333  0
+player one: x 0 y 2
+player two: x 2 y 1
+0 0 0 3 
+1 1 3 3 
+1 1 0 3 
+0 0 0 0 
+
+0  0  0.333333  0
+player one: x 0 y 2
+player two: x 3 y 0
+0 0 0 3 
+1 1 0 3 
+1 1 0 3 
+0 0 0 0 
+
+0  0  0.333333  0
+player one: x 0 y 1
+player two: x 3 y 0
+0 0 0 3 
+1 1 0 3 
+0 1 0 3 
+0 0 0 0 
+
+0  0  0.333333  0
+player one: x 0 y 1
+player two: x 3 y 1
+0 0 0 0 
+1 1 0 3 
+0 1 0 3 
+0 0 0 0 
+
+
+
+
+
+1  1  0.333333  0
+player one: x 3 y 1
+player two: x 3 y 0
+0 0 0 3 
+0 1 0 4 
+0 1 1 3 
+0 0 0 0 
+
+1  1  0.333333  0
+player one: x 2 y 1
+player two: x 3 y 0
+0 0 0 3 
+0 1 0 3 
+0 1 1 3 
+0 0 0 0 
+
+
+
+
+
+
+
+
+
+
+
+1  1  0.333333  0
+player one: x 3 y 1
+player two: x 0 y 3
+0 0 1 0 
+3 1 1 4 
+3 1 1 3 
+3 0 0 0 
+
+0  1  0.333333  0
+player one: x 2 y 1
+player two: x 0 y 3
+0 0 1 0 
+3 1 1 3 
+3 1 1 3 
+3 0 0 0 
+
+1  0  0.333333  0
+player one: x 2 y 1
+player two: x 0 y 2
+0 0 1 0 
+3 1 1 3 
+3 1 1 3 
+0 0 0 0 
+
+0  1  0.333333  0
+player one: x 2 y 0
+player two: x 0 y 2
+0 0 1 0 
+3 1 0 3 
+3 1 1 3 
+0 0 0 0 
+
+0.333333  0  0.333333  0
+player one: x 2 y 0
+player two: x 0 y 1
+0 0 1 0 
+3 1 0 3 
+0 1 1 3 
+0 0 0 0 
+
+0.333333  0.333333  0.333333  0
+player one: x 2 y 1
+player two: x 0 y 1
+0 0 0 0 
+3 1 0 3 
+0 1 1 3 
+0 0 0 0 
+
+
+
+
+
+1  1  0.333333  0
+player one: x 2 y 0
+player two: x 3 y 1
+0 0 1 0 
+0 1 3 6 
+0 1 1 3 
+0 0 0 0 
+
+1  1  0.333333  0
+player one: x 2 y 0
+player two: x 2 y 1
+0 0 1 0 
+0 1 3 3 
+0 1 1 3 
+0 0 0 0 
+
+0  1  0.333333  0
+player one: x 2 y 1
+player two: x 2 y 1
+0 0 0 0 
+0 1 3 3 
+0 1 1 3 
+0 0 0 0 
+
+0  0  0.333333  0
+player one: x 2 y 1
+player two: x 3 y 1
+0 0 0 0 
+0 1 0 3 
+0 1 1 3 
+0 0 0 0 
+
+0  0  0.333333  -1
+player one: x 1 y 1
+player two: x 3 y 1
+0 0 0 0 
+0 1 0 3 
+0 1 0 3 
+0 0 0 0 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-1  -1  0  -1
+player one: x 0 y 1
+player two: x 2 y 1
+0 1 0 0 
+2 1 3 1 
+3 1 3 3 
+3 0 0 0 
+
+-1  -1  0  -1
+player one: x 3 y 1
+player two: x 2 y 1
+0 1 0 0 
+1 1 3 1 
+3 1 3 3 
+3 0 0 0 
+
+0  -1  0  -1
+player one: x 3 y 1
+player two: x 2 y 2
+0 1 0 0 
+1 1 0 1 
+3 1 3 3 
+3 0 0 0 
+
+0  0  0  -1
+player one: x 0 y 1
+player two: x 2 y 2
+0 1 0 0 
+1 1 0 0 
+3 1 3 3 
+3 0 0 0 
+
+0  0  0  -1
+player one: x 0 y 1
+player two: x 0 y 3
+0 1 0 0 
+1 1 0 0 
+3 1 0 3 
+3 0 0 0 
+
+0  0  0  -1
+player one: x 1 y 0
+player two: x 0 y 3
+0 1 0 0 
+0 1 0 0 
+3 1 0 3 
+3 0 0 0 
+
+
+
+
+
+
+
+
+
+1  1  0  -1
+player one: x 2 y 2
+player two: x 0 y 1
+0 1 0 0 
+6 1 1 3 
+3 1 1 3 
+0 0 0 0 
+
+1  1  0  -1
+player one: x 2 y 2
+player two: x 3 y 1
+0 1 0 0 
+3 1 1 3 
+3 1 1 3 
+0 0 0 0 
+
+-1  1  0  -1
+player one: x 2 y 1
+player two: x 3 y 1
+0 1 0 0 
+3 1 1 3 
+3 1 0 3 
+0 0 0 0 
+
+-1  -1  0  -1
+player one: x 2 y 1
+player two: x 0 y 1
+0 1 0 0 
+3 1 1 0 
+3 1 0 3 
+0 0 0 0 
+
+
+
+1  1  0  -1
+player one: x 3 y 1
+player two: x 1 y 1
+0 1 0 0 
+3 4 0 1 
+3 1 0 3 
+0 0 0 0 
+
+1  1  0  -1
+player one: x 3 y 1
+player two: x 0 y 1
+0 1 0 0 
+3 1 0 1 
+3 1 0 3 
+0 0 0 0 
+
+1  1  0  -1
+player one: x 1 y 0
+player two: x 0 y 1
+0 1 0 0 
+3 1 0 0 
+3 1 0 3 
+0 0 0 0 
+
+1  1  0  -1
+player one: x 1 y 0
+player two: x 0 y 2
+0 1 0 0 
+0 1 0 0 
+3 1 0 3 
+0 0 0 0 
+
+0.333333  1  0  -1
+player one: x 1 y 1
+player two: x 0 y 2
+0 0 0 0 
+0 1 0 0 
+3 1 0 3 
+0 0 0 0 
+
+
+
+
+
+
+
+
+
+
+
+
+
+1  1  0  -1
+player one: x 3 y 1
+player two: x 1 y 2
+0 1 0 0 
+1 1 0 1 
+3 4 3 3 
+0 0 3 0 
+
+1  1  0  -1
+player one: x 3 y 1
+player two: x 0 y 2
+0 1 0 0 
+1 1 0 1 
+3 1 3 3 
+0 0 3 0 
+
+-1  1  0  -1
+player one: x 0 y 1
+player two: x 0 y 2
+0 1 0 0 
+1 1 0 0 
+3 1 3 3 
+0 0 3 0 
+
+-1  -1  0  -1
+player one: x 0 y 1
+player two: x 2 y 3
+0 1 0 0 
+1 1 0 0 
+0 1 3 3 
+0 0 3 0 
+
+
+
+
+
+
+
+
+
+1  1  0  -1
+player one: x 0 y 1
+player two: x 0 y 1
+0 1 0 0 
+4 1 1 0 
+3 1 3 1 
+0 0 3 0 
+
+0  1  0  -1
+player one: x 3 y 1
+player two: x 0 y 1
+0 1 0 0 
+3 1 1 0 
+3 1 3 1 
+0 0 3 0 
+
+0  0  0  -1
+player one: x 3 y 1
+player two: x 0 y 2
+0 1 0 0 
+0 1 1 0 
+3 1 3 1 
+0 0 3 0 
+
+0  0  0  -1
+player one: x 2 y 1
+player two: x 0 y 2
+0 1 0 0 
+0 1 1 0 
+3 1 3 3 
+0 0 3 0 
+
+0  0  0  -1
+player one: x 2 y 1
+player two: x 2 y 3
+0 1 0 0 
+0 1 1 0 
+0 1 3 3 
+0 0 3 0 
+
+0  0  0  -1
+player one: x 1 y 0
+player two: x 2 y 3
+0 1 0 0 
+0 1 0 0 
+0 1 3 3 
+0 0 3 0 
+
+
+
+
+
+
+
+
+
+1  1  0  -1
+player one: x 0 y 2
+player two: x 0 y 1
+0 1 0 0 
+4 1 3 3 
+1 1 3 3 
+0 0 0 0 
+
+1  1  0  -1
+player one: x 0 y 2
+player two: x 3 y 1
+0 1 0 0 
+1 1 3 3 
+1 1 3 3 
+0 0 0 0 
+
+-1  1  0  -1
+player one: x 0 y 1
+player two: x 3 y 1
+0 1 0 0 
+1 1 3 3 
+0 1 3 3 
+0 0 0 0 
+
+-1  -1  0  -1
+player one: x 0 y 1
+player two: x 2 y 1
+0 1 0 0 
+1 1 3 0 
+0 1 3 3 
+0 0 0 0 
+
+
+
+1  1  0  -1
+player one: x 3 y 1
+player two: x 3 y 1
+0 1 0 0 
+0 1 3 4 
+0 1 3 3 
+0 0 0 0 
+
+1  1  0  -1
+player one: x 3 y 1
+player two: x 2 y 1
+0 1 0 0 
+0 1 3 1 
+0 1 3 3 
+0 0 0 0 
+
+1  1  0  -1
+player one: x 1 y 0
+player two: x 2 y 1
+0 1 0 0 
+0 1 3 0 
+0 1 3 3 
+0 0 0 0 
+
+1  1  0  -1
+player one: x 1 y 0
+player two: x 2 y 2
+0 1 0 0 
+0 1 0 0 
+0 1 3 3 
+0 0 0 0 
+
+0.333333  1  0  -1
+player one: x 1 y 1
+player two: x 2 y 2
+0 0 0 0 
+0 1 0 0 
+0 1 3 3 
+0 0 0 0 
+
+0.333333  0.333333  1  -1
+player one: x 1 y 1
+player two: x 3 y 2
+0 0 0 0 
+0 1 0 0 
+0 1 0 3 
+0 0 0 0 
+
+player one: x 1 y 1
+player two: x 3 y 2
+0 0 0 0 
+0 1 0 0 
+0 1 0 3 
+0 0 0 0 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1  1  1  0.333333
+player one: x 2 y 1
+player two: x 3 y 1
+1 0 0 0 
+1 1 4 3 
+1 1 3 3 
+0 0 0 3 
+
+0  1  1  0.333333
+player one: x 1 y 1
+player two: x 3 y 1
+1 0 0 0 
+1 1 3 3 
+1 1 3 3 
+0 0 0 3 
+
+1  0  1  0.333333
+player one: x 1 y 1
+player two: x 2 y 1
+1 0 0 0 
+1 1 3 0 
+1 1 3 3 
+0 0 0 3 
+
+0  1  1  0.333333
+player one: x 0 y 0
+player two: x 2 y 1
+1 0 0 0 
+1 0 3 0 
+1 1 3 3 
+0 0 0 3 
+
+1  0  1  0.333333
+player one: x 0 y 0
+player two: x 2 y 2
+1 0 0 0 
+1 0 0 0 
+1 1 3 3 
+0 0 0 3 
+
+0.5  1  1  0.333333
+player one: x 0 y 1
+player two: x 2 y 2
+0 0 0 0 
+1 0 0 0 
+1 1 3 3 
+0 0 0 3 
+
+0.5  0.5  1  0.333333
+player one: x 0 y 1
+player two: x 3 y 3
+0 0 0 0 
+1 0 0 0 
+1 1 0 3 
+0 0 0 3 
+
+0.333333  0.5  1  0.333333
+player one: x 0 y 2
+player two: x 3 y 3
+0 0 0 0 
+0 0 0 0 
+1 1 0 3 
+0 0 0 3 
+
+0.333333  0.333333  1  0.333333
+player one: x 0 y 2
+player two: x 3 y 2
+0 0 0 0 
+0 0 0 0 
+1 1 0 3 
+0 0 0 0 
+
+player one: x 0 y 2
+player two: x 3 y 2
+0 0 0 0 
+0 0 0 0 
+1 1 0 3 
+0 0 0 0 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-1  -1  1  0.333333
+player one: x 2 y 1
+player two: x 3 y 1
+0 0 1 0 
+3 1 2 3 
+3 1 1 3 
+0 0 0 3 
+
+-1  -1  1  0.333333
+player one: x 1 y 1
+player two: x 3 y 1
+0 0 1 0 
+3 1 1 3 
+3 1 1 3 
+0 0 0 3 
+
+1  -1  1  0.333333
+player one: x 1 y 1
+player two: x 0 y 1
+0 0 1 0 
+3 1 1 0 
+3 1 1 3 
+0 0 0 3 
+
+0  1  1  0.333333
+player one: x 2 y 0
+player two: x 0 y 1
+0 0 1 0 
+3 0 1 0 
+3 1 1 3 
+0 0 0 3 
+
+1  0  1  0.333333
+player one: x 2 y 0
+player two: x 0 y 2
+0 0 1 0 
+0 0 1 0 
+3 1 1 3 
+0 0 0 3 
+
+0.5  1  1  0.333333
+player one: x 2 y 1
+player two: x 0 y 2
+0 0 0 0 
+0 0 1 0 
+3 1 1 3 
+0 0 0 3 
+
+0.5  0.5  1  0.333333
+player one: x 2 y 1
+player two: x 3 y 3
+0 0 0 0 
+0 0 1 0 
+0 1 1 3 
+0 0 0 3 
+
+0.333333  0.5  1  0.333333
+player one: x 2 y 2
+player two: x 3 y 3
+0 0 0 0 
+0 0 0 0 
+0 1 1 3 
+0 0 0 3 
+
+0.333333  0.333333  1  0.333333
+player one: x 2 y 2
+player two: x 3 y 2
+0 0 0 0 
+0 0 0 0 
+0 1 1 3 
+0 0 0 0 
+
+player one: x 2 y 2
+player two: x 3 y 2
+0 0 0 0 
+0 0 0 0 
+0 1 1 3 
+0 0 0 0 
+
+
+-1 0.333333 these are the values calculated 
+
+
+-0.142857 0.333333 these are the values calculated 
+
+
+-0.2 0.333333 these are the values calculated 
+
+
+-0.2 0.333333 these are the values calculated 
+playing first movve
+player one: x 2 y 3
+player two: x 2 y 0
+0 0 1 0 
+0 0 0 0 
+0 0 0 0 
+0 0 3 0 
 Please play a move(3): 

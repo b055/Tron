@@ -28,8 +28,56 @@ Voronoi::Voronoi(Grid * grid,int width):width(width)
 		vor.push_back(temp);
 		one.push_back(other);
 		two.push_back(other);
-
 	}
+	for(int j = 0;j<width;j++)
+		if(this->grid.getGrid()[0][j] !=0){
+			if(0 == this->grid.getPlayerOneHeadY())
+			{
+				for(int i = 0;i<width;i++)
+				{
+					one[0][i] = 0;
+				}
+			}
+			else if(0 == this->grid.getPlayerTwoHeadY())
+			{
+				for(int i = 0;i<width;i++)
+				{
+					two[0][i] = 0;
+				}
+			}
+			else{
+				for(int i = 0;i<width;i++)
+				{
+					pos[0][i] = 1;
+				}
+			}
+			break;
+		}
+	for(int j = 0;j<width;j++)
+		if(this->grid.getGrid()[width-1][j] !=0){
+			if(width-1 == this->grid.getPlayerOneHeadY())
+			{
+				for(int i = 0;i<width;i++)
+				{
+					one[width-1][i] = 0;
+				}
+			}
+			else if(width-1 == this->grid.getPlayerTwoHeadY())
+			{
+				for(int i = 0;i<width;i++)
+				{
+					two[width-1][i] = 0;
+				}
+			}
+			else
+			{
+				for(int i = 0;i<width;i++)
+				{
+					pos[width-1][i] = 1;
+				}
+			}
+			break;
+		}
 	//std::cout<<"here's the one coordinate "<<grid->getPlayerOneHeadY()<<" "<<grid->getPlayerOneHeadX()<<std::endl;
 	one[grid->getPlayerOneHeadY()][grid->getPlayerOneHeadX()]=0;
 	two[grid->getPlayerTwoHeadY()][grid->getPlayerTwoHeadX()] = 0;
@@ -437,20 +485,20 @@ void Voronoi::getMerge(int turn){
 			vor[i][j] = (one[i][j]%VAR-two[i][j]%VAR);
 
 }
-int* Voronoi::calculate(int player)
+float* Voronoi::calculate(int player)
 {
-	int* result = new int[2];
+
+	float* result = new float[2];
 	if(grid.endState())
 	{
 		if(grid.loser() == 0)
 		{
-			result[0] = -std::numeric_limits<int>::infinity();
-			result[1] = std::numeric_limits<int>::infinity();
+			std::cout<<grid.printGrid();
+			result[0] = -1;result[1]=1;
 		}
-		else
+		else if(grid.loser() ==1)
 		{
-			result[1] = -std::numeric_limits<int>::infinity();
-			result[0] = std::numeric_limits<int>::infinity();
+			result[1]=-1;result[0]=1;
 		}
 		return result;
 	}
@@ -511,9 +559,16 @@ int* Voronoi::calculate(int player)
 	else if(vor[width-1][0]>0)
 		two++;
 
-
-	result[0] = one;
-	result[1] = two;
+/*
+	if(one == 0 && two == 0)
+	{
+		result[0] = 0;result[1] = 0;
+	}
+	else*/
+	{
+		result[0] = (one-two)/(float)(one+two);
+		result[1] = (two-one)/(float)(one+two);
+	}
 
 	return result;
 }

@@ -45,7 +45,7 @@ public:
 	std::string outputOne();
 	std::string outputTwo();
 	virtual ~Voronoi();
-	int * calculate(int);
+	float * calculate(int);
 	inline void setWidth(int w){width = w;}
 
 };
