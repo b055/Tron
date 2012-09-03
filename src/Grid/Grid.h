@@ -11,6 +11,7 @@
 #include <string>
 #include <sstream>
 #include <iostream>
+#include <fstream>
 #include <stdio.h>
 #include <vector>
 #include <algorithm>
@@ -19,6 +20,7 @@
 namespace tron{
 class Grid {
 public:
+	Grid(std::string);
 	Grid(int );
 	Grid();
 	Grid(int * ,int*, int**);
@@ -46,8 +48,11 @@ public:
 	inline void setPlayerTwoHeadX(int x){player_two_head_x = x;}
 	inline void setPlayerTwoHeadY(int y){player_two_head_y = y;}
 	inline void setLoser(int l){loser = l;}
+	void readFile(std::string);
+	void outputFile();
 	inline int getLoser(){return loser;}
 	bool endState();
+
 private:
 	std::vector<std::vector<int> > grid;
 	int player_one_head_x;
@@ -62,6 +67,7 @@ private:
 	int cells;
 	int * result;
 	int loser;
+	std::string sourceFile;
 };
 }
 #endif /* GRID_H_ */

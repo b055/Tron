@@ -45,6 +45,23 @@ namespace tron{
 		valid = false;
 		result = new int[2];
 	}
+	Grid::Grid(std::string src):width(30)
+	{
+		valid = true;
+		result = new int[2];
+		loser = 0;
+		sourceFile = src;
+		for(int i =0;i<width;i++)
+		{
+			std::vector<int> temp;
+			for(int j = 0;j<width;j++)
+			{
+				temp.push_back(0);
+			}
+			grid.push_back(temp);
+		}
+		readFile(src);
+	}
 	void Grid::reset()
 	{
 		player_one_head_x = 0;
@@ -97,8 +114,113 @@ namespace tron{
 	//	std::cout<<"left this stupid constructore\n";
 	}
 
+	void Grid::readFile(std::string src)
+	{
+		std::ifstream stream;
+		stream.open(src.c_str());
 
+		std::string row;
+		std::string x;
+		std::string y;
+		std::string value;
+		int x_coord,y_coord;
+		while(!stream.eof())
+		{
+			getline(stream,row);
+			std::stringstream colstream(row);
+			getline(colstream,x,' ');
+			getline(colstream,y,' ');
+			getline(colstream,value,' ');
+			x_coord = strtold(x.c_str(),0);
+			y_coord = strtold(y.c_str(),0);
+			if(value.compare("Clear") ==0)
+			{
+				grid[y_coord][x_coord] = 0;
+			}
+			else if(value.compare("YourWall") ==0)
+			{
+				grid[y_coord][x_coord] = 1;
+			}
+			else if(value.compare("Opponent") ==0)
+			{
+				player_two_head_x = x_coord;
+				player_two_head_y = y_coord;
+				grid[player_two_head_y][player_two_head_x] = 3;
+			}
+			else if(value.compare("OpponentWall")==0)
+			{
+				grid[y_coord][x_coord] = 3;
+			}
+			else if (value.compare("You")==0)
+			{
+				player_one_head_x = x_coord;
+				player_one_head_y = y_coord;
+				grid[player_one_head_y][player_one_head_x] = 1;
+			}
+		}
 
+	}
+	void Grid::outputFile()
+	{
+		std::stringstream outss;
+
+		std::ofstream filestream(sourceFile.c_str());
+		for(int i = 0 ;i<width;i++)
+			for(int j = 0;j<width;j++)
+			{
+				if(grid[j][i] == 0)
+				{
+					outss<<i<<" "<<j<<" Clear \r\n";
+				}
+				else if(grid[j][i] == 1)
+				{
+					if(player_one_head_x != i && player_one_head_y != j)
+					{
+						outss<<i<<" "<<j<<" OpponentWall \r\n";
+					}
+					else if(player_one_head_x == i && player_one_head_y == j)
+					{
+						outss<<i<<" "<<j<<" Opponent \r\n";
+					}
+				}
+				else if(grid[j][i] == 3)
+				{
+					if(player_two_head_x != i && player_two_head_y != j)
+					{
+						outss<<i<<" "<<j<<" YourWall \r\n";
+					}
+					else if(player_two_head_x == i && player_two_head_y == j)
+					{
+						outss<<i<<" "<<j<<" You \r\n";
+					}
+				}
+				else if(grid[j][i] == 6)
+				{
+					outss<<i<<" "<<j<<" YourWall \r\n";
+					outss<<i<<" "<<j<<" You \r\n";
+				}
+				else if(grid[j][i] == 2)
+				{
+					outss<<i<<" "<<j<<" OpponentWall \r\n";
+					outss<<i<<" "<<j<<" Opponent \r\n";
+				}
+				else if(grid[j][i]== 4)
+				{
+					if(player_two_head_x == i && player_two_head_y == j)
+					{
+						outss<<i<<" "<<j<<" OpponentWall \r\n";
+						outss<<i<<" "<<j<<" You \r\n";
+					}
+					else if(player_one_head_x == i && player_one_head_y == j)
+					{
+						outss<<i<<" "<<j<<" YourWall \r\n";
+						outss<<i<<" "<<j<<" Opponent \r\n";
+					}
+				}
+			}
+		filestream<<outss;
+		filestream.close();
+	}
 	Grid& Grid::operator=(Grid & newGrid)
 	{
 		player_one_head_x = newGrid.player_one_head_x;
