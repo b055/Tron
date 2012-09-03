@@ -482,23 +482,29 @@ void Voronoi::getMerge(int turn){
 #pragma omp parallel for
 	for(int i = 0;i<width;i++)
 		for(int j = 0;j<width;j++)
-			vor[i][j] = (one[i][j]%VAR-two[i][j]%VAR);
+			vor[i][j] = (one[i][j]-two[i][j])%VAR;
 
 }
 float* Voronoi::calculate(int player)
 {
-
 	float* result = new float[2];
 	if(grid.endState())
 	{
-		if(grid.loser() == 0)
+		if(grid.getLoser() == 1)
 		{
-			std::cout<<grid.printGrid();
-			result[0] = -1;result[1]=1;
+			//std::cout<<grid.printGrid();
+			result[0] = -std::numeric_limits<float>::infinity();
+			result[1]=std::numeric_limits<float>::infinity();
 		}
-		else if(grid.loser() ==1)
+		else if(grid.getLoser() ==3)
 		{
-			result[1]=-1;result[0]=1;
+			result[1]=-std::numeric_limits<float>::infinity();
+			result[0]=std::numeric_limits<float>::infinity();
+		}
+		else
+		{
+			std::cout<<"could not determine the loser\n";
+			std::cout<<grid.printGrid()<<"\n";
 		}
 		return result;
 	}
@@ -522,7 +528,7 @@ float* Voronoi::calculate(int player)
 //	last(one);this->resetMark();
 
 //	std::cout<<this->outputOne();
-	std::cout<<std::endl;
+	//std::cout<<std::endl;
 
 	surroundLeft(grid.getPlayerTwoHeadX(),grid.getPlayerTwoHeadY(),two);this->resetMark();
 	surroundBottom(grid.getPlayerTwoHeadX(),grid.getPlayerTwoHeadY(),two);this->resetMark();
@@ -531,7 +537,7 @@ float* Voronoi::calculate(int player)
 //	last(two);this->resetMark();
 
 //	std::cout<<this->outputTwo();
-	std::cout<<std::endl;
+	//std::cout<<std::endl;
 
 	getMerge(player);
 	vor[grid.getPlayerOneHeadY()][grid.getPlayerOneHeadX()]=0;
@@ -559,15 +565,15 @@ float* Voronoi::calculate(int player)
 	else if(vor[width-1][0]>0)
 		two++;
 
-/*
+
 	if(one == 0 && two == 0)
 	{
 		result[0] = 0;result[1] = 0;
 	}
-	else*/
+	else
 	{
-		result[0] = (one-two)/(float)(one+two);
-		result[1] = (two-one)/(float)(one+two);
+		result[0] = one-two;
+		result[1] = two-one;
 	}
 
 	return result;

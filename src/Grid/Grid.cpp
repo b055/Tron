@@ -9,7 +9,7 @@
 #include "Grid.h"
 namespace tron{
 	//takes player one's head, player_two's head player and the grid
-	Grid::Grid(int width):width(width)
+	Grid::Grid(int width):width(width),loser(0)
 	{
 		cells = width * width;
 		statewidth = 6+(width/2*width/2);
@@ -27,7 +27,7 @@ namespace tron{
 		valid = false;
 		 result = new int[2];
 	}
-	Grid::Grid():width(4)
+	Grid::Grid():width(10),loser(0)
 	{
 		cells = width * width;
 		statewidth = 6+(width/2*width/2);
@@ -51,6 +51,7 @@ namespace tron{
 		player_two_head_x = 0;
 		player_one_head_y = 0;
 		player_two_head_y  = 0;
+		loser = 0;
 #pragma omp parallel for
 		for(int i =0;i<width;i++)
 		{
@@ -100,10 +101,12 @@ namespace tron{
 
 	Grid& Grid::operator=(Grid & newGrid)
 	{
-		player_one_head_x = newGrid.getPlayerOneHeadX();
-		player_one_head_y = newGrid.getPlayerOneHeadY();
-		player_two_head_x = newGrid.getPlayerTwoHeadX();
-		player_two_head_y = newGrid.getPlayerTwoHeadY();
+		player_one_head_x = newGrid.player_one_head_x;
+		player_one_head_y = newGrid.player_one_head_y;
+		player_two_head_x = newGrid.player_two_head_x;
+		player_two_head_y = newGrid.player_two_head_y;
+		loser = newGrid.loser;
+		valid = newGrid.valid;
 		width = newGrid.width;
 		copy(newGrid.grid.begin(),newGrid.grid.end(),grid.begin());
 		return *this;
@@ -329,60 +332,5 @@ namespace tron{
 		}
 		return false;
 	}
-	int Grid::loser()
-	{
-		if(endState())
-		{
-			if(grid[player_one_head_y][player_one_head_x] ==2)
-			{
-				return 0;
-			}
-			if(grid[player_two_head_y][player_two_head_x] ==6)
-			{
-				return 1;
-			}
-			int check_top =0;
-			int check_bot = 0;
-			for (int i = 0;i<width;i++)
-			{
-				if((grid[0][i]) != 0)
-				{
-					check_top+=(grid[0][i]);
-				}
-				if(grid[width-1][i]!=0)
-				{
-					check_bot+=grid[width-1][i];
-				}
-			}
-			if(check_top == 6 || check_bot == 6)
-				return 1;
-			else if(check_top == 2 || check_bot ==2)
-				return 0;
 
-			int ones = 0;
-			int twos = 0;
-			for (int j=0;j<width;j++)
-			{
-				for (int i =0;i<width;i++)
-				{
-					if (grid[j][i] == 1)
-					{
-						ones++;
-					}
-					else if (grid[j][i]== 3)
-					{
-						twos++;
-					}
-				}
-			}
-			if(ones<twos)
-				return 0;
-			else
-				return 1;
-		}
-		else
-		{
-			return -1;
-		}
-	}
 }

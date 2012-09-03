@@ -19,7 +19,7 @@ public:
 	virtual ~Minimax();
 	void play();
 private:
-	Grid& alpha_beta(Grid&, int );
+	Grid& alpha_beta(int );
 	float min(Grid,float,float,int,Grid & next);
 	float max(Grid,float,float,int,Grid & next);
 

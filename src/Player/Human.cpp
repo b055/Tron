@@ -49,31 +49,23 @@ void Human::play()
 	else if(count ==1)
 	{
 		int new_x,new_y;
-		if(oppo_y>0&& oppo_y<width-1)
+		if(oppo_y>0 && oppo_y<width-1)
 		{
 			std::cout<<"middle second move\n";
 			new_x = (oppo_x+(width/2))%width;
 			new_y = oppo_y;
-
-
-			grid->isValid(true);
-			(*grid)[new_y][new_x] = digit;
-
 		}
-
 		else
 		{
 			std::cout<<"top second move\n";
 			new_x = x;
 			new_y = width-1-y;
-			grid->isValid(true);
-			(*grid)[new_y][new_x] = digit;
 		}
-
+		(*grid)[new_y][new_x] = digit;
+		grid->isValid(true);
 		this->x = new_x;
 		this->y  =new_y;
 		grid->setPlayerTwoHead(new_x,new_y);
-		grid->setPlayerOneHead(oppo_x,oppo_y);
 		return;
 	}
 	else
@@ -87,7 +79,6 @@ void Human::play()
 
 		if(move.compare("u") == 0)
 		{
-			//std::cout<<"caught up move\n";
 			downMove(this->y);
 			return;
 		}
@@ -98,7 +89,6 @@ void Human::play()
 		}
 		else if(move.compare("r") == 0)
 		{
-			//std::cout<<"caught right move\n";
 			if(x == width-1)
 			{
 				rightMove(-1);
@@ -109,7 +99,6 @@ void Human::play()
 		}
 		else if(move.compare("l") == 0)
 		{
-			//std::cout<<"caught left move\n";
 			if(x==0)
 			{
 				leftMove(width);
@@ -162,7 +151,6 @@ void Human::play()
 void Human::upMove(int y){
 		(*grid)[y+1][x] = digit;
 
-		this->x = x;
 		this->y = y+1;
 		if(digit == 1)
 		{
@@ -181,7 +169,6 @@ void Human::upMove(int y){
 void Human::downMove(int y)
 {
 	(*grid)[y-1][x] = digit;
-	this->x = x;
 	this->y = y-1;
 	if(digit == 1)
 	{

@@ -104,6 +104,8 @@ namespace tron{
 				if(result[i].isValid())
 					return;
 			}
+			std::cout<<digit<<" playing a random move here\n ";
+			result[0].setLoser(digit);
 			randomMove(grid,result[0]);
 		}
 		else
@@ -128,6 +130,8 @@ namespace tron{
 				if(result[i].isValid())
 					return;
 			}
+			std::cout<<digit<<" playing a random move here\n ";
+			result[0].setLoser(digit);
 			randomMove(grid,result[0]);
 		}
 
@@ -515,7 +519,7 @@ namespace tron{
 			if(grid[grid.getPlayerOneHeadY()][x+1]==0)
 			{
 				result = grid;
-				result[y][x+1] = digit;
+				result[grid.getPlayerOneHeadY()][x+1] = digit;
 				if(debug)
 				{
 					std::cout<<result.printGrid();
@@ -588,34 +592,16 @@ namespace tron{
 			move_y = grid.getPlayerOneHeadY();
 			if(grid.getPlayerOneHeadY() == width-1)	//south pole move
 			{
-				move_x = rand() %width;
 				move_y = width-2;
 			}
 			else if(grid.getPlayerOneHeadY() == 0)// north pole move
 			{
-				move_x= rand() %width;
 				move_y = 1;
 			}
 
 			else//middle move
 			{
-				int move = int(rand() % 4);
-				if(move == 0)
-				{
-					move_y = grid.getPlayerOneHeadY()+1;
-				}
-				else if(move == 1)
-				{
-					move_y = grid.getPlayerOneHeadY()-1;
-				}
-				else if(move == 2)
-				{
-					move_x = (grid.getPlayerOneHeadX()+1)%width;
-				}
-				else if(move == 3)
-				{
-					move_x = (grid.getPlayerOneHeadX()-1+width)%width;
-				}
+				move_x = (grid.getPlayerOneHeadX()+1)%width;
 			}
 		}
 		else
@@ -624,46 +610,28 @@ namespace tron{
 			move_y = grid.getPlayerTwoHeadY();
 			if(grid.getPlayerTwoHeadY() == width-1)	//south pole move
 			{
-				move_x = rand() %width;
 				move_y = width-2;
 			}
 			else if(grid.getPlayerTwoHeadY() == 0)// north pole move
 			{
-				move_x= rand() %width;
 				move_y = 1;
 			}
 
 			else//middle move
 			{
-				int move = int(rand() % 4);
-				if(move == 0)
-				{
-					move_y = grid.getPlayerTwoHeadY()+1;
-				}
-				else if(move == 1)
-				{
-					move_y = grid.getPlayerTwoHeadY()-1;
-				}
-				else if(move == 2)
-				{
-					move_x = (grid.getPlayerTwoHeadX()+1)%width;
-				}
-				else if(move == 3)
-				{
-					move_x = (grid.getPlayerTwoHeadX()-1+width)%width;
-				}
+				move_x = (grid.getPlayerTwoHeadX()+1)%width;
 			}
 		}
-		result[move_y][move_x] = result[move_y][move_x]+ digit;
+		result[move_y][move_x] += digit;
 		if(digit == 1)
 		{
-
 			result.setPlayerOneHead(move_x,move_y);
 		}
 		else
 		{
 			result.setPlayerTwoHead(move_x,move_y);
 		}
+		result.setLoser(digit);
 		result.isValid(true);
 	}
 

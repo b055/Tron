@@ -42,8 +42,8 @@ namespace tron {
 			if (debug)
 				std::cout<<"playing first movve\n";
 			std::srand(time(NULL));
-			x =1; rand()%width;
-			y = 2;rand()%width;
+			x =rand()%width;
+			y = rand()%width;
 			grid->setPlayerOneHead(x,y);
 
 			(*grid)[y][x] = digit;
@@ -52,28 +52,28 @@ namespace tron {
 		}
 		else if(count ==1)
 		{
+			if(debug)
+				std::cout<<"finished second\n";
+			int new_x,new_y;
 			if(oppo_y>0&& oppo_y<width-1)
 			{
-				int new_x = (oppo_x+(width/2))%width;
-				int new_y = oppo_y;
-				(*grid).setPlayerTwoHead(new_x,new_y);
-				(*grid).isValid(true);
-				(*grid)[new_y][new_x] = digit;
+				new_x = (oppo_x+(width/2))%width;
+				new_y = oppo_y;
 
 			}else
 			{
-				int new_x = oppo_x;
-				int new_y = width-1-oppo_y;
-				(*grid).setPlayerTwoHead(new_x,new_y);
-				(*grid).isValid(true);
-				(*grid)[new_y][new_x] = digit;
+				new_x = oppo_x;
+				new_y = width-1-oppo_y;
 			}
-			//std::cout<<"finished second\n";
+			(*grid).setPlayerTwoHead(new_x,new_y);
+			(*grid).isValid(true);
+			(*grid)[new_y][new_x] = digit;
+
 			return;
 		}
 
-
 /*
+
 		std::vector<Grid> afterstates(width);
 
 		int index = -1;
@@ -98,7 +98,7 @@ namespace tron {
 				continue;
 			Voronoi * a =  new Voronoi(&afterstates[i],width);
 
-			int * result = a->calculate(digit);
+			float * result = a->calculate(digit);
 			if(digit ==1)
 			{
 				int dif = result[0];//-result[1];
@@ -130,24 +130,26 @@ namespace tron {
 			grid->setPlayerOneHead(afterstates[index].getPlayerOneHeadX(),afterstates[index].getPlayerOneHeadY());
 			grid->setPlayerTwoHead(afterstates[index].getPlayerTwoHeadX(),afterstates[index].getPlayerTwoHeadY());
 			this->setHead(afterstates[index]);
-			int * result = a->calculate(digit);
-		//	std::cout<<a->outputOne()<<std::endl;
-		//	std::cout<<a->outputTwo()<<std::endl;
+			float * result = a->calculate(digit);
+			std::cout<<a->outputOne()<<std::endl;
+			std::cout<<a->outputTwo()<<std::endl;
 			std::cout<<result[0]<<": Player one\t"<<result[1]<<": Player two\n";
 			std::cout<<a->outputVoronoi()<<std::endl;
 
 		}*/
 
-		*grid = alpha_beta(*grid,0);
+		*grid = alpha_beta(0);
 	}
 
-	Grid & Minimax::alpha_beta(Grid & current, int depth)
+	Grid & Minimax::alpha_beta(int depth)
 	{
 		Grid * g = new Grid(width);
-		max(current,-1,1,depth,*g);
-		Voronoi * a = new Voronoi(g,width);
-		std::cout<<a->calculate(digit)[0]<<std::endl;
-		std::cout<<a->outputOne()<<"\n"<<a->outputTwo()<<"\n"<<a->outputVoronoi()<<std::endl;
+		max(*grid,-1,1,depth,*g);
+		Voronoi * vor = new Voronoi(g,width);
+		float *result = new float[2];
+		result = vor->calculate(digit);
+		std::cout<<result[0]<<"    "<<result[1]<<std::endl;
+		std::cout<<vor->outputVoronoi();
 		return *g;
 	}
 
@@ -155,7 +157,7 @@ namespace tron {
 	{
 		depth++;
 		//if end state return value
-		if(current.endState())
+		if(current.endState() || depth == 10)
 		{
 			Voronoi * a = new Voronoi(&current,width);
 			float output;
@@ -168,11 +170,13 @@ namespace tron {
 			{
 				output = result[1];
 			}
-			next = current;
+			if(depth == 1)
+				next = current;
+			//std::cout<<"depth - "<<depth<<"\n"<<current.printGrid()<<"\n\n";
 			return output;
 		}
 
-		float value = -1;
+		float value = -std::numeric_limits<float>::infinity();
 
 		std::vector<Grid> afterstates(width);
 		possibleMoves(current,afterstates);
@@ -182,16 +186,15 @@ namespace tron {
 				continue;
 
 			float temp = min(afterstates[j],alpha,beta,depth,next);
-			value = value>temp?value:temp;
-
-	//		std::cout<<value<<"  "<<temp<<"  "<<beta<<"  "<<alpha<<"\n"<<afterstates[j].printGrid()<<std::endl;
-
-			alpha = alpha>value?alpha:value;
-			if(value>=beta || beta<=alpha)
-			{
-				next = afterstates[j];
-				return value;
+			if(temp>value){
+			//	std::cout<<"depth: "<<depth<<"\n"<<"maximum\n"<<current.printGrid()<<"\n\n";
+				value = temp;
+				if(depth==1)
+					next=afterstates[j];
 			}
+			alpha = alpha>value?alpha:value;
+			if(value>=beta)
+				return value;
 		}
 		return value;
 	}
@@ -200,7 +203,7 @@ namespace tron {
 	{
 		//if endstate beta
 		depth++;
-		if(current.endState())
+		if(current.endState()|| depth == 10)
 		{
 			Voronoi * a = new Voronoi(&current,width);
 			float output;
@@ -213,9 +216,12 @@ namespace tron {
 			{
 				output = result[1];
 			}
+			if(depth == 1)
+				next = current;
+			//std::cout<<"depth - "<<depth<<"\n"<<current.printGrid()<<"\n\n";
 			return output;
 		}
-		float value = 1;
+		float value = std::numeric_limits<float>::infinity();
 		std::vector<Grid> afterstates(width);
 		this->getOpponentPlayer()->possibleMoves(current,afterstates);
 		for(int j = 0;j<width;j++)
@@ -223,14 +229,16 @@ namespace tron {
 			if(afterstates[j].isValid()== false)
 				continue;
 			float temp = max(afterstates[j],alpha,beta,depth,next);
-			value = value<temp?value:temp;
-
-			std::cout<<value<<"  "<<temp<<"  "<<beta<<"  "<<alpha<<"\n"<<afterstates[j].printGrid()<<std::endl;
-
-			beta = beta<value?beta:value;
-			if(value<=alpha || beta<=alpha){
-				return value;
+			if(temp<value)
+			{
+				value = temp;
+				if(depth == 1)
+					next = current;
+			//	std::cout<<"depth: "<<depth<<"\n"<<"minimum\n"<<current.printGrid()<<"\n\n";
 			}
+			beta = beta<value?beta:value;
+			if(value<=alpha)
+				return value;
 		}
 		return value;
 	}
