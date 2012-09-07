@@ -13,6 +13,8 @@
 #include <algorithm>
 #include <sstream>
 #include "Grid.h"
+#include <cmath>
+#include "Chamber.h"
 namespace tron{
 class Voronoi{
 private:

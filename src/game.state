@@ -13,9 +13,9 @@
 0 12 Clear
 0 13 Clear
 0 14 Clear
-0 15 You
-0 16 Clear
-0 17 Clear
+0 15 OpponentWall
+0 16 OpponentWall
+0 17 Opponent
 0 18 Clear
 0 19 Clear
 0 20 Clear
@@ -431,8 +431,8 @@
 14 10 Clear
 14 11 Clear
 14 12 Clear
-14 13 Clear
-14 14 Clear
+14 13 You
+14 14 YourWall
 14 15 Clear
 14 16 Clear
 14 17 Clear
@@ -462,8 +462,8 @@
 15 11 Clear
 15 12 Clear
 15 13 Clear
-15 14 Clear
-15 15 Opponent
+15 14 YourWall
+15 15 YourWall
 15 16 Clear
 15 17 Clear
 15 18 Clear
@@ -884,8 +884,8 @@
 29 13 Clear
 29 14 Clear
 29 15 Clear
-29 16 Clear
-29 17 Clear
+29 16 OpponentWall
+29 17 OpponentWall
 29 18 Clear
 29 19 Clear
 29 20 Clear

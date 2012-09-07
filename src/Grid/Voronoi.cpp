@@ -545,17 +545,44 @@ float* Voronoi::calculate(int player)
 	//std::cout<<this->outputVoronoi();
 	int one = 0;
 	int two = 0;
-	for(int i = 1;i<width-1;i++)
+	int onered = 0;
+	int oneblack = 0;
+	int twored = 0;
+	int twoblack = 0;
+	/*for(int i = 1;i<width-1;i++)
 	{
 		for(int j = 0;j<width;j++)
 		{
 			if(vor[i][j]<0)
+			{
 				one++;
+				if((i % 2 == 0 && j % 2 == 0)||( i % 2 == 1 && j % 2 == 1))
+				{
+					onered++;
+				}
+				else{
+					oneblack++;
+				}
+			}
 			else if(vor[i][j]>0)
+			{
 				two++;
+				if((i % 2 == 0 && j % 2 == 0)||( i % 2 == 1 && j % 2 == 1))
+				{
+					twored++;
+				}
+				else {
+					twoblack++;
+				}
+			}
 		}
-	}
-
+	}*/
+	Chamber * a = new Chamber(this->grid.getGrid(),width,1);
+	std::vector<std::vector< int> > temp1;
+	one = a->calculate(grid.getPlayerOneHeadX(),grid.getPlayerOneHeadY(),temp1);
+	a = new Chamber(this->grid.getGrid(),width,3);
+	std::vector<std::vector< int> > temp3;
+	two  = a->calculate(grid.getPlayerTwoHeadX(),grid.getPlayerTwoHeadY(),temp3);
 	if(vor[0][0]<0)
 		one++;
 	else if(vor[0][0]>0)
@@ -565,7 +592,8 @@ float* Voronoi::calculate(int player)
 	else if(vor[width-1][0]>0)
 		two++;
 
-
+	one -= abs(onered-oneblack);// meed to check thhes red black squares and whether they are actually valid
+	two -= abs(twored - twoblack);
 	if(one == 0 && two == 0)
 	{
 		result[0] = 0;result[1] = 0;

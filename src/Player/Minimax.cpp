@@ -17,9 +17,9 @@ namespace tron {
 
 	}
 
-	void Minimax::play()
+	void Minimax::play(time_t & start)
 	{
-
+		this->start = start;
 		//check if at edges and get possible moves
 		if(debug)
 			std::cout<<"possible moves for "<<digit<<std::endl;
@@ -148,16 +148,17 @@ namespace tron {
 		Voronoi * vor = new Voronoi(g,width);
 		float *result = new float[2];
 		result = vor->calculate(digit);
-		std::cout<<result[0]<<"    "<<result[1]<<std::endl;
-		std::cout<<vor->outputVoronoi();
+		//std::cout<<result[0]<<"    "<<result[1]<<std::endl;
+	//	std::cout<<vor->outputVoronoi();
 		return *g;
 	}
 
 	float Minimax::max(Grid current, float alpha,float beta, int depth,Grid & next)
 	{
 		depth++;
+		time(&end);
 		//if end state return value
-		if(current.endState() || depth == 10)
+		if(current.endState() || difftime(end,start)>=3.5 )
 		{
 			Voronoi * a = new Voronoi(&current,width);
 			float output;
@@ -203,7 +204,8 @@ namespace tron {
 	{
 		//if endstate beta
 		depth++;
-		if(current.endState()|| depth == 10)
+		time(&end);
+		if(current.endState()|| std::difftime(end,start)>=3.5 )
 		{
 			Voronoi * a = new Voronoi(&current,width);
 			float output;

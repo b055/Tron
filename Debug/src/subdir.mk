@@ -4,6 +4,7 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 O_SRCS += \
+../src/Chamber.o \
 ../src/Evaluate.o \
 ../src/Game.o \
 ../src/Grid.o \
@@ -15,17 +16,17 @@ O_SRCS += \
 
 CPP_SRCS += \
 ../src/Cycles.cpp \
-../src/Minimax.cpp \
+../src/Entelect.cpp \
 ../src/MinimaxVsHuman.cpp 
 
 OBJS += \
 ./src/Cycles.o \
-./src/Minimax.o \
+./src/Entelect.o \
 ./src/MinimaxVsHuman.o 
 
 CPP_DEPS += \
 ./src/Cycles.d \
-./src/Minimax.d \
+./src/Entelect.d \
 ./src/MinimaxVsHuman.d 
 
 

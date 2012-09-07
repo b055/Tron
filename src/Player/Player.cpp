@@ -104,7 +104,7 @@ namespace tron{
 				if(result[i].isValid())
 					return;
 			}
-			std::cout<<digit<<" playing a random move here\n ";
+			//std::cout<<digit<<" playing a random move here\n ";
 			result[0].setLoser(digit);
 			randomMove(grid,result[0]);
 		}
@@ -130,7 +130,7 @@ namespace tron{
 				if(result[i].isValid())
 					return;
 			}
-			std::cout<<digit<<" playing a random move here\n ";
+		//	std::cout<<digit<<" playing a random move here\n ";
 			result[0].setLoser(digit);
 			randomMove(grid,result[0]);
 		}

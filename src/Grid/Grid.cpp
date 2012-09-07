@@ -27,7 +27,7 @@ namespace tron{
 		valid = false;
 		 result = new int[2];
 	}
-	Grid::Grid():width(10),loser(0)
+	Grid::Grid():width(30),loser(0)
 	{
 		cells = width * width;
 		statewidth = 6+(width/2*width/2);
@@ -117,20 +117,24 @@ namespace tron{
 	void Grid::readFile(std::string src)
 	{
 		std::ifstream stream;
-		stream.open(src.c_str());
-
+		stream.open(src.c_str(),std::fstream::in);
+		if(!stream.is_open()){
+			std::cerr<<"Failed to open the file\n";
+			return;
+		}
 		std::string row;
 		std::string x;
 		std::string y;
 		std::string value;
 		int x_coord,y_coord;
+
 		while(!stream.eof())
 		{
-			getline(stream,row);
+			getline(stream,row,'\n');
 			std::stringstream colstream(row);
 			getline(colstream,x,' ');
 			getline(colstream,y,' ');
-			getline(colstream,value,' ');
+			getline(colstream,value,'\r');
 			x_coord = strtold(x.c_str(),0);
 			y_coord = strtold(y.c_str(),0);
 			if(value.compare("Clear") ==0)
@@ -164,61 +168,61 @@ namespace tron{
 	{
 		std::stringstream outss;
 
-		std::ofstream filestream(sourceFile.c_str());
+		std::ofstream filestream(sourceFile.c_str(),std::fstream::out);
 		for(int i = 0 ;i<width;i++)
 			for(int j = 0;j<width;j++)
 			{
 				if(grid[j][i] == 0)
 				{
-					outss<<i<<" "<<j<<" Clear \r\n";
+					outss<<i<<" "<<j<<" Clear\r\n";
 				}
 				else if(grid[j][i] == 1)
 				{
-					if(player_one_head_x != i && player_one_head_y != j)
+					if(player_one_head_x != i || player_one_head_y != j)
 					{
-						outss<<i<<" "<<j<<" OpponentWall \r\n";
+						outss<<i<<" "<<j<<" OpponentWall\r\n";
 					}
 					else if(player_one_head_x == i && player_one_head_y == j)
 					{
-						outss<<i<<" "<<j<<" Opponent \r\n";
+						outss<<i<<" "<<j<<" Opponent\r\n";
 					}
 				}
 				else if(grid[j][i] == 3)
 				{
-					if(player_two_head_x != i && player_two_head_y != j)
+					if(player_two_head_x != i || player_two_head_y != j)
 					{
-						outss<<i<<" "<<j<<" YourWall \r\n";
+						outss<<i<<" "<<j<<" YourWall\r\n";
 					}
 					else if(player_two_head_x == i && player_two_head_y == j)
 					{
-						outss<<i<<" "<<j<<" You \r\n";
+						outss<<i<<" "<<j<<" You\r\n";
 					}
 				}
 				else if(grid[j][i] == 6)
 				{
-					outss<<i<<" "<<j<<" YourWall \r\n";
-					outss<<i<<" "<<j<<" You \r\n";
+					outss<<i<<" "<<j<<" YourWall\r\n";
+					outss<<i<<" "<<j<<" You\r\n";
 				}
 				else if(grid[j][i] == 2)
 				{
-					outss<<i<<" "<<j<<" OpponentWall \r\n";
-					outss<<i<<" "<<j<<" Opponent \r\n";
+					outss<<i<<" "<<j<<" OpponentWall\r\n";
+					outss<<i<<" "<<j<<" Opponent\r\n";
 				}
 				else if(grid[j][i]== 4)
 				{
 					if(player_two_head_x == i && player_two_head_y == j)
 					{
-						outss<<i<<" "<<j<<" OpponentWall \r\n";
-						outss<<i<<" "<<j<<" You \r\n";
+						outss<<i<<" "<<j<<" YourWall\r\n";
+						outss<<i<<" "<<j<<" You\r\n";
 					}
 					else if(player_one_head_x == i && player_one_head_y == j)
 					{
-						outss<<i<<" "<<j<<" YourWall \r\n";
-						outss<<i<<" "<<j<<" Opponent \r\n";
+						outss<<i<<" "<<j<<" OpponentWall\r\n";
+						outss<<i<<" "<<j<<" Opponent\r\n";
 					}
 				}
 			}
-		filestream<<outss;
+		filestream<<outss.str();
 		filestream.close();
 	}
 	Grid& Grid::operator=(Grid & newGrid)
