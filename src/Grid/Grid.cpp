@@ -212,12 +212,18 @@ namespace tron{
 				{
 					if(player_two_head_x == i && player_two_head_y == j)
 					{
-						outss<<i<<" "<<j<<" YourWall\r\n";
+						if(player_one_head_x == i && player_one_head_y == j)
+							outss<<i<<" "<<" Opponent\r\n";
+						else
+							outss<<i<<" "<<j<<" OpponentWall\r\n";
 						outss<<i<<" "<<j<<" You\r\n";
 					}
 					else if(player_one_head_x == i && player_one_head_y == j)
 					{
-						outss<<i<<" "<<j<<" OpponentWall\r\n";
+						if(player_two_head_x == i && player_two_head_y == j)
+							outss<<i<<" "<<j<<" You\r\n";
+						else
+							outss<<i<<" "<<j<<" YourtWall\r\n";
 						outss<<i<<" "<<j<<" Opponent\r\n";
 					}
 				}
