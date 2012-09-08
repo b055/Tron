@@ -33,7 +33,7 @@ void Human::play()
 	}
 	if(count == 0)///first move
 	{
-		std::cout<<"playing first movve\n";
+		std::cout<<"playing first move\n";
 		srand(time(NULL));
 		int x = rand()%width;
 		int y =rand()%width;

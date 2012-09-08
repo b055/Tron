@@ -11,9 +11,6 @@ namespace tron{
 	//takes player one's head, player_two's head player and the grid
 	Grid::Grid(int width):width(width),loser(0)
 	{
-		cells = width * width;
-		statewidth = 6+(width/2*width/2);
-		state = new double[statewidth];
 		for(int i =0;i<width;i++)
 		{
 			std::vector<int> temp;
@@ -25,13 +22,9 @@ namespace tron{
 		}
 		turn = 0;
 		valid = false;
-		 result = new int[2];
 	}
-	Grid::Grid():width(30),loser(0)
+	Grid::Grid():width(10),loser(0)
 	{
-		cells = width * width;
-		statewidth = 6+(width/2*width/2);
-		state = new double[statewidth];
 		for(int i =0;i<width;i++)
 		{
 			std::vector<int> temp;
@@ -43,12 +36,10 @@ namespace tron{
 		}
 		turn = 0;
 		valid = false;
-		result = new int[2];
 	}
 	Grid::Grid(std::string src):width(30)
 	{
 		valid = true;
-		result = new int[2];
 		loser = 0;
 		sourceFile = src;
 		for(int i =0;i<width;i++)
@@ -249,10 +240,12 @@ namespace tron{
 		return *this;
 	}
 	Grid::~Grid() {
-		//for(int i = 0;i<width;i++)
-			//grid[i].~vector();
-		//grid.~vector();
-		//delete [] state;
+		//if(&grid != 0 )
+			//delete &grid;
+		//if(state != 0 )
+			//delete state;
+		//if(result != 0)
+			//delete result;
 	}
 
 	void Grid::setPlayerOneHead(int x, int y )

@@ -178,19 +178,7 @@ void Voronoi::resetOneandTwo()
 			}
 }
 Voronoi::~Voronoi() {
-	for(int i = 0;i<width;i++)
-	{
-		delete[] &vor[i];
-		delete[] &mark[i];
-		//delete[] &pos[i];
-		delete[] &one[i];
-		delete[] &two[i];
-	}
-	delete[] &vor;
-	delete[] &mark;
-	//delete[] &pos;
-	delete[] &one;
-	delete[] &two;
+	//handled by the standard vectors
 }
 
  //counts the empty boxes
@@ -549,7 +537,7 @@ float* Voronoi::calculate(int player)
 	int oneblack = 0;
 	int twored = 0;
 	int twoblack = 0;
-	/*for(int i = 1;i<width-1;i++)
+	for(int i = 1;i<width-1;i++)
 	{
 		for(int j = 0;j<width;j++)
 		{
@@ -576,13 +564,17 @@ float* Voronoi::calculate(int player)
 				}
 			}
 		}
-	}*/
-	Chamber * a = new Chamber(this->grid.getGrid(),width,1);
+	}
+	std::cout<<"before chambers "<<one<<"  "<<two<<std::endl;
+	Chamber a(this->vor,width,1);
 	std::vector<std::vector< int> > temp1;
-	one = a->calculate(grid.getPlayerOneHeadX(),grid.getPlayerOneHeadY(),temp1);
-	a = new Chamber(this->grid.getGrid(),width,3);
+	one = a.calculate(grid.getPlayerOneHeadX(),grid.getPlayerOneHeadY(),temp1);
+
+	Chamber b(this->vor,width,3);
 	std::vector<std::vector< int> > temp3;
-	two  = a->calculate(grid.getPlayerTwoHeadX(),grid.getPlayerTwoHeadY(),temp3);
+	two  = b.calculate(grid.getPlayerTwoHeadX(),grid.getPlayerTwoHeadY(),temp3);
+
+	std::cout<<"after chambers "<<one<<"  "<<two<<std::endl;
 	if(vor[0][0]<0)
 		one++;
 	else if(vor[0][0]>0)
@@ -603,7 +595,6 @@ float* Voronoi::calculate(int player)
 		result[0] = one-two;
 		result[1] = two-one;
 	}
-
 	return result;
 }
 }

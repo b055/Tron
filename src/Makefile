@@ -19,7 +19,7 @@ Minimax.o: Player.o Player/Minimax.cpp Player/Minimax.h Voronoi.o
 Chamber.o: Grid/Chamber.cpp Grid/Chamber.h
 	g++ -c Grid/Chamber.cpp
 clean:
-	rm test run human tron *.o
+	rm entelect test run human tron *.o
 test: t/Tester.cpp Neural/Network.o
 	g++ -g -o test t/Tester.cpp Network.o 
 human: MinimaxVsHuman.cpp Player.o Human.o Game.o Grid.o Voronoi.o Evaluate.o Network.o Minimax.o
