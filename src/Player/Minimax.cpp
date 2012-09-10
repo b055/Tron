@@ -82,7 +82,22 @@ namespace tron {
 	{
 		Grid * g = new Grid(width);
 		max(*grid,-std::numeric_limits<float>::infinity(),std::numeric_limits<float>::infinity(),depth,*g);
-		g->isValid(true);
+
+
+		Voronoi vor(g,width);
+		//std::cout<<"before chambers "<<one<<"  "<<two<<std::endl;
+		vor.calculate(digit);
+		Chamber a(vor.getVor(),width,1,g->getPlayerOneHeadX(),g->getPlayerOneHeadY());
+		std::vector<std::vector< int> > temp1;
+		float one = a.calculate(g->getPlayerOneHeadX(),g->getPlayerOneHeadY(),temp1);
+
+		Chamber b(vor.getVor(),width,3,g->getPlayerTwoHeadX(),g->getPlayerTwoHeadY());
+		std::vector<std::vector< int> > temp3;
+		float two  = b.calculate(g->getPlayerTwoHeadX(),g->getPlayerTwoHeadY(),temp3);
+
+		std::cout<<"after chambers "<<one<<"  "<<two<<std::endl;
+		std::cout<<vor.outputVoronoi();
+
 		return *g;//memory leak
 	}
 
@@ -117,17 +132,19 @@ namespace tron {
 		{
 			if(afterstates[j].isValid() == false)
 				continue;
-
 			float temp = min(afterstates[j],alpha,beta,depth,next);
-			if(temp>value){
+			if(temp>=value){
 				value = temp;
 				if(depth==1)
 					next=afterstates[j];
 			}
 
 			alpha = alpha>value?alpha:value;
-			if(value>=beta)
+			if(value>=beta){
+				if(depth==1)
+					next=afterstates[j];
 				return value;
+			}
 		}
 		return value;
 	}
@@ -161,15 +178,18 @@ namespace tron {
 			if(afterstates[j].isValid()== false)
 				continue;
 			float temp = max(afterstates[j],alpha,beta,depth,next);
-			if(temp<value)
+			if(temp<=value)
 			{
 				value = temp;
 				if(depth == 1)
-					next = current;
+					next = afterstates[j];
 			}
 			beta = beta<value?beta:value;
-			if(value<=alpha)
+			if(value<=alpha){
+				if(depth==1)
+					next=afterstates[j];
 				return value;
+			}
 		}
 		return value;
 	}

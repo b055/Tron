@@ -21,10 +21,9 @@ private:
 	int co,width;
 	std::vector<std::vector< int> > vor;
 	std::vector<std::vector< int> > mark;
-	std::vector<std::vector< int> > pos;
 	std::vector<std::vector< int> > one;
 	std::vector<std::vector< int> > two;
-	Grid grid;
+	Grid * grid;
 	void surroundCheck(int,int,std::vector<std::vector< int> >&);
 	void surroundLeft(int,int,std::vector<std::vector< int> >&);
 	int neighbourMin(int,int,std::vector<std::vector< int> >&);
@@ -40,15 +39,13 @@ private:
 	void resetMark();
 	int VAR;
 public:
-	void setGrid(Grid&);
+	inline std::vector<std::vector< int> > getVor(){return vor;}
 	Voronoi(Grid*,int);
-	Voronoi(int);
 	std::string outputVoronoi();
 	std::string outputOne();
 	std::string outputTwo();
 	virtual ~Voronoi();
 	float * calculate(int);
-	inline void setWidth(int w){width = w;}
 
 };
 }

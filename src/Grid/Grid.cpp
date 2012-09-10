@@ -9,7 +9,7 @@
 #include "Grid.h"
 namespace tron{
 	//takes player one's head, player_two's head player and the grid
-	Grid::Grid(int width):width(width),loser(0)
+	Grid::Grid(int width):width(width),valid(false),loser(0)
 	{
 		for(int i =0;i<width;i++)
 		{
@@ -21,9 +21,8 @@ namespace tron{
 			grid.push_back(temp);
 		}
 		turn = 0;
-		valid = false;
 	}
-	Grid::Grid():width(10),loser(0)
+	Grid::Grid():width(10),valid(false),loser(0)
 	{
 		for(int i =0;i<width;i++)
 		{
@@ -34,8 +33,6 @@ namespace tron{
 			}
 			grid.push_back(temp);
 		}
-		turn = 0;
-		valid = false;
 	}
 	Grid::Grid(std::string src):width(30)
 	{
@@ -69,41 +66,8 @@ namespace tron{
 			}
 		}
 		valid = false;
-		turn = 0;
 	}
-	Grid::Grid(int * player_one,int * player_two, int** grid) {
-		// constructor with many parameters
-	//	std::cout<<"just started the contructor\n";
 
-		player_one_head_x = player_one[0];
-		player_two_head_x = player_two[0];
-		player_one_head_y = player_one[1];
-		player_two_head_y = player_two[1];
-
-	//	std::cout<<player_one_head_x<<"large constructor"<<std::endl;
-
-		int one =0;int two = 0;
-		for(int i =0;i<width;i++)
-		{
-			std::vector<int> temp;
-			for(int j = 0;j<width;j++)
-			{
-				temp.push_back(grid[i][j]);
-				if(grid[i][j]==1)
-					one++;
-				else
-					two++;
-			}
-			this->grid.push_back(temp);
-		}
-		if(one == two )
-			turn = 0;
-		else
-			turn = 1;
-		valid = true;
-
-	//	std::cout<<"left this stupid constructore\n";
-	}
 
 	void Grid::readFile(std::string src)
 	{
@@ -126,8 +90,8 @@ namespace tron{
 			getline(colstream,x,' ');
 			getline(colstream,y,' ');
 			getline(colstream,value,'\r');
-			x_coord = strtold(x.c_str(),0);
-			y_coord = strtold(y.c_str(),0);
+			x_coord = atoi(x.c_str());
+			y_coord = atoi(y.c_str());
 			if(value.compare("Clear") ==0)
 			{
 				grid[y_coord][x_coord] = 0;
@@ -240,12 +204,6 @@ namespace tron{
 		return *this;
 	}
 	Grid::~Grid() {
-		//if(&grid != 0 )
-			//delete &grid;
-		//if(state != 0 )
-			//delete state;
-		//if(result != 0)
-			//delete result;
 	}
 
 	void Grid::setPlayerOneHead(int x, int y )
@@ -394,26 +352,10 @@ namespace tron{
 		state[3] = (available+1-state[1]+1-state[0])/(cells-58.0);
 
 
-		//Voronoi * a =  new tron::Voronoi(&grid,width);
-		//a->setMatrix(grid);
-		//a->setOne(player_one_head_x,player_one_head_y);
-		//a->setTwo(player_two_head_x,player_two_head_y);
-
 		//result = a->calculate(digit);
 		state[4] = result[0]/(cells * 1.0);
 		state[5] = result[1]/(cells * 1.0);
-		//std::cout<<player_one_head_x<<","<<player_one_head_y<<"  "<<player_two_head_x<<","<<player_two_head_y<<std::endl;
-		//std::cout<<a->outputVoronoi();
-		//std::cout<<this->printGrid()<<std::endl;
-		//std::cout<<state[4]<<"  "<<state[5]<<std::endl;
-		//if(a!= 0)
-		//delete a;
-		/*if (finished){
-		for(int i = 0;i<statewidth;i++)
-			if(i >5)
-			std::cout<<i-5<<" "<<state[i]<<std::endl;
-		std::cout<<digit<<std::endl;
-		}*/
+
 		return state;
 	}
 
@@ -424,38 +366,8 @@ namespace tron{
 
 	bool Grid::endState()
 	{
-		//checks for collisions
-
-		for (int j=0;j<width;j++)
-		{
-			for (int i =0;i<width;i++)
-			{
-				if (grid[j][i] != 1 && grid[j][i] != 3 && grid[j][i]!= 0)
-				{
-					return true;
-				}
-			}
-		}
-
-		int check_top=0;
-		int check_bot = 0;
-
-		for (int i = 0;i<width;i++)
-		{
-			if((grid[0][i]) != 0)
-			{
-				check_top++;
-			}
-			if(grid[width-1][i]!=0)
-			{
-				check_bot++;
-			}
-			if(check_top>1|| check_bot>1){
-				return true;
-			}
-
-		}
-		return false;
+		return loser == 1|| loser == 3;
 	}
+
 
 }

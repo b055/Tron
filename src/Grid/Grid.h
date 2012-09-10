@@ -23,7 +23,6 @@ public:
 	Grid(std::string);
 	Grid(int );
 	Grid();
-	Grid(int * ,int*, int**);
 	virtual ~Grid();
 	std::vector<int>& operator[](int);
 	void setPlayerOneHead(int,int);

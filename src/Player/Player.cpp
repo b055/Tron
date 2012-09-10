@@ -105,7 +105,6 @@ namespace tron{
 					return;
 			}
 			//std::cout<<digit<<" playing a random move here\n ";
-			result[0].setLoser(digit);
 			randomMove(grid,result[0]);
 		}
 		else
@@ -131,7 +130,6 @@ namespace tron{
 					return;
 			}
 		//	std::cout<<digit<<" playing a random move here\n ";
-			result[0].setLoser(digit);
 			randomMove(grid,result[0]);
 		}
 
@@ -145,6 +143,7 @@ namespace tron{
 	}	//possible moves for a player at the top
 	void Player::topMoves(Grid& grid,std::vector<Grid>& result)
 	{
+		int count = 0;
 		if(digit== 1)
 		{
 	#pragma omp parallel for
@@ -152,16 +151,13 @@ namespace tron{
 			{
 				if(grid[1][i]==0)
 				{
-					result[i] = grid;
-					result[i][1][i]=digit;
+					result[count] = grid;
+					result[count][1][i]=digit;
 
-					result[i].setPlayerOneHead(i,1);
+					result[count].setPlayerOneHead(i,1);
 
-					result[i].isValid(true);
-				}
-				else
-				{
-					result[i].isValid(false);
+					result[count].isValid(true);
+					count++;
 				}
 			}
 
@@ -174,16 +170,12 @@ namespace tron{
 			{
 				if(grid[1][i]==0)
 				{
-					result[i] = grid;
-					result[i][1][i]=digit;
+					result[count] = grid;
+					result[count][1][i]=digit;
 
-					result[i].setPlayerTwoHead(i,1);
+					result[count].setPlayerTwoHead(i,1);
 
-					result[i].isValid(true);
-				}
-				else
-				{
-					result[i].isValid(false);
+					result[count++].isValid(true);
 				}
 			}
 		}
@@ -193,6 +185,7 @@ namespace tron{
 	void Player::bottomMoves(Grid &grid,std::vector<Grid>& result)
 
 	{
+		int count =0;
 		if(debug)
 			std::cout<<"getting bottom move"<<std::endl;
 		if(digit == 1)
@@ -207,21 +200,16 @@ namespace tron{
 						std::cout<<result[i].printGrid();
 						std::cout<<"other\n";
 					}
-					result[i] = grid;
+					result[count] = grid;
 					if(debug)
 						std::cout<<result[i].printGrid();
-					result[i][width-2][i] = digit;
+					result[count][width-2][i] = digit;
 
-					result[i].setPlayerOneHead(i,width-2);
+					result[count].setPlayerOneHead(i,width-2);
 
-					result[i].isValid(true);
+					result[count++].isValid(true);
 				}
-				else
-				{
-					if(debug)
-						std::cout<<"false "<<i<<std::endl;
-					result[i].isValid(false);
-				}
+
 			}
 		}
 		else
@@ -236,21 +224,15 @@ namespace tron{
 						std::cout<<result[i].printGrid();
 						std::cout<<"other\n";
 					}
-					result[i] = grid;
+					result[count] = grid;
 					if(debug)
 						std::cout<<result[i].printGrid();
-					result[i][width-2][i] = digit;
+					result[count][width-2][i] = digit;
 
-					result[i].setPlayerTwoHead(i,width-2);
+					result[count].setPlayerTwoHead(i,width-2);
 
 
-					result[i].isValid(true);
-				}
-				else
-				{
-					if(debug)
-						std::cout<<"false "<<i<<std::endl;
-					result[i].isValid(false);
+					result[count++].isValid(true);
 				}
 			}
 		}
@@ -505,8 +487,6 @@ namespace tron{
 				result.isValid(false);
 			}
 		}
-	//	if(result.isValid())
-	//		std::cout<<x<<" left move\n"<<result.printGrid();
 	}
 
 	//return after state for right move is possible, otherwise return null
@@ -550,8 +530,6 @@ namespace tron{
 				result.isValid(false);
 			}
 		}
-	//	if(result.isValid())
-		//	std::cout<<x<<" right move\n"<<result.printGrid();
 	}
 
 
@@ -582,7 +560,7 @@ namespace tron{
 	{
 		//std::cout<<"Making a random move\n";
 
-		result= grid;
+		result=	 grid;
 		std::srand(std::time(NULL));
 		int move_x;
 		int move_y;
@@ -632,7 +610,7 @@ namespace tron{
 			result.setPlayerTwoHead(move_x,move_y);
 		}
 		result.setLoser(digit);
-		result.isValid(true);
+		result.isValid(false);
 	}
 
 }

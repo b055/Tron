@@ -35,8 +35,8 @@ void Human::play()
 	{
 		std::cout<<"playing first move\n";
 		srand(time(NULL));
-		int x = rand()%width;
-		int y =rand()%width;
+		int x =8; rand()%width;
+		int y =8;rand()%width;
 
 		grid->setPlayerOneHead(x,y);
 		this->y = y;

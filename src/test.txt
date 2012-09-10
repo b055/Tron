@@ -1,577 +1,118 @@
-middle second move
-226 got to this depth
-222 got to this depth
-224 got to this depth
-226 got to this depth
-226 got to this depth
-168 got to this depth
-222 got to this depth
-218 got to this depth
-220 got to this depth
-222 got to this depth
-222 got to this depth
-170 got to this depth
-170 got to this depth
-218 got to this depth
-214 got to this depth
-216 got to this depth
-218 got to this depth
-218 got to this depth
-172 got to this depth
-170 got to this depth
-168 got to this depth
-172 got to this depth
-172 got to this depth
-214 got to this depth
-210 got to this depth
-212 got to this depth
-214 got to this depth
-214 got to this depth
-174 got to this depth
-170 got to this depth
-170 got to this depth
-172 got to this depth
-172 got to this depth
-166 got to this depth
-174 got to this depth
-172 got to this depth
-170 got to this depth
-174 got to this depth
-174 got to this depth
-210 got to this depth
-206 got to this depth
-208 got to this depth
-210 got to this depth
-210 got to this depth
-176 got to this depth
-170 got to this depth
-172 got to this depth
-172 got to this depth
-172 got to this depth
-168 got to this depth
-174 got to this depth
-172 got to this depth
-170 got to this depth
-174 got to this depth
-174 got to this depth
-164 got to this depth
-176 got to this depth
-172 got to this depth
-172 got to this depth
-174 got to this depth
-174 got to this depth
-168 got to this depth
-176 got to this depth
-174 got to this depth
-172 got to this depth
-176 got to this depth
-176 got to this depth
-206 got to this depth
-202 got to this depth
-204 got to this depth
-206 got to this depth
-206 got to this depth
-178 got to this depth
-170 got to this depth
-174 got to this depth
-172 got to this depth
-172 got to this depth
-170 got to this depth
-174 got to this depth
-172 got to this depth
-170 got to this depth
-174 got to this depth
-174 got to this depth
-166 got to this depth
-176 got to this depth
-172 got to this depth
-172 got to this depth
-174 got to this depth
-174 got to this depth
-168 got to this depth
-176 got to this depth
-174 got to this depth
-172 got to this depth
-176 got to this depth
-176 got to this depth
-162 got to this depth
-178 got to this depth
-172 got to this depth
-174 got to this depth
-174 got to this depth
-174 got to this depth
-170 got to this depth
-176 got to this depth
-174 got to this depth
-172 got to this depth
-176 got to this depth
-176 got to this depth
-166 got to this depth
-178 got to this depth
-174 got to this depth
-174 got to this depth
-176 got to this depth
-176 got to this depth
-170 got to this depth
-178 got to this depth
-176 got to this depth
-174 got to this depth
-178 got to this depth
-178 got to this depth
-202 got to this depth
-198 got to this depth
-200 got to this depth
-202 got to this depth
-202 got to this depth
-180 got to this depth
-170 got to this depth
-176 got to this depth
-172 got to this depth
-172 got to this depth
-172 got to this depth
-174 got to this depth
-172 got to this depth
-170 got to this depth
-174 got to this depth
-174 got to this depth
-168 got to this depth
-176 got to this depth
-172 got to this depth
-172 got to this depth
-174 got to this depth
-174 got to this depth
-168 got to this depth
-176 got to this depth
-174 got to this depth
-172 got to this depth
-176 got to this depth
-176 got to this depth
-164 got to this depth
-178 got to this depth
-172 got to this depth
-174 got to this depth
-174 got to this depth
-174 got to this depth
-170 got to this depth
-176 got to this depth
-174 got to this depth
-172 got to this depth
-176 got to this depth
-176 got to this depth
-166 got to this depth
-178 got to this depth
-174 got to this depth
-174 got to this depth
-176 got to this depth
-176 got to this depth
-170 got to this depth
-178 got to this depth
-176 got to this depth
-174 got to this depth
-178 got to this depth
-178 got to this depth
-160 got to this depth
-180 got to this depth
-172 got to this depth
-176 got to this depth
-174 got to this depth
-174 got to this depth
-172 got to this depth
-176 got to this depth
-174 got to this depth
-172 got to this depth
-176 got to this depth
-176 got to this depth
-168 got to this depth
-178 got to this depth
-174 got to this depth
-174 got to this depth
-176 got to this depth
-176 got to this depth
-170 got to this depth
-178 got to this depth
-176 got to this depth
-174 got to this depth
-178 got to this depth
-178 got to this depth
-164 got to this depth
-180 got to this depth
-174 got to this depth
-176 got to this depth
-176 got to this depth
-176 got to this depth
-172 got to this depth
-178 got to this depth
-176 got to this depth
-174 got to this depth
-178 got to this depth
-178 got to this depth
-168 got to this depth
-180 got to this depth
-176 got to this depth
-176 got to this depth
-178 got to this depth
-178 got to this depth
-172 got to this depth
-180 got to this depth
-178 got to this depth
-176 got to this depth
-180 got to this depth
-180 got to this depth
-198 got to this depth
-194 got to this depth
-196 got to this depth
-198 got to this depth
-198 got to this depth
-182 got to this depth
-170 got to this depth
-178 got to this depth
-172 got to this depth
-172 got to this depth
-174 got to this depth
-174 got to this depth
-172 got to this depth
-170 got to this depth
-174 got to this depth
-174 got to this depth
-170 got to this depth
-176 got to this depth
-172 got to this depth
-172 got to this depth
-174 got to this depth
-174 got to this depth
-168 got to this depth
-176 got to this depth
-174 got to this depth
-172 got to this depth
-176 got to this depth
-176 got to this depth
-166 got to this depth
-178 got to this depth
-172 got to this depth
-174 got to this depth
-174 got to this depth
-174 got to this depth
-170 got to this depth
-176 got to this depth
-174 got to this depth
-172 got to this depth
-176 got to this depth
-176 got to this depth
-166 got to this depth
-178 got to this depth
-174 got to this depth
-174 got to this depth
-176 got to this depth
-176 got to this depth
-170 got to this depth
-178 got to this depth
-176 got to this depth
-174 got to this depth
-178 got to this depth
-178 got to this depth
-162 got to this depth
-180 got to this depth
-172 got to this depth
-176 got to this depth
-174 got to this depth
-174 got to this depth
-172 got to this depth
-176 got to this depth
-174 got to this depth
-172 got to this depth
-176 got to this depth
-176 got to this depth
-168 got to this depth
-178 got to this depth
-174 got to this depth
-174 got to this depth
-176 got to this depth
-176 got to this depth
-170 got to this depth
-178 got to this depth
-176 got to this depth
-174 got to this depth
-178 got to this depth
-178 got to this depth
-164 got to this depth
-180 got to this depth
-174 got to this depth
-176 got to this depth
-176 got to this depth
-176 got to this depth
-172 got to this depth
-178 got to this depth
-176 got to this depth
-174 got to this depth
-178 got to this depth
-178 got to this depth
-168 got to this depth
-180 got to this depth
-176 got to this depth
-176 got to this depth
-178 got to this depth
-178 got to this depth
-172 got to this depth
-180 got to this depth
-178 got to this depth
-176 got to this depth
-180 got to this depth
-180 got to this depth
-158 got to this depth
-182 got to this depth
-172 got to this depth
-178 got to this depth
-174 got to this depth
-174 got to this depth
-174 got to this depth
-176 got to this depth
-174 got to this depth
-172 got to this depth
-176 got to this depth
-176 got to this depth
-170 got to this depth
-178 got to this depth
-174 got to this depth
-174 got to this depth
-176 got to this depth
-176 got to this depth
-170 got to this depth
-178 got to this depth
-176 got to this depth
-174 got to this depth
-178 got to this depth
-178 got to this depth
-166 got to this depth
-180 got to this depth
-174 got to this depth
-176 got to this depth
-176 got to this depth
-176 got to this depth
-172 got to this depth
-178 got to this depth
-176 got to this depth
-174 got to this depth
-178 got to this depth
-178 got to this depth
-167 got to this depth
-162 got to this depth
-160 got to this depth
-156 got to this depth
-150 got to this depth
-146 got to this depth
-144 got to this depth
-142 got to this depth
-140 got to this depth
-138 got to this depth
-136 got to this depth
-134 got to this depth
-132 got to this depth
-130 got to this depth
-128 got to this depth
-126 got to this depth
-124 got to this depth
-122 got to this depth
-120 got to this depth
-118 got to this depth
-116 got to this depth
-114 got to this depth
-112 got to this depth
-110 got to this depth
-108 got to this depth
-106 got to this depth
-106 got to this depth
-104 got to this depth
-104 got to this depth
-102 got to this depth
-102 got to this depth
-100 got to this depth
-100 got to this depth
-98 got to this depth
-98 got to this depth
-96 got to this depth
-96 got to this depth
-94 got to this depth
-94 got to this depth
-92 got to this depth
-92 got to this depth
-90 got to this depth
-90 got to this depth
-88 got to this depth
-88 got to this depth
-86 got to this depth
-86 got to this depth
-84 got to this depth
-84 got to this depth
-82 got to this depth
-82 got to this depth
-80 got to this depth
-80 got to this depth
-78 got to this depth
-78 got to this depth
-76 got to this depth
-76 got to this depth
-74 got to this depth
-74 got to this depth
-72 got to this depth
-72 got to this depth
-70 got to this depth
-70 got to this depth
-68 got to this depth
-68 got to this depth
-66 got to this depth
-66 got to this depth
-64 got to this depth
-64 got to this depth
-62 got to this depth
-62 got to this depth
-60 got to this depth
-60 got to this depth
-58 got to this depth
-58 got to this depth
-56 got to this depth
-56 got to this depth
-54 got to this depth
-54 got to this depth
-52 got to this depth
-52 got to this depth
-52 got to this depth
-52 got to this depth
-52 got to this depth
-52 got to this depth
-52 got to this depth
-52 got to this depth
-52 got to this depth
-52 got to this depth
-52 got to this depth
-52 got to this depth
-52 got to this depth
-52 got to this depth
-52 got to this depth
-52 got to this depth
-52 got to this depth
-52 got to this depth
-52 got to this depth
-52 got to this depth
-52 got to this depth
-52 got to this depth
-52 got to this depth
-52 got to this depth
-52 got to this depth
-52 got to this depth
-50 got to this depth
-50 got to this depth
-48 got to this depth
-48 got to this depth
-46 got to this depth
-46 got to this depth
-44 got to this depth
-44 got to this depth
-42 got to this depth
-42 got to this depth
-40 got to this depth
-40 got to this depth
-38 got to this depth
-38 got to this depth
-36 got to this depth
-36 got to this depth
-34 got to this depth
-34 got to this depth
-32 got to this depth
-32 got to this depth
-30 got to this depth
-30 got to this depth
-28 got to this depth
-28 got to this depth
-26 got to this depth
-26 got to this depth
-24 got to this depth
-24 got to this depth
-22 got to this depth
-22 got to this depth
-20 got to this depth
-20 got to this depth
-18 got to this depth
-18 got to this depth
-16 got to this depth
-16 got to this depth
-14 got to this depth
-14 got to this depth
-12 got to this depth
-12 got to this depth
-10 got to this depth
-10 got to this depth
-8 got to this depth
-8 got to this depth
-6 got to this depth
-6 got to this depth
-4 got to this depth
-4 got to this depth
-2 got to this depth
-2 got to this depth
-2 got to this depth
--2    2
-this is the voronoi 
-2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	
-2	2	2	2	2	2	2	2	2	2	1	0	1	0	1	2	2	2	2	2	2	2	2	2	2	2	3	4	3	2	
-3	2	2	2	2	2	2	2	1	0	-1	-2	-1	-2	-1	0	1	2	2	2	2	2	2	2	3	4	5	6	5	4	
-5	4	3	2	2	2	1	0	-1	-2	-3	-4	-3	-4	-3	-2	-1	0	1	2	2	2	3	4	5	6	7	8	7	6	
-7	6	5	4	2	0	-1	-2	-3	-4	-5	-6	0	-6	-5	-4	-3	-2	-1	0	2	4	5	6	7	8	9	0	9	8	
-7	6	4	2	0	-2	-3	-4	-5	-6	-7	-8	0	-8	-7	-6	-5	-4	-3	-2	0	2	4	6	7	8	9	11	9	9	
-7	6	4	2	0	-2	-3	-4	-5	-6	-7	-8	-10	-8	-7	-6	-5	-4	-3	-2	0	2	4	6	7	8	9	11	9	9	
-7	6	4	2	0	-2	-3	-4	-5	-6	-7	-8	-10	-8	-7	-6	-5	-4	-3	-2	0	2	4	6	7	8	9	11	9	9	
-7	6	4	2	0	-2	-3	-4	-5	-6	-7	-8	-10	-8	-7	-6	-5	-4	-3	-2	0	2	4	6	7	8	9	11	9	9	
-7	6	4	2	0	-2	-3	-4	-5	-6	-7	-8	-10	-8	-7	-6	-5	-4	-3	-2	0	2	4	6	7	8	9	11	9	9	
-7	6	4	2	0	-2	-3	-4	-5	-6	-7	-8	-10	-8	-7	-6	-5	-4	-3	-2	0	2	4	6	7	8	9	11	9	9	
-7	6	4	2	0	-2	-3	-4	-5	-6	-7	-8	-10	-8	-7	-6	-5	-4	-3	-2	0	2	4	6	7	8	9	11	9	9	
-7	6	4	2	0	-2	-3	-4	-5	-6	-7	-8	-10	-8	-7	-6	-5	-4	-3	-2	0	2	4	6	7	8	9	11	9	9	
-7	6	4	2	0	-2	-3	-4	-5	-6	-7	-8	-10	-8	-7	-6	-5	-4	-3	-2	0	2	4	6	7	8	9	11	9	9	
-7	6	4	2	0	-2	-3	-4	-5	-6	-7	-8	-10	-8	-7	-6	-5	-4	-3	-2	0	2	4	6	7	8	9	11	9	9	
-7	6	4	2	0	-2	-3	-4	-5	-6	-7	-8	-10	-8	-7	-6	-5	-4	-3	-2	0	2	4	6	7	8	9	11	9	9	
-7	6	4	2	0	-2	-3	-4	-5	-6	-7	-8	-10	-8	-7	-6	-5	-4	-3	-2	0	2	4	6	7	8	9	11	9	9	
-7	6	4	2	0	-2	-3	-4	-5	-6	-7	-8	-10	-8	-7	-6	-5	-4	-3	-2	0	2	4	6	7	8	9	11	9	9	
-7	6	4	2	0	-2	-3	-4	-5	-6	-7	-8	-10	-8	-7	-6	-5	-4	-3	-2	0	2	4	6	7	8	9	11	9	9	
-7	6	4	2	0	-2	-3	-4	-5	-6	-7	-8	-10	-8	-7	-6	-5	-4	-3	-2	0	2	4	6	7	8	9	11	9	9	
-7	6	4	2	0	-2	-3	-4	-5	-6	-7	-8	-10	-8	-7	-6	-5	-4	-3	-2	0	2	4	6	7	8	9	11	9	9	
-7	6	4	2	0	-2	-3	-4	-5	-6	-7	-8	-10	-8	-7	-6	-5	-4	-3	-2	0	2	4	6	7	8	9	11	9	9	
-7	6	4	2	0	-2	-3	-4	-5	-6	-7	-8	-10	-8	-7	-6	-5	-4	-3	-2	0	2	4	6	7	8	9	11	9	9	
-7	6	4	2	0	-2	-3	-4	-5	-6	-7	-8	-10	-8	-7	-6	-5	-4	-3	-2	0	2	4	6	7	8	9	11	9	9	
-7	5	4	2	0	-2	-3	-4	-5	-6	-7	-8	-10	-8	-7	-6	-5	-4	-3	-2	0	2	4	5	6	7	8	9	9	7	
-4	3	2	1	0	-2	-3	-4	-5	-6	-7	-8	-9	-8	-7	-6	-5	-4	-3	-2	0	1	2	3	4	5	6	7	6	5	
-2	1	0	-1	-1	-1	-1	-2	-3	-4	-5	-6	-7	-6	-5	-4	-3	-2	-1	-1	-1	-1	0	1	2	3	4	5	4	3	
-0	-1	-1	-1	-1	-1	-1	-1	-1	-2	-3	-4	-5	-4	-3	-2	-1	-1	-1	-1	-1	-1	-1	-1	0	1	2	3	2	1	
--1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-2	-3	-2	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	0	1	0	-1	
--1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	
-player one: x 12 y 5
-player two: x 27 y 4
-0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
-0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
-0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
-0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
-0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 0 0 
-0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
-0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
-0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
-0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
-0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
-0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
-0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
-0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
-0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
-0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
-0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
-0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
-0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
-0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
-0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
-0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
-0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
-0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
-0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
-0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
-0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
-0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
-0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
-0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
-0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
-Please play a move(3): 
+playing first move
+0 that's how long the play took
+player one: x 6 y 8
+player two: x 1 y 8
+0 0 0 0 0 0 0 0 0 0 
+0 0 0 0 0 0 0 0 0 0 
+0 0 0 0 0 0 0 0 0 0 
+0 0 0 0 0 0 0 0 0 0 
+0 0 0 0 0 0 0 0 0 0 
+0 0 0 0 0 0 0 0 0 0 
+0 0 0 0 0 0 0 0 0 0 
+0 0 0 0 0 0 0 0 0 0 
+0 3 0 0 0 0 1 0 0 0 
+0 0 0 0 0 0 0 0 0 0 
+Please play a move(1): 
+
+u35
+41
+35
+35
+37
+39
+35
+37
+39
+33
+39
+35
+39
+39
+35
+39
+39
+39
+39
+29
+39
+35
+41
+39
+37
+39
+39
+39
+39
+33
+39
+41
+39
+37
+41
+41
+65
+65
+65
+65
+65
+65
+65
+65
+65
+65
+65
+65
+49
+49
+47
+47
+45
+45
+43
+43
+41
+39
+35
+35
+31
+29
+27
+25
+23
+21
+17
+17
+17
+17
+17
+17
+17
+17
+15
+15
+13
+13
+11
+11
+9
+9
+7
+7
+5
+5
+3
+3
+4 that's how long the play took
+player one: x 6 y 7
+player two: x 1 y 7
+0 0 0 0 0 0 0 0 0 0 
+0 0 0 0 0 0 0 0 0 0 
+0 0 0 0 0 0 0 0 0 0 
+0 0 0 0 0 0 0 0 0 0 
+0 0 0 0 0 0 0 0 0 0 
+0 0 0 0 0 0 0 0 0 0 
+0 0 0 0 0 0 0 0 0 0 
+0 3 0 0 0 0 1 0 0 0 
+0 3 0 0 0 0 1 0 0 0 
+0 0 0 0 0 0 0 0 0 0 
+Please play a move(1): 
