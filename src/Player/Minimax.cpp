@@ -81,9 +81,9 @@ namespace tron {
 	Grid & Minimax::alpha_beta(int depth)
 	{
 		Grid * g = new Grid(width);
-		max(*grid,-std::numeric_limits<float>::infinity(),std::numeric_limits<float>::infinity(),depth,*g);
+		max(*grid,-9999,9999,depth,*g);
 
-
+/*
 		Voronoi vor(g,width);
 		//std::cout<<"before chambers "<<one<<"  "<<two<<std::endl;
 		vor.calculate(digit);
@@ -96,8 +96,7 @@ namespace tron {
 		float two  = b.calculate(g->getPlayerTwoHeadX(),g->getPlayerTwoHeadY(),temp3);
 
 		std::cout<<"after chambers "<<one<<"  "<<two<<std::endl;
-		std::cout<<vor.outputVoronoi();
-
+		std::cout<<vor.outputVoronoi();*/
 		return *g;//memory leak
 	}
 
@@ -124,7 +123,7 @@ namespace tron {
 			return output;
 		}
 
-		float value = -std::numeric_limits<float>::infinity();
+		float value = -9999;
 
 		std::vector<Grid> afterstates(width);
 		possibleMoves(current,afterstates);
@@ -170,7 +169,7 @@ namespace tron {
 				next = current;
 			return output;
 		}
-		float value = std::numeric_limits<float>::infinity();
+		float value = 9999;
 		std::vector<Grid> afterstates(width);
 		this->getOpponentPlayer()->possibleMoves(current,afterstates);
 		for(int j = 0;j<width;j++)

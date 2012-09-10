@@ -410,13 +410,13 @@ float* Voronoi::calculate(int player)
 	{
 		if(grid->getLoser() == 1)
 		{
-			result[0] = -std::numeric_limits<float>::infinity();
-			result[1] = std::numeric_limits<float>::infinity();
+			result[0] = -9999;
+			result[1] = 9999;
 		}
 		else if(grid->getLoser() ==3)
 		{
-			result[0] = std::numeric_limits<float>::infinity();
-			result[1] = -std::numeric_limits<float>::infinity();
+			result[0] = 9999;
+			result[1] = -9999;
 		}
 		else
 		{
