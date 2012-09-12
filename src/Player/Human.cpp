@@ -35,15 +35,29 @@ void Human::play()
 	{
 		std::cout<<"playing first move\n";
 		srand(time(NULL));
-		int x =8; rand()%width;
-		int y =8;rand()%width;
+		int x = rand()%width;
+		int y =rand()%width;
+		if(y ==0){
+			(*grid)[0][0] = digit;
+			grid->setPlayerOneHead(0,0);
+			this->y = 0;
+			this->x = 0;
+		}
+		else if(y== width-1)
+		{
+			(*grid)[width-1][0] = digit;
+			grid->setPlayerOneHead(0,width-1);
+			this->y = width-1;
+			this->x = 0;
+		}
+		else{
+			grid->setPlayerOneHead(x,y);
+			(*grid)[y][x] = digit;
+			
+			this->y = y;
+			this->x = x;
+		}
 
-		grid->setPlayerOneHead(x,y);
-		this->y = y;
-		this->x = x;
-		(*grid)[y][x] = digit;
-
-		grid->isValid(true);
 		return;
 	}
 	else if(count ==1)
@@ -62,7 +76,6 @@ void Human::play()
 			new_y = width-1-y;
 		}
 		(*grid)[new_y][new_x] = digit;
-		grid->isValid(true);
 		this->x = new_x;
 		this->y  =new_y;
 		grid->setPlayerTwoHead(new_x,new_y);
@@ -140,7 +153,6 @@ void Human::play()
 					grid->setPlayerOneHead(oppo_x,oppo_y);
 				}
 			}
-			grid->isValid(true);
 
 			return;
 		}
@@ -149,9 +161,18 @@ void Human::play()
 
 //returns afeterstate for up move if possible, otherwise returns null
 void Human::upMove(int y){
+		this->y = y+1;
+		if( y == width-2 )
+		{
+			if((*grid)[width-1][0] == 0){
+				(*grid)[width-1][0] = digit;
+				(*grid).setPlayerOneHead(width-1,0);
+				this->x = 0;
+			}
+			return;
+		}		
 		(*grid)[y+1][x] = digit;
 
-		this->y = y+1;
 		if(digit == 1)
 		{
 			grid->setPlayerTwoHead(oppo_x,oppo_y);
@@ -162,14 +183,23 @@ void Human::upMove(int y){
 			grid->setPlayerOneHead(oppo_x,oppo_y);
 			grid->setPlayerTwoHead(x,this->y);
 		}
-		grid->isValid(true);
 
 }
 //returns afterstate for down move if possible, otherwise returns null
 void Human::downMove(int y)
 {
-	(*grid)[y-1][x] = digit;
 	this->y = y-1;
+	if( y == 1 )
+	{
+		if((*grid)[0][0] == 0){
+			(*grid)[0][0] = digit;
+			(*grid).setPlayerOneHead(0,0);
+			this->x = 0;
+		}
+		return;
+	}
+	(*grid)[y-1][x] = digit;
+	
 	if(digit == 1)
 	{
 		grid->setPlayerTwoHead(oppo_x,oppo_y);
@@ -180,7 +210,6 @@ void Human::downMove(int y)
 		grid->setPlayerOneHead(oppo_x,oppo_y);
 		grid->setPlayerTwoHead(x,this->y);
 	}
-	grid->isValid(true);
 
 }
 //return afterstate for left move if possible, otherwise returns null
@@ -200,7 +229,6 @@ void Human::leftMove(int x)
 		grid->setPlayerOneHead(oppo_x,oppo_y);
 		grid->setPlayerTwoHead(this->x,y);
 	}
-	grid->isValid(true);
 }
 
 //return after state for right move is possible, otherwise return null
@@ -219,7 +247,6 @@ void Human::leftMove(int x)
 			grid->setPlayerOneHead(oppo_x,oppo_y);
 			grid->setPlayerTwoHead(this->x,y);
 		}
-		grid->isValid(true);
 	}
 
 }

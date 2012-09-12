@@ -21,7 +21,6 @@ public:
 	virtual ~Minimax();
 	void play(time_t &start);
 private:
-	Grid& alpha_beta(int );
 	float min(Grid,float,float,int,Grid & next);
 	float max(Grid,float,float,int,Grid & next);
 	time_t start,end;

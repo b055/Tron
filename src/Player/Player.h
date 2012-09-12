@@ -15,6 +15,7 @@
 #include "omp.h"
 #include "../Grid/Grid.h"
 #include "../Neural/Network.h"
+#include <vector>
 #include "time.h"
 namespace tron{
 class Player {
@@ -23,7 +24,7 @@ public:
 	virtual ~Player();
 	void possibleMoves(Grid &grid,std::vector<Grid>&);
 	void setOpponent(int x , int y){oppo_x = x; oppo_y = y;}
-	void randomMove(Grid &,Grid&);
+	void randomMove(Grid &,std::vector<Grid>&);
 	inline void setX(int x){this->x = x;}
 	inline int getX(){return x;}
 	inline int getY(){return y;}
@@ -56,10 +57,10 @@ protected:
 	int oppo_y;
 	int width;
 	Grid * grid;
-	void upMove(Grid & grid,int, Grid & result);
-	void rightMove(Grid & grid, int,Grid & result);
-	void leftMove(Grid& ,int, Grid & result);
-	void downMove(Grid &,int , Grid & result);
+	void upMove(Grid & grid,int, std::vector<Grid>&);
+	void rightMove(Grid & grid, int,std::vector<Grid>&);
+	void leftMove(Grid& ,int, std::vector<Grid>&);
+	void downMove(Grid &,int , std::vector<Grid>&);
 	void topMoves(Grid &,std::vector<Grid>&);
 	void bottomMoves(Grid &,std::vector<Grid>&);
 	void middleMoves(Grid &,std::vector<Grid>&);

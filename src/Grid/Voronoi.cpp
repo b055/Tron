@@ -9,7 +9,7 @@
 namespace tron{
 Voronoi::Voronoi(Grid * grid,int width):width(width)
 {
-
+	twored= onered=oneblack=twoblack=one_spot=two_spot= 0;
 	this->grid = grid;
 	if(grid->getLoser() == 0)
 	{
@@ -421,7 +421,7 @@ float* Voronoi::calculate(int player)
 		else
 		{
 			std::cout<<"could not determine the loser\n";
-			std::cout<<grid->printGrid()<<"\n";
+			std::cout<<grid->getLoser()<<"\n";
 		}
 		return result;
 	}
@@ -432,88 +432,98 @@ float* Voronoi::calculate(int player)
 	surroundCheck(grid->getPlayerOneHeadX(),grid->getPlayerOneHeadY(),one);this->resetMark();
 	surroundLeft(grid->getPlayerOneHeadX(),grid->getPlayerOneHeadY(),one);this->resetMark();
 
-//	last(one);this->resetMark();
 
-//	std::cout<<this->outputOne();
-	//std::cout<<std::endl;
 
 	surroundLeft(grid->getPlayerTwoHeadX(),grid->getPlayerTwoHeadY(),two);this->resetMark();
 	surroundBottom(grid->getPlayerTwoHeadX(),grid->getPlayerTwoHeadY(),two);this->resetMark();
 	surroundTop(grid->getPlayerTwoHeadX(),grid->getPlayerTwoHeadY(),two);this->resetMark();
 	surroundCheck(grid->getPlayerTwoHeadX(),grid->getPlayerTwoHeadY(),two);this->resetMark();
-//	last(two);this->resetMark();
 
-//	std::cout<<this->outputTwo();
-	//std::cout<<std::endl;
 
 	getMerge(player);
 	vor[grid->getPlayerOneHeadY()][grid->getPlayerOneHeadX()]=0;
 	vor[grid->getPlayerTwoHeadY()][grid->getPlayerTwoHeadX()]=0;
 	//std::cout<<this->outputVoronoi();
-	int one = 0;
-	int two = 0;
-	int onered = 0;
-	int oneblack = 0;
-	int twored = 0;
-	int twoblack = 0;
-	/*for(int i = 1;i<width-1;i++)
+	
+	
+
+	//std::cout<<"before chambers "<<one<<"  "<<two<<std::endl;
+	Chamber a(&(this->vor),width,1,grid->getPlayerOneHeadX(),grid->getPlayerOneHeadY());
+	std::vector<std::vector< int> > temp1;
+	int one = a.getValue();
+	//surroundSum(1,grid->getPlayerOneHeadX(),grid->getPlayerOneHeadY());
+	Chamber b(&(this->vor),width,3,grid->getPlayerTwoHeadX(),grid->getPlayerTwoHeadY());
+	//surroundSum(3,grid->getPlayerTwoHeadX(),grid->getPlayerTwoHeadY());
+	int two  = b.getValue();
+	
+	/*
+	int one_excess = abs(onered-oneblack);// meed to check thhes red black squares and whether they are actually valid
+	int two_excess = abs(twored - twoblack);
+
+	if(vor[0][0] < 0) one_spot++; else if(vor[0][0]>0) two_spot++;
+	if(vor[width-1][0]<0) one_spot++; else if(vor[width-1][0]>0) two_spot++;
+
+
+	if(one_excess/(float)one_spot >=0.1) // need to think this part out
+		one *= (float)one_excess/one_spot;
+	if(two_excess/(float)two_spot >=0.1)
+		two *= (float)two_excess/two_spot;
+	*/
+
+	result[0] = one-two;
+	result[1] = two-one;
+	
+	return result;
+}
+
+void Voronoi::sum(int digit,int j,int i )
+{
+	if(j>0 && j<width-1 && i>0 && i<width-1)
 	{
-		for(int j = 0;j<width;j++)
+		if(digit == 1 && mark[i][j] == 0 && vor[i][j]<0)
+		{
+			mark[i][j] = 1;
+			
+			one_spot++;
+			if((i % 2 == 0 && j % 2 == 0)||( i % 2 == 1 && j % 2 == 1))
+			{
+				onered++;
+			}
+			else{
+				oneblack++;
+			}				
+			surroundSum(digit,j,i);	
+		}
+		else if(digit == 3 && mark[i][j] == 0 && vor[i][j]>0)
+		{
+			mark[i][j] = 1;			
+			two_spot++;
+			if((i % 2 == 0 && j % 2 == 0)||( i % 2 == 1 && j % 2 == 1))
+			{
+				twored++;
+			}
+			else {
+				twoblack++;
+			}	
+			surroundSum(digit,j,i);		
+			
+		}
+	}	
+}
+void Voronoi::surroundSum(int digit, int j, int i)
+{
+	/*sum(digit,(j+1)%width,i);
+	sum(digit,(j-1+width)%width,i);
+	sum(digit,j,i+1);
+	sum(digit,j,i-1);*/
+	for(int i =1;i<width-1;i++)
+		for(int j = 1;j<width-1;j++)
 		{
 			if(vor[i][j]<0)
-			{
-				one++;
-				if((i % 2 == 0 && j % 2 == 0)||( i % 2 == 1 && j % 2 == 1))
-				{
-					onered++;
-				}
-				else{
-					oneblack++;
-				}
-			}
+				one_spot++;
 			else if(vor[i][j]>0)
-			{
-				two++;
-				if((i % 2 == 0 && j % 2 == 0)||( i % 2 == 1 && j % 2 == 1))
-				{
-					twored++;
-				}
-				else {
-					twoblack++;
-				}
-			}
+				two_spot++;
+
 		}
-	}*/
-	//std::cout<<"before chambers "<<one<<"  "<<two<<std::endl;
-	Chamber a(this->vor,width,1,grid->getPlayerOneHeadX(),grid->getPlayerOneHeadY());
-	std::vector<std::vector< int> > temp1;
-	one = a.calculate(grid->getPlayerOneHeadX(),grid->getPlayerOneHeadY(),temp1);
-
-	Chamber b(this->vor,width,3,grid->getPlayerTwoHeadX(),grid->getPlayerTwoHeadY());
-	std::vector<std::vector< int> > temp3;
-	two  = b.calculate(grid->getPlayerTwoHeadX(),grid->getPlayerTwoHeadY(),temp3);
-
-	//std::cout<<"after chambers "<<one<<"  "<<two<<std::endl;
-	if(vor[0][0]<0)
-		one++;
-	else if(vor[0][0]>0)
-		two++;
-	if(vor[width-1][0]<0)
-		one++;
-	else if(vor[width-1][0]>0)
-		two++;
-
-	one -= abs(onered-oneblack);// meed to check thhes red black squares and whether they are actually valid
-	two -= abs(twored - twoblack);
-	if(one == 0 && two == 0)
-	{
-		result[0] = 0;result[1] = 0;
-	}
-	else
-	{
-		result[0] = one-two;
-		result[1] = two-one;
-	}
-	return result;
 }
 }

@@ -38,12 +38,18 @@ private:
 	void resetOneandTwo();
 	void resetMark();
 	int VAR;
+	int one_spot,two_spot,twored,twoblack,oneblack,onered;
+	
 public:
+	void sum(int,int,int);
+	void surroundSum(int,int,int);
 	inline std::vector<std::vector< int> > getVor(){return vor;}
 	Voronoi(Grid*,int);
 	std::string outputVoronoi();
 	std::string outputOne();
 	std::string outputTwo();
+	inline int getTwoSpot(){return two_spot;}
+	inline int getOneSpot(){return one_spot;}
 	virtual ~Voronoi();
 	float * calculate(int);
 

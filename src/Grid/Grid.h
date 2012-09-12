@@ -36,8 +36,6 @@ public:
 	inline std::vector<std::vector<int> > & getGrid(){return grid;}
 	bool separated();
 	void reset();
-	inline bool isValid()const{return valid;}
-	inline void isValid(bool b){valid = b;}
 	inline int getPlayerOneHeadX()const{return player_one_head_x;};
 	inline int getPlayerOneHeadY()const{return player_one_head_y;};
 	inline int getPlayerTwoHeadY()const{return player_two_head_y;};
@@ -59,7 +57,6 @@ private:
 	int player_two_head_x;
 	int player_two_head_y;
 	int turn;
-	bool valid;
 	int width;
 	double * state;
 	int statewidth;

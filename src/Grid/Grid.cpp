@@ -1,4 +1,4 @@
-/*
+	/*
  * Grid.cpp
  *
  *  Created on: 06 Aug 2012
@@ -9,7 +9,7 @@
 #include "Grid.h"
 namespace tron{
 	//takes player one's head, player_two's head player and the grid
-	Grid::Grid(int width):width(width),valid(false),loser(0)
+	Grid::Grid(int width):width(width),loser(0)
 	{
 		for(int i =0;i<width;i++)
 		{
@@ -22,7 +22,8 @@ namespace tron{
 		}
 		turn = 0;
 	}
-	Grid::Grid():width(10),valid(false),loser(0)
+	
+	Grid::Grid():width(10),loser(0)
 	{
 		for(int i =0;i<width;i++)
 		{
@@ -36,7 +37,6 @@ namespace tron{
 	}
 	Grid::Grid(std::string src):width(30)
 	{
-		valid = true;
 		loser = 0;
 		sourceFile = src;
 		for(int i =0;i<width;i++)
@@ -65,7 +65,6 @@ namespace tron{
 				grid[i][j] =0;
 			}
 		}
-		valid = false;
 	}
 
 
@@ -193,7 +192,6 @@ namespace tron{
 		player_two_head_x = newGrid.player_two_head_x;
 		player_two_head_y = newGrid.player_two_head_y;
 		loser = newGrid.loser;
-		valid = newGrid.valid;
 		width = newGrid.width;
 		copy(newGrid.grid.begin(),newGrid.grid.end(),grid.begin());
 		return *this;

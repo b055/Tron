@@ -48,7 +48,6 @@ namespace tron {
 			(*grid)[y][x] = digit;
 			grid->setPlayerOneHead(x,y);
 
-			(*grid).isValid(true);
 			std::cout<<grid->printGrid();
 			return;
 		}
@@ -69,44 +68,21 @@ namespace tron {
 			}
 			(*grid)[new_y][new_x] = digit;
 			(*grid).setPlayerTwoHead(new_x,new_y);
-			(*grid).isValid(true);
 
 			return;
 		}
-		for(int i = 0;i<1000;i++)
-			std::vector<Grid> afterstates(width);
-		*grid = alpha_beta(0);
+		max(*grid,-9999,9999,0,*grid);
 	}
-
-	Grid & Minimax::alpha_beta(int depth)
-	{
-		Grid * g = new Grid(width);
-		max(*grid,-9999,9999,depth,*g);
-
-/*
-		Voronoi vor(g,width);
-		//std::cout<<"before chambers "<<one<<"  "<<two<<std::endl;
-		vor.calculate(digit);
-		Chamber a(vor.getVor(),width,1,g->getPlayerOneHeadX(),g->getPlayerOneHeadY());
-		std::vector<std::vector< int> > temp1;
-		float one = a.calculate(g->getPlayerOneHeadX(),g->getPlayerOneHeadY(),temp1);
-
-		Chamber b(vor.getVor(),width,3,g->getPlayerTwoHeadX(),g->getPlayerTwoHeadY());
-		std::vector<std::vector< int> > temp3;
-		float two  = b.calculate(g->getPlayerTwoHeadX(),g->getPlayerTwoHeadY(),temp3);
-
-		std::cout<<"after chambers "<<one<<"  "<<two<<std::endl;
-		std::cout<<vor.outputVoronoi();*/
-		return *g;//memory leak
-	}
+	
 
 	float Minimax::max(Grid current, float alpha,float beta, int depth,Grid & next)
 	{
 		depth++;
 		time(&end);
 		//if end state return value
-		if(current.endState() || difftime(end,start)>=3.5 )
+		if(current.endState() || difftime(end,start)>= 1)
 		{
+			//std::cout<<depth<<std::endl;
 			Voronoi a(&current,width);
 			float output;
 			float * result = a.calculate(digit);
@@ -120,17 +96,17 @@ namespace tron {
 			}
 			if(depth == 1)
 				next = current;
+
+			//delete result;
 			return output;
 		}
 
 		float value = -9999;
 
-		std::vector<Grid> afterstates(width);
+		std::vector<Grid> afterstates;
 		possibleMoves(current,afterstates);
-		for(int j = 0;j<width;j++)
+		for(int j = 0;j<afterstates.size();j++)
 		{
-			if(afterstates[j].isValid() == false)
-				continue;
 			float temp = min(afterstates[j],alpha,beta,depth,next);
 			if(temp>=value){
 				value = temp;
@@ -152,7 +128,7 @@ namespace tron {
 	{
 		depth++;
 		time(&end);
-		if(current.endState()|| std::difftime(end,start)>=3.5 )
+		if(current.endState()|| std::difftime(end,start)>= 1)
 		{
 			Voronoi a(&current,width);
 			float output;
@@ -167,15 +143,14 @@ namespace tron {
 			}
 			if(depth == 1)
 				next = current;
+			//delete result;
 			return output;
 		}
 		float value = 9999;
-		std::vector<Grid> afterstates(width);
+		std::vector<Grid> afterstates;
 		this->getOpponentPlayer()->possibleMoves(current,afterstates);
-		for(int j = 0;j<width;j++)
+		for(int j = 0;j<afterstates.size();j++)
 		{
-			if(afterstates[j].isValid()== false)
-				continue;
 			float temp = max(afterstates[j],alpha,beta,depth,next);
 			if(temp<=value)
 			{
