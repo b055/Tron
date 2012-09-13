@@ -80,7 +80,7 @@ namespace tron {
 		depth++;
 		time(&end);
 		//if end state return value
-		if(current.endState() || difftime(end,start)>= 1)
+		if(current.endState() || depth == 10)// || difftime(end,start)>= 3.5)
 		{
 			//std::cout<<depth<<std::endl;
 			Voronoi a(&current,width);
@@ -128,7 +128,7 @@ namespace tron {
 	{
 		depth++;
 		time(&end);
-		if(current.endState()|| std::difftime(end,start)>= 1)
+		if(current.endState() || depth == 10)// || std::difftime(end,start)>= 3.5)
 		{
 			Voronoi a(&current,width);
 			float output;
