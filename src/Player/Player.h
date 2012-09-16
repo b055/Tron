@@ -22,9 +22,8 @@ class Player {
 public:
 	Player(int,int);
 	virtual ~Player();
-	void possibleMoves(Grid &grid,std::vector<Grid>&);
+	std::vector<std::vector< int> > possibleMoves();
 	void setOpponent(int x , int y){oppo_x = x; oppo_y = y;}
-	void randomMove(Grid &,std::vector<Grid>&);
 	inline void setX(int x){this->x = x;}
 	inline int getX(){return x;}
 	inline int getY(){return y;}
@@ -46,6 +45,9 @@ public:
 	Network* getNet(){return net;}
 	void reset();
 	void wallHug(Grid**);
+	inline bool getLoser(){return loser;}
+	inline void setLoser(bool l){loser = l;}
+	inline int getPrior(){return priorLosing;}
 private:
 	Network * net;
 protected:
@@ -57,14 +59,17 @@ protected:
 	int oppo_y;
 	int width;
 	Grid * grid;
-	void upMove(Grid & grid,int, std::vector<Grid>&);
-	void rightMove(Grid & grid, int,std::vector<Grid>&);
-	void leftMove(Grid& ,int, std::vector<Grid>&);
-	void downMove(Grid &,int , std::vector<Grid>&);
-	void topMoves(Grid &,std::vector<Grid>&);
-	void bottomMoves(Grid &,std::vector<Grid>&);
-	void middleMoves(Grid &,std::vector<Grid>&);
+	std::vector<int> upMove(int);
+	std::vector<int> rightMove(int);
+	std::vector<int> leftMove(int);
+	std::vector<int> downMove(int );
+	std::vector<int> randomMove();
+	std::vector<std::vector< int> > topMoves();
+	std::vector<std::vector< int> > bottomMoves();
+	std::vector<std::vector< int> > middleMoves();
+	int priorLosing;
 	bool debug;
+	bool loser;
 };
 }
 

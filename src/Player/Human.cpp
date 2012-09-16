@@ -33,30 +33,19 @@ void Human::play()
 	}
 	if(count == 0)///first move
 	{
-		std::cout<<"playing first move\n";
+		//std::cout<<"playing first move\n";
 		srand(time(NULL));
-		int x = rand()%width;
-		int y =rand()%width;
-		if(y ==0){
-			(*grid)[0][0] = digit;
-			grid->setPlayerOneHead(0,0);
-			this->y = 0;
-			this->x = 0;
-		}
-		else if(y== width-1)
-		{
-			(*grid)[width-1][0] = digit;
-			grid->setPlayerOneHead(0,width-1);
-			this->y = width-1;
-			this->x = 0;
-		}
-		else{
-			grid->setPlayerOneHead(x,y);
-			(*grid)[y][x] = digit;
-			
-			this->y = y;
-			this->x = x;
-		}
+		int x =4; rand()%width;
+		int y =1;rand()%width;
+
+		if(y == 0) y++;
+		if(y == width-1) y--;
+
+		grid->setPlayerOneHead(x,y);
+		(*grid)[y][x] = digit;
+
+		this->y = y;
+		this->x = x;
 
 		return;
 	}
@@ -65,7 +54,7 @@ void Human::play()
 		int new_x,new_y;
 		if(oppo_y>0 && oppo_y<width-1)
 		{
-			std::cout<<"middle second move\n";
+			//std::cout<<"middle second move\n";
 			new_x = (oppo_x+(width/2))%width;
 			new_y = oppo_y;
 		}
@@ -89,164 +78,60 @@ void Human::play()
 		std::string move;
 		getline(std::cin,move);
 		std::cout<<std::endl<<std::endl<<move;
-
+		std::vector<int> temp;
 		if(move.compare("u") == 0)
 		{
-			downMove(this->y);
-			return;
+			temp = downMove(y);
 		}
 		else if(move.compare("d") == 0)
 		{
-			upMove(this->y);
-			return;
+			temp = upMove(y);
 		}
 		else if(move.compare("r") == 0)
 		{
 			if(x == width-1)
 			{
-				rightMove(-1);
-				return;
+				temp = rightMove(-1);
 			}
-			rightMove(this->x);
-			return;
+			else
+				temp = rightMove(this->x);
 		}
 		else if(move.compare("l") == 0)
 		{
 			if(x==0)
 			{
-				leftMove(width);
-				return;
+				temp = leftMove(width);
 			}
-			leftMove(this->x);
-			return ;
+			else{
+				temp = leftMove(x);
+			}
 		}
 		else
 		{
 			int position = atoi(move.c_str());
-			if(y == 0)
-			{
-				(*grid)[1][position] = digit;
-				this->x = position;this->y = 1;
-				if(digit == 1)
-				{
-					grid->setPlayerOneHead(position,1);
-					grid->setPlayerTwoHead(oppo_x,oppo_y);
-				}
-				else
-				{
-					grid->setPlayerTwoHead(position,1);
-					grid->setPlayerOneHead(oppo_x,oppo_y);
-				}
-			}
-			else if(y ==width-1)
-			{
-				(*grid)[width-2][position] = digit;
-				this->x = position; this->y = width-2;
-				if(digit == 1)
-				{
-					grid->setPlayerOneHead(position,width-2);
-					grid->setPlayerTwoHead(oppo_x,oppo_y);
-				}
-				else
-				{
-					grid->setPlayerTwoHead(position,width-2);
-					grid->setPlayerOneHead(oppo_x,oppo_y);
-				}
-			}
+			temp.push_back(position);
+			if(y ==0 )
+				temp.push_back(1);
+			if(y== width-1)
+				temp.push_back(width-2);
 
-			return;
 		}
-	}
-}
-
-//returns afeterstate for up move if possible, otherwise returns null
-void Human::upMove(int y){
-		this->y = y+1;
-		if( y == width-2 )
-		{
-			if((*grid)[width-1][0] == 0){
-				(*grid)[width-1][0] = digit;
-				(*grid).setPlayerOneHead(width-1,0);
-				this->x = 0;
-			}
-			return;
-		}		
-		(*grid)[y+1][x] = digit;
-
+		(*grid)[temp[1]][temp[0]] = digit;
+		x= temp[0];y = temp[1];
 		if(digit == 1)
 		{
-			grid->setPlayerTwoHead(oppo_x,oppo_y);
-			grid->setPlayerOneHead(x,this->y);
+			grid->setPlayerOneHead(temp[0],temp[1]);
 		}
 		else
 		{
-			grid->setPlayerOneHead(oppo_x,oppo_y);
-			grid->setPlayerTwoHead(x,this->y);
+			grid->setPlayerTwoHead(temp[0],temp[1]);
 		}
-
-}
-//returns afterstate for down move if possible, otherwise returns null
-void Human::downMove(int y)
-{
-	this->y = y-1;
-	if( y == 1 )
-	{
-		if((*grid)[0][0] == 0){
-			(*grid)[0][0] = digit;
-			(*grid).setPlayerOneHead(0,0);
-			this->x = 0;
-		}
-		return;
-	}
-	(*grid)[y-1][x] = digit;
-	
-	if(digit == 1)
-	{
-		grid->setPlayerTwoHead(oppo_x,oppo_y);
-		grid->setPlayerOneHead(x,this->y);
-	}
-	else
-	{
-		grid->setPlayerOneHead(oppo_x,oppo_y);
-		grid->setPlayerTwoHead(x,this->y);
-	}
-
-}
-//return afterstate for left move if possible, otherwise returns null
-void Human::leftMove(int x)
-{
-	(*grid)[y][x-1] = digit;
-
-	this->x = x-1;
-	this->y = y;
-	if(digit == 1)
-	{
-		grid->setPlayerTwoHead(oppo_x,oppo_y);
-		grid->setPlayerOneHead(this->x,y);
-	}
-	else
-	{
-		grid->setPlayerOneHead(oppo_x,oppo_y);
-		grid->setPlayerTwoHead(this->x,y);
+		getOpponentPlayer()->setOpponent(getX(),getY());
+		if(temp[1] == 0|| temp[1] == width-1)
+			for(int i = 0; i< width;i++)
+				(*grid)[temp[1]][i] = digit;
 	}
 }
 
-//return after state for right move is possible, otherwise return null
-	void Human::rightMove(int x)
-	{
-		(*grid)[y][x+1] = digit;
-		this->x = 1+x;
-		this->y = y;
-		if(digit == 1)
-		{
-			grid->setPlayerTwoHead(oppo_x,oppo_y);
-			grid->setPlayerOneHead(this->x,y);
-		}
-		else
-		{
-			grid->setPlayerOneHead(oppo_x,oppo_y);
-			grid->setPlayerTwoHead(this->x,y);
-		}
-	}
 
 }

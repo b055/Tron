@@ -20,10 +20,16 @@ public:
 	Minimax(int,int);
 	virtual ~Minimax();
 	void play(time_t &start);
+
 private:
-	float min(Grid,float,float,int,Grid & next);
-	float max(Grid,float,float,int,Grid & next);
+	int min(int,int,int);
+	int max(int,int,int);
+	int MAX;
+	int LIMIT;
+	int priorLosing;
 	time_t start,end;
+	void restore(int,int,int,int);
+	void restoreGrid(int,int,int);
 };
 } /* namespace tron */
 #endif /* MINIMAX_H_ */

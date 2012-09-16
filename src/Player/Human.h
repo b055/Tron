@@ -18,10 +18,6 @@ public:
 	virtual ~Human();
 	void play();
 	std::string getWeights(){return "";}
-	void upMove(int);
-	void downMove(int);
-	void rightMove(int);
-	void leftMove(int);
 
 };
 
