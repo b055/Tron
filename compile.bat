@@ -1,0 +1,1 @@
+MsBuild VisualCycles.sln /p:configuration=release
