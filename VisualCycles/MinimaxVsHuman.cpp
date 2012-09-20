@@ -12,7 +12,7 @@ using namespace tron;
 
 int main(void) {
 
-	int width = 10;
+	int width = 30;
 	Minimax* machine;
 	Human* human;
 

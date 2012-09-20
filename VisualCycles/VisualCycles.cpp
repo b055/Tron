@@ -18,17 +18,16 @@ int main(int argc, char * args[]) {
 	time_t start;
 	time(&start);
 	int width = 30;
-	Minimax* me;
-	Minimax* opponent;
+	Minimax* me= new Minimax(1,width);;
+	Minimax* opponent = new Minimax(3,width);;
 
-	me = new Minimax(1,width);
-	opponent = new Minimax(3,width);
 	
 	tron::Grid *g = new tron::Grid(args[1]);
 	
 	me->setGrid(g);
 	me->setHead(*g);
 	me->setOpponentPlayer(opponent);
+
 	//g->setPlayerOneHeadX((g->getPlayerOneHeadX()+1)%width);
 	//std::cout<<g->printGrid();
 	opponent->setGrid(g);
@@ -36,14 +35,16 @@ int main(int argc, char * args[]) {
 	opponent->setOpponentPlayer(me);	
 
 	me->play(start);
+
 	me->setHead(*g);
 	opponent->setHead(*g);
 	opponent->setOpponent(me->getX(),me->getY());
 
-	//std::cout<<g->printGrid();
+	std::cout<<g->printGrid();
 	g->outputFile();
 	
-	//time_t end;time(&end);
-	//std::printf("%f",difftime(end,start));
+	delete me;
+	delete opponent;
+	delete g;
 	return 0;
 }

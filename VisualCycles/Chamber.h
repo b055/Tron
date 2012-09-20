@@ -53,7 +53,9 @@ public:
 			width = 10;
 			visited = false;
 		}
-		~Vertex() {}
+		~Vertex() {
+
+		}
 		bool operator==(Vertex& v)
 		{
 			if(v.y == y)
@@ -88,8 +90,6 @@ private:
 	void addVertices(int,int);
 	bool addedNorth;
 	bool addedSouth;
-	int countChildren(Vertex*);
-	int artMissed();
 };
 
 } /* namespace tron */

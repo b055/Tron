@@ -7,7 +7,7 @@
 
 #ifndef VORONOI_H_
 #define VORONOI_H_
-#include "string.h"
+#include <string>
 #include <vector>
 #include <queue>
 #include <algorithm>
@@ -32,7 +32,7 @@ private:
 	void resetOneandTwo();
 	void resetMark();
 	void breadth(int);
-	int VAR;
+	int VAR, one_avail,two_avail;
 	
 public:
 	inline std::vector<std::vector< int> > getVor(){return vor;}
@@ -42,7 +42,12 @@ public:
 	std::string outputTwo();
 	virtual ~Voronoi();
 	int * calculate(int);
-
+	inline int getOneAvail(){return one_avail;}
+	inline int getTwoAvail(){return two_avail;}
+	inline int getOneNorth(){return one[0][0];}
+	inline int getTwoNorth(){return two[0][0];}
+	inline int getOneSouth(){return one[width-1][0];}
+	inline int getTwoSouth(){return two[width-1][0];}
 };
 }
 #endif /* VORONOI_H_ */

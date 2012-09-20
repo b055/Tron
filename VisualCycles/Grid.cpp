@@ -88,7 +88,7 @@ namespace tron{
 			std::stringstream colstream(row);
 			getline(colstream,x,' ');
 			getline(colstream,y,' ');
-			getline(colstream,value,' ');
+			getline(colstream,value,'\n');
 			x_coord = atoi(x.c_str());
 			y_coord = atoi(y.c_str());
 			if(value.compare("Clear") ==0)
@@ -154,7 +154,6 @@ namespace tron{
 					}
 				}				
 			}
-			filestream.flush();
 		}
 		if(player_one_head_y == 0)
 			for(int i = 0;i<width;i++)
@@ -166,7 +165,7 @@ namespace tron{
 			{
 				filestream<<i<<" "<<"0 YourWall\n";
 			}
-		if(player_two_head_y == 0)
+		else if(player_two_head_y == 0)
 			for(int i = 0;i<width;i++)
 			{
 				filestream<<i<<" "<<"0 Opponent\n";
@@ -193,7 +192,7 @@ namespace tron{
 			{
 				filestream<<i<<" "<<"29 YourWall\n";
 			}
-		if(player_two_head_y == width-1)
+		else if(player_two_head_y == width-1)
 			for(int i = 0;i<width;i++)
 			{
 				filestream<<i<<" "<<"29 Opponent\n";
@@ -208,7 +207,6 @@ namespace tron{
 			{
 				filestream<<i<<" "<<"29 Clear\n";
 			}
-
 			filestream.flush();
 			filestream.close();
 	}

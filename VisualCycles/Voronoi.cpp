@@ -7,10 +7,9 @@
 
 #include "Voronoi.h"
 namespace tron{
-Voronoi::Voronoi(Grid * const gridPointer,int width):width(width)
+Voronoi::Voronoi(Grid * const gridPointer,int width):width(width),one_avail(0),two_avail(0)
 {
-	this->grid = new Grid(width);
-	(*this->grid) = *gridPointer;
+	this->grid = gridPointer;
 	if(grid->getLoser() == 0)
 	{
 
@@ -95,7 +94,7 @@ void Voronoi::breadth( int digit)
 		mat = &two;
 	}
 	queue.push(first);
-	bool northPush =false;   //boolean that checks the first value was made zero, should rename this
+	bool firstPush =false;   //boolean that checks the first value was made zero, should rename this
 	while(!queue.empty())
 	{
 		int x,y;
@@ -158,12 +157,16 @@ void Voronoi::breadth( int digit)
 			right.push_back(y);
 			adj.push_back(right);
 		}
+		//got all the adjacent
 		for(int i =0; i<adj.size() ;i++)
 		{
 			if((*grid)[adj[i][1]][adj[i][0]] ==0  && mark[adj[i][1]][adj[i][0]] == 0 )
 			{
 
 				queue.push(adj[i]);
+				if(digit == 1)	one_avail++;
+				else two_avail++;
+
 				if(adj[i][1] == 0 || adj[i][1] == width-1)
 					for(int j = 0;j<width;j++)
 						mark[adj[i][1]][j] = 1;
@@ -174,10 +177,10 @@ void Voronoi::breadth( int digit)
 
 		}
 		int min = VAR;
-		if(!northPush)
+		if(!firstPush)
 		{
 			(*mat)[current[1]][current[0]]= 0;
-			northPush = true;
+			firstPush = true;
 		}
 		else if(current[1] == 0 || current[1] == width-1)
 		{

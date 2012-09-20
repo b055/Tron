@@ -35,8 +35,8 @@ void Human::play()
 	{
 		//std::cout<<"playing first move\n";
 		srand(time(NULL));
-		int x =4; rand()%width;
-		int y =1;rand()%width;
+		int x = 15;rand()%width;
+		int y =15;rand()%width;
 
 		if(y == 0) y++;
 		if(y == width-1) y--;

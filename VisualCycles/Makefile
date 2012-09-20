@@ -34,8 +34,8 @@ clean:
 human: MinimaxVsHuman.cpp Player.o Human.o Game.o Grid.o Voronoi.o   Minimax.o
 	g++ -g -o human MinimaxVsHuman.cpp Player.o Human.o  Game.o Voronoi.o Grid.o Minimax.o Chamber.o
 
-entelect: Player.o Grid.o Voronoi.o Minimax.o Entelect.cpp Chamber.o
-	g++ -g -o entelect Entelect.cpp Player.o Grid.o Voronoi.o Minimax.o Chamber.o
+entelect: Player.o Grid.o Voronoi.o Minimax.o VisualCycles.cpp Chamber.o
+	g++ -g -o entelect VisualCycles.cpp Player.o Grid.o Voronoi.o Minimax.o Chamber.o
 
 chamber:  main.cpp Chamber.o
 	g++ -g -o chamber main.cpp Chamber.o

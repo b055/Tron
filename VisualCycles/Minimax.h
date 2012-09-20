@@ -30,6 +30,8 @@ private:
 	time_t start,end;
 	void restore(int,int,int,int);
 	void restoreGrid(int,int,int);
+	Voronoi * first;
+	int * first_result;
 };
 } /* namespace tron */
 #endif /* MINIMAX_H_ */

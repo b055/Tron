@@ -60,6 +60,9 @@ Chamber::Chamber(std::vector<std::vector< int> > *grid,int width, int digit,int 
 }
 Chamber::~Chamber() {
 	// handled by the standard vectors
+	for(int i = 0; i<vertices.size();i++)
+		delete vertices[i];
+
 }
 std::string Chamber::printSol()
 {
@@ -191,95 +194,6 @@ bool Chamber::isValid(int x, int y ,int digit)
 		return (*grid)[y][x]<0;
 	else 
 		return (*grid)[y][x]>0;
-}
-int Chamber::artMissed()
-{
-	int count= 0;
-	int top,bottom,right,left,x,y,value;
-	for(int i = 0;i<artpoints.size();i++)
-	{
-		if(sol[artpoints[i]->y][artpoints[i]->x] != 1)
-		{
-			value = 0;
-			x = artpoints[i]->x;
-			y = artpoints[i]->y;
-			if(artpoints[i]->y == 0)
-			{
-				for(int j = 0;j<width;j++)
-				{
-					if(sol[y+1][j] == 1)value++;
-				}
-			}
-			else if(artpoints[i]->y == width-1)
-			{
-				for(int j = 0;j<width;j++)
-				{
-					if(sol[y-1][j] == 1)value++;
-				}
-			}
-			else if(artpoints[i]->y == width-2)
-			{
-				right = (x+1)%width;
-				left = (x-1+width)%width;
-				top = y-1;
-				if(sol[y][right] == 1)value++;
-				if(sol[y][left]==1) value++;
-				if(sol[y][top] == 1) value++;
-			}
-			else if(artpoints[i]->y == 1)
-			{
-				right = (x+1)%width;
-				left = (x-1+width)%width;
-				bottom = y+1;
-				if(sol[y][right] == 1)value++;
-				if(sol[y][left]==1) value++;
-				if(sol[y][bottom] == 1)value++;
-			}
-			else 
-			{
-				right = (x+1)%width;
-				left = (x-1+width)%width;
-				bottom = y+1;
-				top = y-1;
-				if(sol[y][right] == 1)value++;
-				if(sol[y][left]==1) value++;
-				if(sol[y][top] == 1) value++;
-				if(sol[y][bottom] == 1)value++;
-			}
-			if(value >1)
-				count++;
-		}
-	}
-	return count;
-}
-int Chamber::countChildren(Vertex * v)
-{
-	int count =  v->children.size();
-	if(isArtPoint(v->x,v->y))
-	{
-		int max = -9999;
-		for(int i = 0;i<v->children.size();i++)
-		{
-			int c = countChildren(v->children[i]);
-			if(c>max)
-			{
-				max = c;
-				//if(v->children[i]->children.size()>1) // bring some sort of balance to the kids count
-					//max++;
-			}
-		}
-		
-		count+=max;
-	}
-	else
-	{
-		//std::cout<<v->x<<"  "<<v->y<<"  "<<v->children.size()<<std::endl;
-		for(int i = 0;i<v->children.size();i++)
-		{
-			count+=countChildren(v->children[i]);
-		}
-	}	
-	return count;
 }
 
 
