@@ -7,8 +7,8 @@
 
 #include "Player.h"
 namespace tron{
-	Player::Player(int digit,int width):digit(digit),width(width){
-		debug = false;
+	Player::Player(int digit):digit(digit){
+		//debug = false;
 		loser = false;
 	}
 	Player::~Player() {
@@ -37,7 +37,7 @@ namespace tron{
 				//std::cout<<"topMoves\n";
 			result = topMoves();
 		}
-		else if (y==width-1)//bottom
+		else if (y==29)//bottom
 		{
 			//if(debug)
 				//std::cout<<"bottommoves\n";
@@ -61,9 +61,9 @@ namespace tron{
 			str<<"player one: x "<<x<<" y "<<y<<std::endl;
 			str<< "player two: x "<<x<<" y "<<oppo_y<<std::endl;
 
-			for(int j=0;j<width;j++)
+			for(int j=0;j<30;j++)
 			{
-				for(int i =0;i<width;i++){
+				for(int i =0;i<30;i++){
 					str<<(*grid)[j][i];str<<" ";
 				}
 				str<<"\n";
@@ -76,9 +76,9 @@ namespace tron{
 			str<< "player one: x "<<oppo_x<<" y "<<oppo_y<<std::endl;
 			str<<"player two: x "<<x<<" y "<<y<<std::endl;
 
-			for(int j=0;j<width;j++)
+			for(int j=0;j<30;j++)
 			{
-				for(int i =0;i<width;i++){
+				for(int i =0;i<30;i++){
 					str<<(*grid)[j][i];str<<" ";
 				}
 				str<<"\n";
@@ -92,7 +92,7 @@ namespace tron{
 		int count = 0;
 		std::vector<std::vector<int > > result;
 
-		for(int i = 0;i<width;i++)
+		for(int i = 0;i<30;i++)
 		{
 			if((*grid)[1][i]==0)
 			{
@@ -114,16 +114,16 @@ namespace tron{
 		//std::cout<<"getting bottom move"<<std::endl;
 
 	//#pragma omp parallel for
-		for(int i = 0; i<width;i++)
+		for(int i = 0; i<30;i++)
 		{
-			if((*grid)[width-2][i]==0)
+			if((*grid)[28][i]==0)
 			{
 			//	if(debug){
 			//		std::cout<<"true "<<i<<std::endl;
 			//	}
 				std::vector< int> temp;
 				temp.push_back(i);
-				temp.push_back(width-2);
+				temp.push_back(28);
 				result.push_back(temp);
 			}
 		}
@@ -151,7 +151,7 @@ namespace tron{
 			if(!down.empty())
 				result.push_back(down);
 
-		if(x==width-1)//right edge
+		if(x==29)//right edge
 		{
 			//std::cout<<"right edge\n";
 			if((*grid)[y][0]==0)//can wrap around the right
@@ -168,8 +168,8 @@ namespace tron{
 		else if(x==0)//left edge
 		{
 			//std::cout<<"left edge\n";
-			if((*grid)[y][width-1]==0){//can wrap around the left
-				std::vector<int> left = leftMove(width);
+			if((*grid)[y][29]==0){//can wrap around the left
+				std::vector<int> left = leftMove(30);
 				if(!left.empty())
 					result.push_back(left);
 			}
@@ -281,9 +281,9 @@ namespace tron{
 		std::srand(time(NULL));
 		int move_x = x;
 		int move_y = y;
-		if(y == width-1)	//south pole move
+		if(y == 29)	//south pole move
 		{
-			move_y = width-2;
+			move_y = 28;
 		}
 		else if(y == 0)// north pole move
 		{
@@ -292,7 +292,9 @@ namespace tron{
 
 		else//middle move
 		{
-			move_x = (x+1)%width;
+			move_x = (x+1);
+			if(move_x == 30)
+				move_x =0;
 		}
 		temp.push_back(move_x);
 		temp.push_back(move_y);

@@ -18,7 +18,7 @@
 namespace tron{
 class Player {
 public:
-	Player(int,int);
+	Player(int);
 	virtual ~Player();
 	std::vector<std::vector< int> > possibleMoves();
 	void setOpponent(int x , int y){oppo_x = x; oppo_y = y;}
@@ -34,7 +34,7 @@ public:
 	inline int getDigit(){return digit;}
 	inline void setGrid(Grid* ptr){grid = ptr;}
 	inline Grid& getGrid(){return *grid;}
-	inline int getWidth(){return width;}
+	//inline int getWidth(){return width;}
 	inline void setOpponentPlayer(Player*p){opponent = p;}
 	inline Player* getOpponentPlayer(){return opponent;}
 	std::string printGrid();
@@ -51,7 +51,6 @@ protected:
 	int digit;
 	int oppo_x;
 	int oppo_y;
-	int width;
 	Grid * grid;
 	std::vector<int> upMove(int);
 	std::vector<int> rightMove(int);

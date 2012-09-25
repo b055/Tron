@@ -17,7 +17,7 @@ namespace tron {
 
 class Minimax: public tron::Player {
 public:
-	Minimax(int,int);
+	Minimax(int);
 	virtual ~Minimax();
 	void play(time_t &start);
 
@@ -32,6 +32,7 @@ private:
 	void restoreGrid(int,int,int);
 	Voronoi * first;
 	int * first_result;
+	void wallHug();
 };
 } /* namespace tron */
 #endif /* MINIMAX_H_ */

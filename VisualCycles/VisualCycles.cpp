@@ -17,9 +17,8 @@ using namespace tron;
 int main(int argc, char * args[]) {
 	time_t start;
 	time(&start);
-	int width = 30;
-	Minimax* me= new Minimax(1,width);;
-	Minimax* opponent = new Minimax(3,width);;
+	Minimax* me= new Minimax(1);;
+	Minimax* opponent = new Minimax(3);
 
 	
 	tron::Grid *g = new tron::Grid(args[1]);
@@ -28,19 +27,20 @@ int main(int argc, char * args[]) {
 	me->setHead(*g);
 	me->setOpponentPlayer(opponent);
 
-	//g->setPlayerOneHeadX((g->getPlayerOneHeadX()+1)%width);
-	//std::cout<<g->printGrid();
+
 	opponent->setGrid(g);
 	opponent->setHead(*g);
 	opponent->setOpponentPlayer(me);	
 
+	//me->setX(me->getX()+1);
+	//g->setPlayerOneHeadX(me->getX());
 	me->play(start);
 
 	me->setHead(*g);
 	opponent->setHead(*g);
 	opponent->setOpponent(me->getX(),me->getY());
 
-	std::cout<<g->printGrid();
+	//std::cout<<g->printGrid();
 	g->outputFile();
 	
 	delete me;

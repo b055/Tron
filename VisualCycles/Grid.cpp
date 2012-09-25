@@ -10,39 +10,26 @@
 #include <iostream>
 namespace tron{
 	//takes player one's head, player_two's head player and the grid
-	Grid::Grid(int width):width(width),loser(0)
+	Grid::Grid():loser(0)
 	{
-		for(int i =0;i<width;i++)
+		for(int i =0;i<30;i++)
 		{
 			std::vector<int> temp;
-			for(int j = 0;j<width;j++)
+			for(int j = 0;j<30;j++)
 			{
 				temp.push_back(0);
 			}
 			grid.push_back(temp);
 		}
-		turn = 0;
 	}
 	
-	Grid::Grid():width(30),loser(0)
-	{
-		for(int i =0;i<width;i++)
-		{
-			std::vector<int> temp;
-			for(int j = 0;j<width;j++)
-			{
-				temp.push_back(0);
-			}
-			grid.push_back(temp);
-		}
-	}
-	Grid::Grid(std::string src):width(30),sourceFile(src)
+	Grid::Grid(std::string src):sourceFile(src)
 	{
 		loser = 0;
-		for(int i =0;i<width;i++)
+		for(int i =0;i<30;i++)
 		{
 			std::vector<int> temp;
-			for(int j = 0;j<width;j++)
+			for(int j = 0;j<30;j++)
 			{
 				temp.push_back(0);
 			}
@@ -58,9 +45,9 @@ namespace tron{
 		player_two_head_y  = 0;
 		loser = 0;
 #pragma omp parallel for
-		for(int i =0;i<width;i++)
+		for(int i =0;i<30;i++)
 		{
-			for(int j = 0;j<width;j++)
+			for(int j = 0;j<30;j++)
 			{
 				grid[i][j] =0;
 			}
@@ -123,9 +110,9 @@ namespace tron{
 		
 		std::ofstream filestream;
 		filestream.open(sourceFile.c_str());
-		for(int j = 1 ; j<width-1 ; j++)
+		for(int j = 1 ; j<29 ; j++)
 		{
-			for(int i = 0 ; i<width ; i++)
+			for(int i = 0 ; i<30 ; i++)
 			{
 				if(grid[j][i] == 0)
 				{
@@ -156,54 +143,54 @@ namespace tron{
 			}
 		}
 		if(player_one_head_y == 0)
-			for(int i = 0;i<width;i++)
+			for(int i = 0;i<30;i++)
 			{
 				filestream<<i<<" "<<"0 You\n";
 			}
 		else if(grid[0][0] == 1)
-			for(int i = 0;i<width;i++)
+			for(int i = 0;i<30;i++)
 			{
 				filestream<<i<<" "<<"0 YourWall\n";
 			}
 		else if(player_two_head_y == 0)
-			for(int i = 0;i<width;i++)
+			for(int i = 0;i<30;i++)
 			{
 				filestream<<i<<" "<<"0 Opponent\n";
 			}		
 		else if(grid[0][0]== 3)
-			for(int i = 0;i<width;i++)
+			for(int i = 0;i<30;i++)
 			{
 				filestream<<i<<" "<<"0 OpponentWall\n";
 			}
 		else
-			for(int i = 0;i<width;i++)
+			for(int i = 0;i<30;i++)
 			{
 				filestream<<i<<" "<<"0 Clear\n";
 			}
 
 
-		if(player_one_head_y == width-1)
-			for(int i = 0;i<width;i++)
+		if(player_one_head_y == 29)
+			for(int i = 0;i<30;i++)
 			{
 				filestream<<i<<" "<<"29 You\n";
 			}
-		else if(grid[width-1][0] == 1)
-			for(int i = 0;i<width;i++)
+		else if(grid[29][0] == 1)
+			for(int i = 0;i<30;i++)
 			{
 				filestream<<i<<" "<<"29 YourWall\n";
 			}
-		else if(player_two_head_y == width-1)
-			for(int i = 0;i<width;i++)
+		else if(player_two_head_y == 29)
+			for(int i = 0;i<30;i++)
 			{
 				filestream<<i<<" "<<"29 Opponent\n";
 			}		
-		else if(grid[width-1][0]== 3)
-			for(int i = 0;i<width;i++)
+		else if(grid[29][0]== 3)
+			for(int i = 0;i<30;i++)
 			{
 				filestream<<i<<" "<<"29 OpponentWall\n";
 			}
 		else
-			for(int i = 0;i<width;i++)
+			for(int i = 0;i<30;i++)
 			{
 				filestream<<i<<" "<<"29 Clear\n";
 			}
@@ -217,7 +204,6 @@ namespace tron{
 		player_two_head_x = newGrid.player_two_head_x;
 		player_two_head_y = newGrid.player_two_head_y;
 		loser = newGrid.loser;
-		width = newGrid.width;
 		copy(newGrid.grid.begin(),newGrid.grid.end(),grid.begin());
 		return *this;
 	}
@@ -250,9 +236,9 @@ namespace tron{
 		str<<"player one: x "<<player_one_head_x<<" y "<<this->player_one_head_y<<std::endl;
 		str<< "player two: x "<<player_two_head_x<<" y "<<player_two_head_y<<std::endl;
 
-		for(int j=0;j<width;j++)
+		for(int j=0;j<30;j++)
 		{
-			for(int i =0;i<width;i++){
+			for(int i =0;i<30;i++){
 				str<<grid[j][i];str<<" ";
 			}
 			str<<"\n";
@@ -289,9 +275,9 @@ namespace tron{
 			oppo = 1;
 		}
 #pragma omp parallel for
-		for(int i = 0;i<width;i++)
+		for(int i = 0;i<30;i++)
 		{
-			for(int j = 0;j<width;j++)
+			for(int j = 0;j<30;j++)
 			{
 				if(grid[j][i] == digit)//number of ones
 				{
@@ -317,9 +303,9 @@ namespace tron{
 		}
 
 
-		for(int j = 0; j<width;j++)
+		for(int j = 0; j<30;j++)
 		{
-			for(int i = 0 ;i<width;i++)
+			for(int i = 0 ;i<30;i++)
 			{
 				if(i%2 ==0 && j%2 == 0)//get the states for every four boxes
 				{
@@ -359,12 +345,12 @@ namespace tron{
 					if(grid[j][i]!=0 )
 						state[0] = 1;
 				}
-				else if(j==width-1&& state[1] == 0)//south pole
+				else if(j==29&& state[1] == 0)//south pole
 				{
 					if(grid[j][i]!=0)
 						state[1] = 1;
 				}
-				if(j != 0 && j!= width-1 && grid[j][i]==0)//available spaces
+				if(j != 0 && j!= 29 && grid[j][i]==0)//available spaces
 				{
 					available++;
 				}

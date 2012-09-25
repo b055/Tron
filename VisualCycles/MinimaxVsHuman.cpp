@@ -12,7 +12,6 @@ using namespace tron;
 
 int main(void) {
 
-	int width = 30;
 	Minimax* machine;
 	Human* human;
 
@@ -20,10 +19,10 @@ int main(void) {
 	srand(time(NULL));
 
 
-	machine = new Minimax(1,width);
-	human = new Human(3,width);
+	machine = new Minimax(1);
+	human = new Human(3);
 
-	Game *g = new Game(width);
+	Game *g = new Game(30);
 
 
 	machine->setGrid(g->getGrid());

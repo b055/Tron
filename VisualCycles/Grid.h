@@ -19,7 +19,6 @@ namespace tron{
 class Grid {
 public:
 	Grid(std::string);
-	Grid(int );
 	Grid();
 	virtual ~Grid();
 	std::vector<int>& operator[](int);
@@ -54,10 +53,7 @@ private:
 	int player_one_head_y;
 	int player_two_head_x;
 	int player_two_head_y;
-	int turn;
-	int width;
 	double * state;
-	int statewidth;
 	int cells;
 	int * result;
 	int loser;

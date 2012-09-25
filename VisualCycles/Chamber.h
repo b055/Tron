@@ -12,22 +12,23 @@
 #include <string>
 #include <queue>
 #include <sstream>
+#include <iostream>
 namespace tron {
 
 class Chamber {
 public:
-	Chamber(std::vector<std::vector< int> >*,int,int,int,int);
+	Chamber(std::vector<std::vector< int> >*,int,int,int);
 	virtual ~Chamber();
 	void printMark();
 	std::string printSol();
 	inline int getValue(){return value;}
 	int breadth(int,int,int);
+	bool isArtPoint(int,int);
 private:
 	bool isValid(int,int,int);
 	std::vector<std::vector< int> >* grid;
 	std::vector<std::vector< int> > mark;
 	std::vector<std::vector< int> > sol;
-	bool isArtPoint(int,int);
 	int digit;
 	bool NorthValue,SouthValue;
 	int counter;

@@ -14,7 +14,7 @@ namespace tron {
 
 class Human: public tron::Player {
 public:
-	Human(int,int);
+	Human(int);
 	virtual ~Human();
 	void play();
 	std::string getWeights(){return "";}

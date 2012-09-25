@@ -9,7 +9,7 @@
 
 namespace tron {
 
-	Minimax::Minimax(int digit,int width):Player(digit,width),MAX(9999),LIMIT(8) {
+	Minimax::Minimax(int digit):Player(digit),MAX(9999),LIMIT(6) {
 	}
 
 	Minimax::~Minimax() {
@@ -20,14 +20,14 @@ namespace tron {
 	{
 		//check if at poles and get possible moves
 		//check if at edges and get possible moves
-	/*	if(debug)
+		/*if(debug)
 			std::cout<<"possible moves for "<<digit<<std::endl;
 		int count = 0;
-		for(int i = 0;i<width;i++)
+		for(int i = 0;i<30;i++)
 		{
 			if(count>1)
 				break;
-			for(int j = 0 ;j<width;j++)
+			for(int j = 0 ;j<30;j++)
 			{
 				if(count>1)
 					break;
@@ -40,11 +40,11 @@ namespace tron {
 		{
 			//std::cout<<"playing first movve\n";
 			std::srand(time(NULL));
-			int x = rand()%width;
-			int y = rand()%width;
+			int x = rand()%30;
+			int y = rand()%30;
 			if(y == 0)
 				y++;
-			if(width-1 == y)
+			if(30-1 == y)
 				y--;
 			
 			(*grid)[y][x] = digit;
@@ -58,9 +58,9 @@ namespace tron {
 			//std::cout<<"playing second move\n";
 			//std::cout<<"made copy\n";
 			int new_x,new_y;
-			if((*grid).getPlayerOneHeadY()>0&& (*grid).getPlayerOneHeadY()<width-1)
+			if((*grid).getPlayerOneHeadY()>0&& (*grid).getPlayerOneHeadY()<30-1)
 			{
-				new_x = ((*grid).getPlayerOneHeadX()+(width/2))%width;
+				new_x = ((*grid).getPlayerOneHeadX()+(30/2))%30;
 				new_y = (*grid).getPlayerOneHeadY();
 				(*grid)[new_y][new_x] = digit;
 			}			
@@ -68,62 +68,32 @@ namespace tron {
 			return;
 		}*/
 		this->start = start;
-		//check if at edges and get possible moves
-	//	if(debug)
-		//	std::cout<<"possible moves for "<<digit<<std::endl;
-		
-		/*if(y<18 && y>12 && oppo_y<18 && oppo_y >12)
+
+		first = new Voronoi(grid);
+		int *result = first->calculate(digit);
+
+		if(first->getSeparated())
 		{
-			LIMIT = 8;
+			wallHug();
+			return;
 		}
-		else
+
+		if((y ==1 || oppo_y == 1) && (*grid)[0][0] == 0)
 		{
-			first = new Voronoi(grid,width);
-			first_result= first->calculate(0);
-			int one_avail = first->getOneAvail();
-			int two_avail = first->getTwoAvail();
-
-			int min_avail = one_avail<two_avail?one_avail:two_avail;
-			if(min_avail <= 30)
-			{
-				LIMIT = 30;
-			}
-			else
-			{
-				/*int free_top =0;
-				int free_bottom = 0;
-				for(int i = 0;i<width;i++)
-				{
-					if((*grid)[1][i] ==0)
-						free_top++;
-					if((*grid)[width-1][i]==0)
-						free_bottom++;
-				}
-				int max_pole = free_top>free_bottom?free_top:free_bottom;
-				if(max_pole <= 5)
-				{}
-				else
-				{
-					int one_north = first->getOneNorth();
-					int one_south = first->getOneSouth();
-					int two_north = first->getTwoNorth();
-					int two_south = first->getTwoSouth();
-
-					int proximity= one_north<one_south?one_north:one_south;
-					proximity= proximity<two_north?proximity:two_north;
-					proximity = proximity<two_south?proximity:two_south;
-
-					if(proximity < LIMIT/2)
-					{// if a player is really close to the pole, just predict beyond the pole
-						LIMIT = (proximity<<1) +6;
-					}
-					else
-					{// otherwise just use the limit
-
-					}
-				}
-			}
-		}*/
+			LIMIT = 4;
+		}
+		else if( (y>=28 ||  oppo_y ==28) && (*grid)[29][0] == 0)
+		{
+			LIMIT = 4;
+		}
+		if((y == 0 || y == 29) && possibleMoves().size()>6 )
+		{
+			LIMIT = 4;
+		}
+		else if((oppo_y == 0 || oppo_y == 29)&& this->getOpponentPlayer()->possibleMoves().size()>6)
+		{
+			LIMIT = 4;
+		}
 
 		int xbefore = x;
 		int ybefore = y;
@@ -136,9 +106,9 @@ namespace tron {
 		/*if a guaranteed loss, just try to make the next best move, hopefully the other player will fuck up
 		 * if all goes as planned, i won't need to perform this stuf
 		 * */
-		std::cout<<value<<std::endl;
+		//std::cout<<value<<std::endl;
 
-
+		LIMIT = 6;
 		if(value == -MAX)
 		{
 		//	std::cout<<grid->printGrid()<<std::endl;
@@ -150,7 +120,7 @@ namespace tron {
 			int bestvalue = value;
 			for(int j = 0;j<afterstates.size();j++)
 			{
-				Voronoi a(grid,width);
+				Voronoi a(grid);
 				int * result = a.calculate(digit);
 				if(digit==1)
 				{
@@ -183,7 +153,7 @@ namespace tron {
 			int bestvalue = -MAX;
 			for(int j = 0;j<afterstates.size();j++)
 			{
-				Voronoi a(grid,width);
+				Voronoi a(grid);
 				int * result = a.calculate(digit);
 				if(digit==1)
 				{
@@ -210,7 +180,199 @@ namespace tron {
 		delete first;
 	}
 	
+	void Minimax::wallHug()
+	{
+		std::vector<std::vector<int> > afterstates = possibleMoves();
+		int bestx,besty;
+		int max = -1;
+		std::vector<std::vector< int> > maxStack;
+		if(afterstates.size() == 1)
+		{
+			restore(afterstates[0][0],afterstates[0][1],oppo_x,oppo_y);
+			restoreGrid(afterstates[0][0],afterstates[0][1],digit);
+			return;
+		}
+		bestx = afterstates[0][0];
+		besty = afterstates[0][1];
+		int chamber = 0;
+		for(int i = 0;i<afterstates.size();i++)
+		{
+			int temp =0;
 
+			int topy,bottomy,rightx,leftx;
+			topy = afterstates[i][1]-1;
+			bottomy = afterstates[i][1]+1;
+			rightx = afterstates[i][0]+1;
+			if(rightx == 30)
+				rightx = 0;
+			leftx = afterstates[i][0]-1;
+			if(leftx == -1)
+				leftx = 29;
+			if((*grid)[afterstates[i][1]][rightx]!=0)
+				temp++;
+			if((*grid)[afterstates[i][1]][leftx]!=0)
+				temp++;
+			if(bottomy != 30)
+			{
+				if((*grid)[bottomy][afterstates[i][0]]!=0)
+					temp++;
+			}
+			else
+			{
+
+			}
+			if(topy != -1)
+			{
+				if((*grid)[topy][afterstates[i][0]]!=0)
+					temp++;
+			}
+			else
+			{
+
+			}
+
+
+			if(temp>=max)
+			{
+
+				if(temp == 4)
+				{
+					continue;
+				}
+
+				int oldx = x;int oldy = y;
+				restore(afterstates[i][0],afterstates[i][1],oppo_x,oppo_y);
+				restoreGrid(afterstates[i][0],afterstates[i][1],digit);
+				Voronoi one(grid);
+				int* result = one.calculate(digit);
+				restore(oldx,oldy,oppo_x,oppo_y);
+				restoreGrid(afterstates[i][0],afterstates[i][1],0);
+
+				if(digit == 1)
+				{
+					if(result[0]>=chamber)
+					{
+						chamber = result[0];
+						std::vector< int> current;
+						current.push_back(afterstates[i][0]);
+						current.push_back(afterstates[i][1]);
+						current.push_back(temp);
+						maxStack.push_back(current);
+						bestx= afterstates[i][0];
+						besty = afterstates[i][1];
+						max = temp;
+					}
+
+				}
+				else
+				{
+					if(result[1]>=chamber)
+					{
+						chamber = result[1];
+						std::vector< int> current;
+						current.push_back(afterstates[i][0]);
+						current.push_back(afterstates[i][1]);
+						current.push_back(temp);
+						maxStack.push_back(current);
+						bestx= afterstates[i][0];
+						besty = afterstates[i][1];
+						max = temp;
+					}
+				}
+			}
+		}
+		int count = 0;
+		for(int i = 0;i<maxStack.size();i++)
+		{
+			if(maxStack[i][3] == max)
+				count++;
+		}
+		if(count == 2)
+		{
+			int oldx = x;int oldy = y;
+			restore(maxStack[0][0],maxStack[0][1],oppo_x,oppo_y);
+			restoreGrid(maxStack[0][0],maxStack[0][1],digit);
+			Voronoi one(grid);
+
+			restore(oldx,oldy,oppo_x,oppo_y);
+			restoreGrid(maxStack[0][0],maxStack[0][1],0);
+
+			int * oneresult = one.calculate(digit);
+
+			restore(maxStack[1][0],maxStack[1][1],oppo_x,oppo_y);
+			restoreGrid(maxStack[1][0],maxStack[1][1],digit);
+			Voronoi two(grid);
+			int *tworesult = two.calculate(digit);
+
+			restore(oldx,oldy,oppo_x,oppo_y);
+			restoreGrid(maxStack[1][0],maxStack[1][1],0);
+
+
+			if(digit == 1)
+			{
+				if(tworesult[0]>oneresult[0])
+				{
+					restore(maxStack[1][0],maxStack[1][1],oppo_x,oppo_y);
+					restoreGrid(maxStack[1][0],maxStack[1][1],digit);
+				}
+				else if(oneresult[0]>tworesult[0])
+				{
+					restore(maxStack[0][0],maxStack[0][1],oppo_x,oppo_y);
+					restoreGrid(maxStack[0][0],maxStack[0][1],digit);
+				}
+				else
+				{
+					int ran = rand()%2;
+					if(ran == 0)
+					{
+						restore(maxStack[1][0],maxStack[1][1],oppo_x,oppo_y);
+						restoreGrid(maxStack[1][0],maxStack[1][1],digit);
+					}
+					else
+					{
+						restore(maxStack[0][0],maxStack[0][1],oppo_x,oppo_y);
+						restoreGrid(maxStack[0][0],maxStack[0][1],digit);
+					}
+				}
+			}
+			else
+			{
+				if(tworesult[1]>oneresult[1])
+				{
+					restore(maxStack[1][0],maxStack[1][1],oppo_x,oppo_y);
+					restoreGrid(maxStack[1][0],maxStack[1][1],digit);
+				}
+				else if(oneresult[1]>tworesult[1])
+				{
+					restore(maxStack[0][0],maxStack[0][1],oppo_x,oppo_y);
+					restoreGrid(maxStack[0][0],maxStack[0][1],digit);
+				}
+				else
+				{
+					int ran = rand()%2;
+					if(ran == 0)
+					{
+						restore(maxStack[1][0],maxStack[1][1],oppo_x,oppo_y);
+						restoreGrid(maxStack[1][0],maxStack[1][1],digit);
+					}
+					else
+					{
+						restore(maxStack[0][0],maxStack[0][1],oppo_x,oppo_y);
+						restoreGrid(maxStack[0][0],maxStack[0][1],digit);
+					}
+				}
+			}
+		}
+		else
+		{
+			if(maxStack.empty())
+			{
+
+			}
+			restore(bestx,besty,oppo_x,oppo_y);
+			restoreGrid(bestx,besty,digit);
+		}
+	}
 	int Minimax::max(int alpha,int beta, int depth)
 	{
 		depth++;
@@ -218,29 +380,33 @@ namespace tron {
 		//std::cout<<depth<<std::endl;
 		double elapsed = difftime(end,start);
 		//if end state return value
-		if(getLoser()|| this->getOpponentPlayer()->getLoser() || depth > LIMIT || difftime(end,start)>= 4)
+
+		//if(elapsed <2 && depth >LIMIT)
+			//LIMIT++;
+		if((getLoser() || this->getOpponentPlayer()->getLoser()) || depth > LIMIT || elapsed>= 3.5)
 		{
-			//std::cout<<depth<<std::endl;
-			if(elapsed >= 4.5)
-				return alpha;
 			if(getLoser())
 				return -MAX;
 			if(this->getOpponentPlayer()->getLoser())
 				return MAX;
 
 			{
-				Voronoi a(grid,width);
+				Voronoi a(grid);
 				int * result = a.calculate(digit);
 
 				if(digit==1)
 				{
 					int value = result[0];
+					if(value>60 && a.getSeparated())
+						value = MAX;
 					delete result;
 					return value;
 				}
 				else
 				{
 					int value = result[1];
+					if(value>60 && a.getSeparated())
+						value = MAX;
 					delete result;
 					return value;
 				}
@@ -250,7 +416,7 @@ namespace tron {
 		int value = -MAX;
 		std::vector<std::vector<int> > afterstates = possibleMoves();
 		int bestx = -1; int besty=-1;
-		if((y == 0 || y == width-1) && !afterstates.empty())
+		if(afterstates.size()>6)
 			random_shuffle(afterstates.begin(),afterstates.end());
 		bestx = afterstates[0][0];
 		besty = afterstates[0][1];
@@ -325,25 +491,29 @@ namespace tron {
 		double elapsed = difftime(end,start);
 		Player* opponent = this->getOpponentPlayer();
 		//std::cout<<depth<<std::endl;
-		if(getLoser() || opponent->getLoser() || depth > LIMIT || difftime(end,start)>= 4)
+		//if(elapsed <2 && depth >LIMIT)
+			//LIMIT++;
+		if((getLoser() || opponent->getLoser()) || (depth > LIMIT || elapsed>= 3.5))
 		{
-			if(elapsed >= 4.5)
-				return beta; //returns the beta
 			if(getLoser())
 				return -MAX;
 			if(opponent->getLoser())
 				return MAX;
-			Voronoi a(grid,width);
+			Voronoi a(grid);
 			int * result = a.calculate(digit);
 			if(digit== 1 )
 			{
 				int value =  result[0];
+				if(value>60 && a.getSeparated())
+					value = MAX;
 				delete result;
 				return value;
 			}
 			else if( digit == 3 )
 			{
 				int value = result[1];
+				if(value>60 && a.getSeparated())
+					value = MAX;
 				delete result;
 				return value;
 			}
@@ -352,7 +522,7 @@ namespace tron {
 		int value = MAX;
 		std::vector<std::vector<int> > afterstates = opponent->possibleMoves();
 
-		if((oppo_y == 0 || oppo_y == width-1) && !afterstates.empty())// shuffle the points at the poles, chances are not all would be checked
+		if(afterstates.size()>6)// shuffle the points at the poles, chances are not all would be checked
 			random_shuffle(afterstates.begin(),afterstates.end());
 
 		for(int j = 0;j<afterstates.size();j++)
@@ -422,9 +592,9 @@ namespace tron {
 
 	void Minimax::restoreGrid(int x,int y,int digit)
 	{
-		if(y == 0 || y == width-1)
+		if(y == 0 || y == 29)
 		{
-			for(int i =0;i<width;i++)
+			for(int i =0;i<30;i++)
 				(*grid)[y][i] = digit;
 		}
 		else

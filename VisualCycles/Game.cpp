@@ -8,7 +8,7 @@
 #include "Game.h"
 
 namespace tron{
-	Game::Game(int w):width(w),grid(new Grid(w)){
+	Game::Game(int w):width(w),grid(new Grid()){
 	}
 
 	Game::~Game() {

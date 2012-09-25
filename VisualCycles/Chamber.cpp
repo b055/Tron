@@ -9,14 +9,14 @@
 
 namespace tron {
 
-Chamber::Chamber(std::vector<std::vector< int> > *grid,int width, int digit,int x,int y)
-:addedNorth(false),addedSouth(false),NorthValue(false),rootChildren(0),SouthValue(false),width(width),digit(digit)
+Chamber::Chamber(std::vector<std::vector< int> > *grid, int digit,int x,int y)
+:addedNorth(false),addedSouth(false),NorthValue(false),rootChildren(0),SouthValue(false),digit(digit)
 {
 	this->grid = grid;
-	for(int i = 0;i<width;i++)
+	for(int i = 0;i<30;i++)
 	{
 		std::vector<int> temp;
-		for(int j = 0;j<width;j++)
+		for(int j = 0;j<30;j++)
 		{
 			temp.push_back(0);
 		}
@@ -26,8 +26,12 @@ Chamber::Chamber(std::vector<std::vector< int> > *grid,int width, int digit,int 
 
 	counter = 1;
 	int rightx,leftx,topy,bottomy;
-	rightx = (x+1)%width;
-	leftx = (x-1+width)% width;
+	rightx = (x+1);
+	if(rightx==30)
+		rightx =0;
+	leftx = x-1;
+	if(leftx == -1)
+		leftx = 29;
 	topy = y-1;
 	bottomy = y+1;
 	vertices.push_back(new Vertex(x,y));
@@ -38,7 +42,7 @@ Chamber::Chamber(std::vector<std::vector< int> > *grid,int width, int digit,int 
 	if(topy != -1)
 		if((*grid)[topy][x] != 0)
 			addVertices(x,topy);
-	if(bottomy != width)
+	if(bottomy != 30)
 		if((*grid)[bottomy][x]!= 0)
 			addVertices(x,bottomy);
 	value = 0;
@@ -46,16 +50,13 @@ Chamber::Chamber(std::vector<std::vector< int> > *grid,int width, int digit,int 
 	{
 		findArt(*vertices[0]);
 		if(rootChildren>1){
-			artpoints.push_back(vertices[0]);
+		//	artpoints.push_back(vertices[0]);
 		}
-		//value = countChildren(vertices[0]);
 		
-		for(int i = 0;i<width;i++)
-			for(int j = 0;j<width;j++)
+		for(int i = 0;i<30;i++)
+			for(int j = 0;j<30;j++)
 				mark[i][j] = 0;	
 		value = breadth(vertices[0]->x,vertices[0]->y,digit); //seems to perform better
-		//printMark();
-		//std::cout<<std::endl<<printSol();
 	}	
 }
 Chamber::~Chamber() {
@@ -67,8 +68,8 @@ Chamber::~Chamber() {
 std::string Chamber::printSol()
 {
 	std::stringstream ss;
-	for(int i = 0 ;i<width;i++){
-		for(int j =0;j<width;j++)
+	for(int i = 0 ;i<30;i++){
+		for(int j =0;j<30;j++)
 			ss<<sol[i][j]<<" ";
 		ss<<std::endl;
 	}
@@ -98,26 +99,26 @@ int Chamber::breadth( int rootx,int rooty, int digit)
 		std::vector<int> left;
 		std::vector<int> right;
 		//gets the adjacents
-		if(y-1 >-1 && y -1 < width-2 && isValid(x,y-1,digit))
+		if(y-1 >-1 && y -1 < 28 && isValid(x,y-1,digit))
 		{
 			top.push_back(x);
 			top.push_back(y-1);
 			adj.push_back(top);
 		}
-		else if(y-1 == width-2 )
+		else if(y-1 == 28 )
 		{
-			for(int i = 0;i<width;i++)
+			for(int i = 0;i<30;i++)
 			{
-				if(isValid(i,width-2,digit))
+				if(isValid(i,28,digit))
 				{
 					std::vector<int> temp;
 					temp.push_back(i);
-					temp.push_back(width-2);
+					temp.push_back(28);
 					adj.push_back(temp);
 				}
 			}
 		}
-		if(y+1 < width && y+1 >1 && isValid(x,y+1,digit))
+		if(y+1 < 30 && y+1 >1 && isValid(x,y+1,digit))
 		{
 			bottom.push_back(x);
 			bottom.push_back(y+1);
@@ -125,7 +126,7 @@ int Chamber::breadth( int rootx,int rooty, int digit)
 		}
 		else if(y+1 == 1)
 		{
-			for(int i = 0;i<width;i++)
+			for(int i = 0;i<30;i++)
 			{
 				if(isValid(i,1,digit))
 				{
@@ -136,15 +137,21 @@ int Chamber::breadth( int rootx,int rooty, int digit)
 				}
 			}
 		}
-		if(isValid((x-1+width)%width,y,digit))
+		int leftx = x-1;
+		if(leftx==-1)
+			leftx=29;
+		int rightx = x+1;
+		if(rightx==30)
+			rightx=0;
+		if(isValid(leftx,y,digit))
 		{
-			left.push_back((x-1+width)%width);
+			left.push_back(leftx);
 			left.push_back(y);
 			adj.push_back(left);
 		}
-		if(isValid((x+1)%width,y,digit))
+		if(isValid(rightx,y,digit))
 		{
-			right.push_back((x+1)%width);
+			right.push_back(rightx);
 			right.push_back(y);
 			adj.push_back(right);
 		}
@@ -155,8 +162,8 @@ int Chamber::breadth( int rootx,int rooty, int digit)
 			
 			if(isValid(adj[i][0],adj[i][1],digit) && mark[adj[i][1]][adj[i][0]] == 0)
 			{
-				if(adj[i][1] == 0 || adj[i][1] == width-1)
-					for(int j = 0;j<width;j++)
+				if(adj[i][1] == 0 || adj[i][1] == 29)
+					for(int j = 0;j<30;j++)
 						mark[adj[i][1]][j] = 1;
 				mark[adj[i][1]][adj[i][0]] = 1;	
 				if(isArtPoint(adj[i][0],adj[i][1]))
@@ -199,7 +206,7 @@ bool Chamber::isValid(int x, int y ,int digit)
 
 void Chamber::addVertices(int x, int y)
 {
-	if(digit == 1 && y>-1 && y<width && (*grid)[y][x]<0 && mark[y][x] == 0)
+	if(digit == 1 && y>-1 && y<30 && (*grid)[y][x]<0 && mark[y][x] == 0)
 	{
 		if(y == 0)
 		{
@@ -208,37 +215,43 @@ void Chamber::addVertices(int x, int y)
 				Vertex * v = new Vertex(x,y);
 				vertices.push_back(v);
 				addedNorth= true;
-				for(int i = 0;i<width;i++)
+				for(int i = 0;i<30;i++)
 					mark[0][i] = 1;
-				for(int i = 0;i<width;i++)
+				for(int i = 0;i<30;i++)
 					addVertices(i,y+1);
 			}
 		}
-		else if(y == width-1)
+		else if(y == 29)
 		{
 			if(!addedSouth)
 			{
 				Vertex *v = new Vertex(x,y);
 				vertices.push_back(v);
 				addedSouth= true;
-				for(int i = 0;i<width;i++)
-					mark[width-1][i] = 1;
-				for(int i = 0;i<width;i++)
+				for(int i = 0;i<30;i++)
+					mark[29][i] = 1;
+				for(int i = 0;i<30;i++)
 					addVertices(i,y-1);
 			}
 		}
 		else
 		{
+			int rightx = x+1;
+			if(rightx == 30)
+				rightx = 0;
+			int leftx = x-1;
+			if(leftx == -1)
+				leftx = 29;
 			mark[y][x] = 1;
 			Vertex*v = new Vertex(x,y);
 			vertices.push_back(v);
 			addVertices(x,y+1);
 			addVertices(x,y-1);
-			addVertices((x+1)%width,y);
-			addVertices((x-1+width)%width,y);
+			addVertices(rightx,y);
+			addVertices(leftx,y);
 		}
 	}
-	else if(digit == 3 && y>-1 && y<width && (*grid)[y][x]>0 && mark[y][x] == 0 )
+	else if(digit == 3 && y>-1 && y<30 && (*grid)[y][x]>0 && mark[y][x] == 0 )
 	{
 		if(y == 0)
 		{
@@ -247,34 +260,40 @@ void Chamber::addVertices(int x, int y)
 				Vertex * v = new Vertex(x,y);
 				vertices.push_back(v);
 				addedNorth= true;
-				for(int i = 0;i<width;i++)
+				for(int i = 0;i<30;i++)
 					mark[0][i] = 1;
-				for(int i = 0;i<width;i++)
+				for(int i = 0;i<30;i++)
 					addVertices(i,1);
 			}
 		}
-		else if(y == width-1)
+		else if(y == 29)
 		{
 			if(!addedSouth)
 			{
 				Vertex *v = new Vertex(x,y);
 				vertices.push_back(v);
 				addedSouth= true;
-				for(int i = 0;i<width;i++)
-					mark[width-1][i] = 1;
-				for(int i = 0;i<width;i++)
+				for(int i = 0;i<30;i++)
+					mark[29][i] = 1;
+				for(int i = 0;i<30;i++)
 					addVertices(i,y-1);
 			}
 		}
 		else
 		{
+			int rightx = x+1;
+			if(rightx == 30)
+				rightx = 0;
+			int leftx = x-1;
+			if(leftx == -1)
+				leftx = 29;
 			mark[y][x] = 1;
 			Vertex*v = new Vertex(x,y);
 			vertices.push_back(v);
 			addVertices(x,y+1);
 			addVertices(x,y-1);
-			addVertices((x+1)%width,y);
-			addVertices((x-1+width)%width,y);
+			addVertices(rightx,y);
+			addVertices(leftx,y);
 		}
 	}
 
@@ -282,9 +301,9 @@ void Chamber::addVertices(int x, int y)
 
 void Chamber::printMark()
 {
-	for(int i = 0;i< width;i++)
+	for(int i = 0;i< 30;i++)
 	{
-		for(int j = 0; j<width;j++)
+		for(int j = 0; j<30;j++)
 		{
 			//std::cout<<mark[i][j]<<" ";
 		}
@@ -300,7 +319,7 @@ bool Chamber::isArtPoint(int x, int y)
 	{
 		if(y == artpoints[i]->y)
 		{
-			if(y == 0 || y == width-1)
+			if(y == 0 || y == 29)
 				return true;
 			else
 				return x == artpoints[i]->x;
@@ -335,12 +354,12 @@ void Chamber::findArt(Vertex& v)
 			v.low = v.low<w->low?v.low:w->low;
 		}
 		else
-		{
+
 			if(v.num == 1 || *(v.parent) != *w)
 			{
 				v.low = v.low<w->num?v.low:w->num;
 			}
-		}
+
 	}
 }
 
@@ -349,8 +368,12 @@ std::vector< tron::Chamber::Vertex*> Chamber::adjacent(Vertex& v)
 {
 	std::vector< Vertex*> adj;
 	int rightx,leftx,topy,bottomy;
-	rightx = (v.x+1)%width;
-	leftx = (v.x-1+width)% width;
+	rightx = v.x+1;
+	if(rightx == 30)
+		rightx = 0;
+	leftx = v.x-1;
+	if(leftx == -1)
+		leftx = 29;
 	topy = v.y-1;
 	bottomy = v.y+1;
 	if(topy ==-1)
@@ -362,10 +385,10 @@ std::vector< tron::Chamber::Vertex*> Chamber::adjacent(Vertex& v)
 			}
 		}
 	}
-	else if(bottomy == width)
+	else if(bottomy == 30)
 		for(unsigned int i = 1;i<vertices.size();i++)
 		{
-			if(vertices[i]->y == width-1)
+			if(vertices[i]->y == 29)
 				adj.push_back(vertices[i]);
 		}
 	else if(topy == 0)
@@ -390,7 +413,7 @@ std::vector< tron::Chamber::Vertex*> Chamber::adjacent(Vertex& v)
 			}
 		}
 	}
-	else if(bottomy == width-1)
+	else if(bottomy == 29)
 	{
 		for(unsigned int i = 1;i<vertices.size();i++)
 			{
