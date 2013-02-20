@@ -20,7 +20,7 @@ namespace tron {
 	{
 		//check if at poles and get possible moves
 		//check if at edges and get possible moves
-		/*if(debug)
+		if(debug)
 			std::cout<<"possible moves for "<<digit<<std::endl;
 		int count = 0;
 		for(int i = 0;i<30;i++)
@@ -66,8 +66,8 @@ namespace tron {
 			}			
 			(*grid).setPlayerTwoHead(new_x,new_y);
 			return;
-		}*/
-		this->start = start;
+		}
+		time(&this->start);// = start;
 
 		first = new Voronoi(grid);
 		int *result = first->calculate(digit);
